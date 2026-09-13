@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platine Vinyle Interactive</title>
+  <!-- Lien vers le fichier CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- La Platine Cible -->
+  <div class="turntable" id="drop-zone">
+    <!-- Le plateau noir qui va tourner -->
+    <div class="platter" id="platter">
+      <!-- C'est ici que l'image du vinyle Taylor Swift s'affichera -->
+      <div class="vinyl-on-player" id="current-vinyl"></div>
+      <div class="center-spindle"></div>
+    </div>
+    <!-- Le bras de lecture -->
+    <div class="tonearm" id="tonearm"></div>
+  </div>
+
+  <!-- Le Rack de Vinyles (Glissables) -->
+  <div class="vinyl-rack">
+    <div class="vinyl-item" draggable="true" data-audio="audio/lover.mp3" data-cover="lover-cover.jpg">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Lover">
+    </div>
+    <div class="vinyl-item" draggable="true" data-audio="audio/midnights.mp3" data-cover="midnights-cover.jpg">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10" alt="Midnights">
+    </div>
+  </div>
+
+  <!-- Lecteur Audio masqué -->
+  <audio id="audio-player"></audio>
+
+  <!-- Lien vers le fichier JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
