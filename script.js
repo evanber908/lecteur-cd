@@ -1,4 +1,4 @@
-let player;
+let player = null;
 let selectedYoutubeId = '';
 
 // 1. Initialisation automatique de l'API YouTube
@@ -8,12 +8,13 @@ function onYouTubeIframeAPIReady() {
     width: '100%',
     playerVars: {
       'autoplay': 0,
-      'controls': 0,      // Cache les contrôles YouTube (pause, barre de progression)
+      'controls': 0,
       'showinfo': 0,
       'rel': 0,
       'loop': 1,
       'modestbranding': 1,
-      'playsinline': 1
+      'playsinline': 1,
+      'enablejsapi': 1 // Indispensable pour contrôler la vidéo en JS
     },
     events: {
       'onStateChange': onPlayerStateChange
@@ -30,6 +31,8 @@ const tonearm = document.getElementById('tonearm');
 vinyls.forEach(vinyl => {
   vinyl.addEventListener('dragstart', (e) => {
     selectedYoutubeId = vinyl.getAttribute('data-youtube');
+    // Ligne OBLIGATOIRE pour que le Drag fonctionne sur Firefox
+    e.dataTransfer.setData('text/plain', selectedYoutubeId);
   });
 });
 
@@ -40,16 +43,20 @@ dropZone.addEventListener('dragover', (e) => {
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
 
-  if (selectedYoutubeId && player && player.loadVideoById) {
-    // Charger la vidéo correspondante dans le lecteur
+  // Sécurité : Vérifier si l'API YouTube a bien pu se charger
+  if (!player || typeof player.loadVideoById !== 'function') {
+    alert("⚠️ Le lecteur YouTube n'est pas prêt. Vérifiez que vous ouvrez ce site via un serveur local (Live Server) et que vous avez internet.");
+    return;
+  }
+
+  if (selectedYoutubeId) {
+    // 1. Charger ET lancer la vidéo IMMÉDIATEMENT (sans setTimeout)
     player.loadVideoById(selectedYoutubeId);
+    player.playVideo();
     
-    // Effet réaliste : la vidéo se lance et les animations démarrent
-    setTimeout(() => {
-      player.playVideo();
-      platter.classList.add('spinning');
-      tonearm.classList.add('active');
-    }, 500);
+    // 2. Lancer les animations CSS
+    platter.classList.add('spinning');
+    tonearm.classList.add('active');
   }
 });
 
