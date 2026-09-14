@@ -1,47 +1,68 @@
+let player;
+let selectedYoutubeId = '';
+
+// 1. Initialisation automatique de l'API YouTube
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-player', {
+    height: '100%',
+    width: '100%',
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,      // Cache les contrôles YouTube (pause, barre de progression)
+      'showinfo': 0,
+      'rel': 0,
+      'loop': 1,
+      'modestbranding': 1,
+      'playsinline': 1
+    },
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+// 2. Gestion du Drag & Drop
 const vinyls = document.querySelectorAll('.vinyl-item');
 const dropZone = document.getElementById('drop-zone');
 const platter = document.getElementById('platter');
-const currentVinyl = document.getElementById('current-vinyl');
 const tonearm = document.getElementById('tonearm');
-const audioPlayer = document.getElementById('audio-player');
 
-let selectedAudioSrc = '';
-let selectedCover = '';
-
-// 1. Gestion du Drag (Début du glissement)
 vinyls.forEach(vinyl => {
   vinyl.addEventListener('dragstart', (e) => {
-    selectedAudioSrc = vinyl.getAttribute('data-audio');
-    selectedCover = vinyl.getAttribute('data-cover');
+    selectedYoutubeId = vinyl.getAttribute('data-youtube');
   });
 });
 
-// 2. Autoriser le dépôt sur la platine
 dropZone.addEventListener('dragover', (e) => {
-  e.preventDefault(); 
+  e.preventDefault();
 });
 
-// 3. Gestion du Drop (Dépôt du vinyle)
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
-  
-  // Placer visuellement le macaron de l'album au centre du vinyle virtuel
-  currentVinyl.style.backgroundImage = `url(${selectedCover})`;
-  currentVinyl.style.display = 'block';
-  
-  // Charger le morceau Taylor Swift correspondant
-  audioPlayer.src = selectedAudioSrc;
-  
-  // Lancer les animations et la musique après un mini délai (effet réaliste)
-  setTimeout(() => {
-    audioPlayer.play();
-    platter.classList.add('spinning'); // Le disque tourne
-    tonearm.classList.add('active');   // Le bras se pose
-  }, 600);
+
+  if (selectedYoutubeId && player && player.loadVideoById) {
+    // Charger la vidéo correspondante dans le lecteur
+    player.loadVideoById(selectedYoutubeId);
+    
+    // Effet réaliste : la vidéo se lance et les animations démarrent
+    setTimeout(() => {
+      player.playVideo();
+      platter.classList.add('spinning');
+      tonearm.classList.add('active');
+    }, 500);
+  }
 });
 
-// 4. Si la musique s'arrête ou fait pause
-audioPlayer.addEventListener('pause', () => {
-  platter.classList.remove('spinning');
-  tonearm.classList.remove('active');
-});
+// 3. Synchroniser les animations selon l'état de la vidéo YouTube
+function onPlayerStateChange(event) {
+  // Si la vidéo est en pause ou terminée
+  if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+    platter.classList.remove('spinning');
+    tonearm.classList.remove('active');
+  } 
+  // Si la vidéo est en lecture
+  else if (event.data === YT.PlayerState.PLAYING) {
+    platter.classList.add('spinning');
+    tonearm.classList.add('active');
+  }
+}

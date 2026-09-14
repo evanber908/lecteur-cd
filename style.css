@@ -1,62 +1,76 @@
-/* --- Styles de base et mise en page --- */
+/* --- Mise en page globale --- */
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f0f0f0;
-  font-family: sans-serif;
+  background-color: #121212;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
 }
 
+/* Le boîtier de la platine */
 .turntable {
   position: relative;
-  width: 350px;
-  height: 340px;
-  background: #d3d3d3;
-  border-radius: 15px;
+  width: 360px;
+  height: 360px;
+  background: #222;
+  border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
   margin-bottom: 40px;
+  border: 1px solid #333;
 }
 
-/* Le plateau de la platine */
+/* Le plateau noir */
 .platter {
-  width: 300px;
-  height: 300px;
-  background: #111;
+  width: 320px;
+  height: 320px;
+  background: #0d0d0d;
   border-radius: 50%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
 }
 
-/* Macaron au centre du vinyle */
+/* L'Écran circulaire du MagniVinyl où la vidéo apparaît */
 .vinyl-on-player {
-  width: 100px;
-  height: 100px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  display: none; 
-  z-index: 2;
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Ajustement de la vidéo iframe dans le cercle */
+.vinyl-on-player iframe {
+  width: 170% !important;
+  height: 170% !important;
+  margin-left: -35%;
+  margin-top: -35%;
+  pointer-events: none; /* Empêche de cliquer directement sur la vidéo */
 }
 
 /* Axe central blanc */
 .center-spindle {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: #fff;
+  width: 16px;
+  height: 16px;
+  background: #e0e0e0;
   border-radius: 50%;
-  z-index: 3;
+  z-index: 5;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.8);
 }
 
 /* Animation CSS de rotation */
@@ -65,57 +79,58 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Cette classe sera ajoutée en JavaScript quand la musique joue */
 .spinning {
-  animation: spin 3s linear infinite;
+  animation: spin 6s linear infinite;
 }
 
 /* Le bras de lecture */
 .tonearm {
-  width: 20px;
-  height: 150px;
-  background: #ccc;
+  width: 16px;
+  height: 160px;
+  background: linear-gradient(to bottom, #ccc, #888);
   position: absolute;
-  top: 20px;
-  right: 20px;
-  transform-origin: top center;
-  transition: transform 0.5s ease;
-  border-radius: 10px;
-  box-shadow: -3px 3px 6px rgba(0,0,0,0.4);
+  top: 25px;
+  right: 25px;
+  transform-origin: 8px 15px;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 8px;
+  box-shadow: -3px 3px 8px rgba(0,0,0,0.5);
   z-index: 10;
 }
 
-/* Quand la musique joue, le bras pivote sur le disque */
 .tonearm.active {
-  transform: rotate(25deg);
+  transform: rotate(26deg);
 }
 
-/* --- Styles pour le rack de vinyles --- */
+/* --- Rack de Vinyles --- */
 .vinyl-rack {
   display: flex;
-  gap: 30px;
+  gap: 25px;
 }
 
 .vinyl-item {
-  width: 120px;
-  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: grab;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: transform 0.2s;
-  background-color: #fff;
-}
-
-.vinyl-item:active {
-  cursor: grabbing;
 }
 
 .vinyl-item:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 }
 
 .vinyl-item img {
-  width: 100%;
-  height: 100%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
   object-fit: cover;
-  display: block;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+  border: 2px solid #333;
+}
+
+.vinyl-item span {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #bbb;
 }
