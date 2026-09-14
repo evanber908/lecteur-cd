@@ -39,24 +39,29 @@ body {
 
 /* L'Écran circulaire du MagniVinyl où la vidéo apparaît */
 .vinyl-on-player {
-  width: 280px;
-  height: 280px;
+  width: 100%;  /* Prend les 320px du plateau */
+  height: 100%; /* Prend les 320px du plateau */
   border-radius: 50%;
   overflow: hidden;
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 1; /* Se place juste sous l'axe central */
 }
 
 /* Ajustement de la vidéo iframe dans le cercle */
 .vinyl-on-player iframe {
-  width: 170% !important;
-  height: 170% !important;
-  margin-left: -35%;
-  margin-top: -35%;
-  pointer-events: none; /* Empêche de cliquer directement sur la vidéo */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  /* On force une taille 16:9 géante qui dépasse du cercle */
+  width: 800px !important;
+  height: 450px !important; 
+  
+  /* On recentre parfaitement la vidéo au milieu */
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Empêche de cliquer par erreur sur YouTube */
 }
 
 /* Axe central blanc */
