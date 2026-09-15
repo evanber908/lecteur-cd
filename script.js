@@ -2,14 +2,17 @@ let player = null;
 let selectedYoutubeId = '';
 let selectedCover = '';
 
-// 1. Initialisation automatique de l'API YouTube
+// 1. Initialisation de l'API YouTube
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
     height: '100%',
     width: '100%',
     playerVars: {
       'autoplay': 0,
-      'controls': 1,      // Affichage des contrôles vidéo sur l'écran du haut
+      'controls': 0,          // Désactive les boutons et barres YouTube
+      'cc_load_policy': 0,     // Désactive les sous-titres par défaut
+      'disablekb': 1,          // Désactive le contrôle au clavier
+      'iv_load_policy': 3,     // Désactive les annotations et liens intégrés
       'rel': 0,
       'modestbranding': 1,
       'playsinline': 1,
@@ -21,7 +24,7 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// 2. Gestion du Drag & Drop
+// 2. Éléments du DOM
 const vinyls = document.querySelectorAll('.vinyl-item');
 const dropZone = document.getElementById('drop-zone');
 const platter = document.getElementById('platter');
@@ -29,6 +32,11 @@ const currentVinyl = document.getElementById('current-vinyl');
 const vinylLabel = document.getElementById('vinyl-label');
 const tonearm = document.getElementById('tonearm');
 
+const btnPlay = document.getElementById('btn-play');
+const btnPause = document.getElementById('btn-pause');
+const btnEject = document.getElementById('btn-eject');
+
+// 3. Drag & Drop
 vinyls.forEach(vinyl => {
   vinyl.addEventListener('dragstart', (e) => {
     selectedYoutubeId = vinyl.getAttribute('data-youtube');
@@ -50,23 +58,43 @@ dropZone.addEventListener('drop', (e) => {
   }
 
   if (selectedYoutubeId) {
-    // 1. Afficher le vinyle physique et sa pochette au centre
     if (selectedCover) {
       vinylLabel.style.backgroundImage = `url(${selectedCover})`;
     }
     currentVinyl.style.display = 'flex';
 
-    // 2. Lancer la vidéo sur l'écran du haut
     player.loadVideoById(selectedYoutubeId);
     player.playVideo();
     
-    // 3. Lancer la rotation du disque et abaisser le bras
     platter.classList.add('spinning');
     tonearm.classList.add('active');
   }
 });
 
-// 3. Synchroniser la rotation du disque avec l'état de la vidéo
+// 4. Gestion des boutons personnalisés
+btnPlay.addEventListener('click', () => {
+  if (player && selectedYoutubeId && typeof player.playVideo === 'function') {
+    player.playVideo();
+  }
+});
+
+btnPause.addEventListener('click', () => {
+  if (player && typeof player.pauseVideo === 'function') {
+    player.pauseVideo();
+  }
+});
+
+btnEject.addEventListener('click', () => {
+  if (player && typeof player.stopVideo === 'function') {
+    player.stopVideo();
+  }
+  currentVinyl.style.display = 'none';
+  platter.classList.remove('spinning');
+  tonearm.classList.remove('active');
+  selectedYoutubeId = '';
+});
+
+// 5. Synchronisation de la rotation et du bras de lecture
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
     platter.classList.remove('spinning');

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- Écran Vidéo placé juste au-dessus -->
+  <!-- Écran Vidéo (Pur affichage image et son) -->
   <div class="screen-container">
     <div class="screen-frame">
       <div id="youtube-player"></div>
@@ -19,7 +19,7 @@
   <div class="turntable" id="drop-zone">
     <div class="platter" id="platter">
 
-      <!-- Le Vinyle physique avec sa pochette au centre (qui va tourner) -->
+      <!-- Le Vinyle physique avec sa pochette au centre -->
       <div class="vinyl-record" id="current-vinyl">
         <div class="vinyl-label" id="vinyl-label"></div>
       </div>
@@ -30,6 +30,13 @@
 
     <!-- Le bras de lecture -->
     <div class="tonearm" id="tonearm"></div>
+  </div>
+
+  <!-- Barre de commandes personnalisée -->
+  <div class="controls-bar">
+    <button type="button" id="btn-play">▶ Play</button>
+    <button type="button" id="btn-pause">⏸ Pause</button>
+    <button type="button" id="btn-eject">⏏ Retirer le CD</button>
   </div>
 
   <!-- Le Rack de Vinyles (Glissables) -->
