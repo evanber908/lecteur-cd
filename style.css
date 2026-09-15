@@ -85,10 +85,10 @@ body {
   position: relative;
   width: 360px;
   height: 360px;
-  background: linear-gradient(135deg, #2d3139, #1a1c23);
+   background: linear-gradient(135deg, #2d3139, #1a1c23);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
   margin-bottom: 20px;
   border: 2px solid #4a505b;
   box-sizing: border-box;
@@ -103,7 +103,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.5);
   border: 3px solid #b0b7c3;
 }
 
@@ -243,8 +243,8 @@ body {
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border: 2px solid #ddd;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  border: 2px solid #444;
 }
 
 .vinyl-item span {
