@@ -8,13 +8,20 @@
 </head>
 <body>
 
-  <!-- La Platine Cible (Style MagniVinyl) -->
+  <!-- Écran Vidéo placé juste au-dessus -->
+  <div class="screen-container">
+    <div class="screen-frame">
+      <div id="youtube-player"></div>
+    </div>
+  </div>
+
+  <!-- La Platine Cible (Tourne-disque) -->
   <div class="turntable" id="drop-zone">
     <div class="platter" id="platter">
 
-      <!-- Écran circulaire intégré au vinyle qui affichera la vidéo YouTube -->
-      <div class="vinyl-on-player" id="current-vinyl">
-        <div id="youtube-player"></div>
+      <!-- Le Vinyle physique avec sa pochette au centre (qui va tourner) -->
+      <div class="vinyl-record" id="current-vinyl">
+        <div class="vinyl-label" id="vinyl-label"></div>
       </div>
 
       <!-- Axe central de la platine -->
@@ -27,13 +34,12 @@
 
   <!-- Le Rack de Vinyles (Glissables) -->
   <div class="vinyl-rack">
-    <!-- Remplacez data-youtube par l'ID de la vidéo YouTube souhaitée -->
-    <div class="vinyl-item" draggable="true" data-youtube="tgVYh94QH8k" data-cover="lover-cover.jpg">
+    <div class="vinyl-item" draggable="true" data-youtube="tgVYh94QH8k" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Lover">
       <span>Lover</span>
     </div>
 
-    <div class="vinyl-item" draggable="true" data-youtube="Odh9ddPUkEY" data-cover="midnights-cover.jpg">
+    <div class="vinyl-item" draggable="true" data-youtube="Odh9ddPUkEY" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10" alt="Midnights">
       <span>Anti-Hero</span>
     </div>
