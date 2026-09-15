@@ -9,10 +9,10 @@ function onYouTubeIframeAPIReady() {
     width: '100%',
     playerVars: {
       'autoplay': 0,
-      'controls': 0,          // Désactive les boutons et barres YouTube
-      'cc_load_policy': 0,     // Désactive les sous-titres par défaut
-      'disablekb': 1,          // Désactive le contrôle au clavier
-      'iv_load_policy': 3,     // Désactive les annotations et liens intégrés
+      'controls': 0,
+      'cc_load_policy': 0,
+      'disablekb': 1,
+      'iv_load_policy': 3,
       'rel': 0,
       'modestbranding': 1,
       'playsinline': 1,
@@ -31,6 +31,7 @@ const platter = document.getElementById('platter');
 const currentVinyl = document.getElementById('current-vinyl');
 const vinylLabel = document.getElementById('vinyl-label');
 const tonearm = document.getElementById('tonearm');
+const screenDefault = document.getElementById('screen-default');
 
 const btnPlay = document.getElementById('btn-play');
 const btnPause = document.getElementById('btn-pause');
@@ -58,6 +59,9 @@ dropZone.addEventListener('drop', (e) => {
   }
 
   if (selectedYoutubeId) {
+    // Masquer l'écran par défaut pour afficher la vidéo
+    screenDefault.style.display = 'none';
+
     if (selectedCover) {
       vinylLabel.style.backgroundImage = `url(${selectedCover})`;
     }
@@ -88,9 +92,12 @@ btnEject.addEventListener('click', () => {
   if (player && typeof player.stopVideo === 'function') {
     player.stopVideo();
   }
+  
+  // Réinitialiser la platine et réafficher l'écran par défaut
   currentVinyl.style.display = 'none';
   platter.classList.remove('spinning');
   tonearm.classList.remove('active');
+  screenDefault.style.display = 'flex';
   selectedYoutubeId = '';
 });
 

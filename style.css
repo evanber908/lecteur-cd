@@ -34,7 +34,28 @@ body {
   position: relative;
 }
 
-/* Rendre le lecteur YouTube totalement insensible aux clics */
+/* Écran noir par défaut avec message */
+.screen-default {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  z-index: 2;
+  pointer-events: none;
+  padding: 20px;
+  box-sizing: border-box;
+  letter-spacing: 0.5px;
+}
+
 .screen-frame iframe {
   width: 100%;
   height: 100%;
@@ -88,7 +109,7 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
 
-/* Macaron au centre du vinyle (pochette d'album) */
+/* Macaron au centre du vinyle */
 .vinyl-label {
   width: 110px;
   height: 110px;

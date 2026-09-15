@@ -8,10 +8,14 @@
 </head>
 <body>
 
-  <!-- Écran Vidéo (Pur affichage image et son) -->
+  <!-- Écran Vidéo avec overlay par défaut -->
   <div class="screen-container">
     <div class="screen-frame">
       <div id="youtube-player"></div>
+      <!-- Écran par défaut masqué uniquement quand un vinyle est chargé -->
+      <div class="screen-default" id="screen-default">
+        <span>Veuillez mettre un CD dans le lecteur</span>
+      </div>
     </div>
   </div>
 
@@ -32,7 +36,7 @@
     <div class="tonearm" id="tonearm"></div>
   </div>
 
-  <!-- Barre de commandes personnalisée -->
+  <!-- Barre de commandes -->
   <div class="controls-bar">
     <button type="button" id="btn-play">▶ Play</button>
     <button type="button" id="btn-pause">⏸ Pause</button>
@@ -54,7 +58,7 @@
 
   <!-- Chargement de l'API iFrame YouTube -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Votre script JavaScript -->
+  <!-- Script JavaScript -->
   <script src="script.js"></script>
 
 </body>
