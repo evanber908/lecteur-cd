@@ -63,31 +63,32 @@ body {
   pointer-events: none;
 }
 
-/* --- Le boîtier de la platine --- */
+/* --- Le boîtier de la platine (Finition aluminium sombre) --- */
 .turntable {
   position: relative;
   width: 360px;
   height: 360px;
-  background: #222;
+  background: linear-gradient(135deg, #2d3139, #1a1c23);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
   margin-bottom: 20px;
-  border: 1px solid #333;
+  border: 2px solid #4a505b;
   box-sizing: border-box;
 }
 
-/* Le plateau noir */
+/* Le plateau métallique sous le vinyle (Finition argentée pour contraste maximal) */
 .platter {
   width: 320px;
   height: 320px;
-  background: #0d0d0d;
+  background: radial-gradient(circle, #7a8290 0%, #484e59 70%, #9aa2b0 100%);
   border-radius: 50%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 3px solid #b0b7c3;
 }
 
 /* --- Le Vinyle / CD --- */
@@ -97,16 +98,16 @@ body {
   border-radius: 50%;
   background: repeating-radial-gradient(
     circle at center,
-    #111 0,
-    #111 2px,
-    #222 3px,
-    #111 4px
+    #050505 0,
+    #050505 2px,
+    #1a1a1a 3px,
+    #050505 4px
   );
   position: absolute;
   display: none;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
 }
 
 /* Macaron au centre du vinyle */
@@ -125,13 +126,14 @@ body {
   position: absolute;
   width: 16px;
   height: 16px;
-  background: #e0e0e0;
+  background: #ffffff;
   border-radius: 50%;
   z-index: 5;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  border: 1px solid #999;
 }
 
 /* Animation CSS de rotation */
@@ -148,14 +150,14 @@ body {
 .tonearm {
   width: 16px;
   height: 160px;
-  background: linear-gradient(to bottom, #ccc, #888);
+  background: linear-gradient(to bottom, #ffffff, #999999);
   position: absolute;
   top: 25px;
   right: 25px;
   transform-origin: 8px 15px;
   transition: transform 0.6s ease-in-out;
   border-radius: 8px;
-  box-shadow: -3px 3px 8px rgba(0,0,0,0.5);
+  box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
 
@@ -171,9 +173,9 @@ body {
 }
 
 .controls-bar button {
-  background-color: #222;
+  background-color: #2a2e35;
   color: #fff;
-  border: 1px solid #444;
+  border: 1px solid #4a505b;
   padding: 10px 18px;
   border-radius: 8px;
   font-size: 14px;
@@ -183,7 +185,7 @@ body {
 }
 
 .controls-bar button:hover {
-  background-color: #333;
+  background-color: #3b404a;
   transform: translateY(-2px);
 }
 
@@ -223,8 +225,8 @@ body {
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-  border: 2px solid #333;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  border: 2px solid #444;
 }
 
 .vinyl-item span {
