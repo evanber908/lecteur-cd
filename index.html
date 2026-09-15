@@ -3,62 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MagniVinyl Taylor Swift</title>
+  <title>MagniVinyl</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Écran Vidéo avec overlay par défaut -->
-  <div class="screen-container">
-    <div class="screen-frame">
-      <div id="youtube-player"></div>
-      <!-- Écran par défaut masqué uniquement quand un vinyle est chargé -->
-      <div class="screen-default" id="screen-default">
-        <span>Veuillez mettre un CD dans le lecteur</span>
+  <div class="main-container">
+    <!-- Colonne Gauche : Écran, Platine et Commandes -->
+    <div class="player-column">
+
+      <!-- Écran Vidéo -->
+      <div class="screen-container">
+        <div class="screen-frame">
+          <div id="youtube-player"></div>
+          <div class="screen-default" id="screen-default">
+            <span>Veuillez mettre un CD dans le lecteur</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platine tourne-disque -->
+      <div class="turntable" id="drop-zone">
+        <div class="platter" id="platter">
+          <div class="vinyl-record" id="current-vinyl">
+            <div class="vinyl-label" id="vinyl-label"></div>
+          </div>
+          <div class="center-spindle"></div>
+        </div>
+        <div class="tonearm" id="tonearm"></div>
+      </div>
+
+      <!-- Barre de commandes -->
+      <div class="controls-bar">
+        <button type="button" id="btn-play">▶ Play</button>
+        <button type="button" id="btn-pause">⏸ Pause</button>
+        <button type="button" id="btn-eject">⏏ Retirer le CD</button>
+      </div>
+
+    </div>
+
+    <!-- Colonne Droite : Rack de Vinyles (Grille 5x2) -->
+    <div class="rack-column">
+      <div class="vinyl-rack">
+
+        <!-- Disques disponibles -->
+        <div class="vinyl-item" draggable="true" data-youtube="tgVYh94QH8k" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Lover">
+          <span>Lover</span>
+        </div>
+
+        <div class="vinyl-item" draggable="true" data-youtube="Odh9ddPUkEY" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10" alt="Midnights">
+          <span>Anti-Hero</span>
+        </div>
+
+        <!-- Emplacements réservés pour les futurs disques -->
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+        <div class="vinyl-placeholder"></div>
+
       </div>
     </div>
   </div>
 
-  <!-- La Platine Cible (Tourne-disque) -->
-  <div class="turntable" id="drop-zone">
-    <div class="platter" id="platter">
-
-      <!-- Le Vinyle physique avec sa pochette au centre -->
-      <div class="vinyl-record" id="current-vinyl">
-        <div class="vinyl-label" id="vinyl-label"></div>
-      </div>
-
-      <!-- Axe central de la platine -->
-      <div class="center-spindle"></div>
-    </div>
-
-    <!-- Le bras de lecture -->
-    <div class="tonearm" id="tonearm"></div>
-  </div>
-
-  <!-- Barre de commandes -->
-  <div class="controls-bar">
-    <button type="button" id="btn-play">▶ Play</button>
-    <button type="button" id="btn-pause">⏸ Pause</button>
-    <button type="button" id="btn-eject">⏏ Retirer le CD</button>
-  </div>
-
-  <!-- Le Rack de Vinyles (Glissables) -->
-  <div class="vinyl-rack">
-    <div class="vinyl-item" draggable="true" data-youtube="tgVYh94QH8k" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Lover">
-      <span>Lover</span>
-    </div>
-
-    <div class="vinyl-item" draggable="true" data-youtube="Odh9ddPUkEY" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10" alt="Midnights">
-      <span>Anti-Hero</span>
-    </div>
-  </div>
-
-  <!-- Chargement de l'API iFrame YouTube -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Script JavaScript -->
   <script src="script.js"></script>
 
 </body>

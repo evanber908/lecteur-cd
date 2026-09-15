@@ -1,25 +1,43 @@
 /* --- Mise en page globale --- */
 body {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  background-color: #121212;
-  color: #fff;
+  background-color: #f2f3f7; /* Fond clair */
+  color: #1a1a1a;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 20px 0;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
-/* --- Écran vidéo au-dessus de la platine --- */
+/* Conteneur principal 2 colonnes */
+.main-container {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* --- Colonne de gauche (Lecteur & Platine) --- */
+.player-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  flex-shrink: 0;
+}
+
+/* --- Écran vidéo --- */
 .screen-container {
   width: 360px;
   height: 215px;
   background: #1e1e1e;
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   border: 1px solid #333;
   margin-bottom: 20px;
   box-sizing: border-box;
@@ -34,7 +52,6 @@ body {
   position: relative;
 }
 
-/* Écran noir par défaut avec message */
 .screen-default {
   position: absolute;
   top: 0;
@@ -63,7 +80,7 @@ body {
   pointer-events: none;
 }
 
-/* --- Le boîtier de la platine (Finition aluminium sombre) --- */
+/* --- Platine tourne-disque --- */
 .turntable {
   position: relative;
   width: 360px;
@@ -71,13 +88,12 @@ body {
   background: linear-gradient(135deg, #2d3139, #1a1c23);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
   border: 2px solid #4a505b;
   box-sizing: border-box;
 }
 
-/* Le plateau métallique sous le vinyle (Finition argentée pour contraste maximal) */
 .platter {
   width: 320px;
   height: 320px;
@@ -87,11 +103,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 0, 0, 0.3);
   border: 3px solid #b0b7c3;
 }
 
-/* --- Le Vinyle / CD --- */
 .vinyl-record {
   width: 300px;
   height: 300px;
@@ -110,7 +125,6 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
 }
 
-/* Macaron au centre du vinyle */
 .vinyl-label {
   width: 110px;
   height: 110px;
@@ -121,7 +135,6 @@ body {
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Axe central argenté */
 .center-spindle {
   position: absolute;
   width: 16px;
@@ -136,7 +149,6 @@ body {
   border: 1px solid #999;
 }
 
-/* Animation CSS de rotation */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -146,7 +158,6 @@ body {
   animation: spin 3s linear infinite;
 }
 
-/* Le bras de lecture */
 .tonearm {
   width: 16px;
   height: 160px;
@@ -169,7 +180,8 @@ body {
 .controls-bar {
   display: flex;
   gap: 12px;
-  margin-bottom: 25px;
+  width: 100%;
+  justify-content: center;
 }
 
 .controls-bar button {
@@ -202,10 +214,16 @@ body {
   background-color: #842029;
 }
 
-/* --- Rack de Vinyles --- */
+/* --- Colonne de droite (Rack de vinyles) --- */
+.rack-column {
+  flex-grow: 1;
+  padding-top: 10px;
+}
+
 .vinyl-rack {
-  display: flex;
-  gap: 25px;
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  gap: 25px 20px;
 }
 
 .vinyl-item {
@@ -221,16 +239,28 @@ body {
 }
 
 .vinyl-item img {
-  width: 110px;
-  height: 110px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-  border: 2px solid #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 2px solid #ddd;
 }
 
 .vinyl-item span {
   margin-top: 8px;
-  font-size: 14px;
-  color: #bbb;
+  font-size: 13px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Emplacements futurs (ronds jaunes du schéma) */
+.vinyl-placeholder {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #fde68a;
+  border: 2px dashed #f59e0b;
+  box-sizing: border-box;
 }
