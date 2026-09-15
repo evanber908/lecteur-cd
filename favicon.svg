@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Disque vinyle -->
+  <circle cx="32" cy="32" r="30" fill="#1a1c23" stroke="#4a505b" stroke-width="2"/>
+  <!-- Microsillons -->
+  <circle cx="32" cy="32" r="23" fill="none" stroke="#2d3139" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="17" fill="none" stroke="#2d3139" stroke-width="1.5"/>
+  <!-- Macaron central jaune -->
+  <circle cx="32" cy="32" r="11" fill="#f59e0b"/>
+  <!-- Axe central blanc -->
+  <circle cx="32" cy="32" r="3" fill="#ffffff"/>
+</svg>
