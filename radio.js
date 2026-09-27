@@ -7,7 +7,7 @@ const volumeKnob = document.getElementById('volume-knob');
 const volumeSlider = document.getElementById('volume-slider');
 const volumeValText = document.getElementById('volume-val-text');
 
-// Éléments d'affichage de la chanson en cours
+// Éléments d'affichage du morceau
 const radioCover = document.getElementById('radio-cover');
 const radioTrackTitle = document.getElementById('radio-track-title');
 const radioTrackArtist = document.getElementById('radio-track-artist');
@@ -15,10 +15,10 @@ const radioTrackAlbum = document.getElementById('radio-track-album');
 
 let trackInterval = null;
 
-// Récupération du titre et de la pochette en temps réel
+// Récupération des informations NRJ en direct
 async function fetchNowPlaying() {
   try {
-    const nrjApiUrl = 'https://www.nrj.fr/live-api/metadata/nrj-taylor-swift';
+    const nrjApiUrl = 'https://www.nrj.fr/onair.json';
     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(nrjApiUrl)}&timestamp=${Date.now()}`;
 
     const response = await fetch(proxyUrl);
@@ -29,25 +29,34 @@ async function fetchNowPlaying() {
 
     const data = JSON.parse(wrapper.contents);
 
-    // Si une chanson est actuellement transmise par l'API
-    if (data && data.current) {
-      const track = data.current;
+    let station = null;
 
-      if (radioCover && track.cover) {
-        radioCover.src = track.cover;
+    // Recherche de la station par son ID ou son slug
+    if (Array.isArray(data)) {
+      station = data.find(s => s.id === "1109" || s.slug === "nrj-taylor-swift");
+    } else if (data['nrj-taylor-swift']) {
+      station = data['nrj-taylor-swift'];
+    }
+
+    // Extraction du morceau en cours de lecture
+    if (station && station.playlist && station.playlist.length > 0) {
+      const currentTrack = station.playlist[0].song;
+
+      if (radioTrackTitle && currentTrack.title) {
+        radioTrackTitle.textContent = currentTrack.title;
       }
-      if (radioTrackTitle) {
-        radioTrackTitle.textContent = track.title || 'Titre inconnu';
+      if (radioTrackArtist && currentTrack.artist) {
+        radioTrackArtist.textContent = currentTrack.artist;
       }
-      if (radioTrackArtist) {
-        radioTrackArtist.textContent = track.artist || 'Taylor Swift';
+      if (radioCover && currentTrack.img_url) {
+        radioCover.src = currentTrack.img_url;
       }
       if (radioTrackAlbum) {
-        radioTrackAlbum.textContent = track.album ? `Album : ${track.album}` : 'NRJ Taylor Swift';
+        radioTrackAlbum.textContent = "NRJ Taylor Swift (En direct)";
       }
     }
   } catch (err) {
-    console.error("Erreur lors de la récupération des informations du titre :", err);
+    console.error("Erreur lors de la récupération des métadonnées :", err);
   }
 }
 
@@ -56,7 +65,7 @@ if (radioPlayer && volumeSlider) {
   radioPlayer.volume = parseFloat(volumeSlider.value);
 }
 
-// Gestion du volume au slider
+// Gestion du slider de volume
 if (volumeSlider) {
   volumeSlider.addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);
