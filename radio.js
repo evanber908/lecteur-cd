@@ -13,7 +13,13 @@ const radioTrackTitle = document.getElementById('radio-track-title');
 const radioTrackArtist = document.getElementById('radio-track-artist');
 const radioTrackAlbum = document.getElementById('radio-track-album');
 
+// Haut-parleur et conteneur de notes
+const speakerGrill = document.querySelector('.speaker-grille') || document.getElementById('speaker-grill');
+const notesContainer = document.getElementById('notes-container');
+
 let trackInterval = null;
+let noteInterval = null;
+const MUSIC_NOTES = ['♪', '♫', '♩', '♬', '✨'];
 
 // Playlist de secours en cas de problème réseau
 const FALLBACK_PLAYLIST = [
@@ -45,15 +51,13 @@ const FALLBACK_PLAYLIST = [
 
 let fallbackIndex = 0;
 
-// Récupération des informations NRJ via ton Worker Cloudflare
+// 1. Récupération du titre en cours (API NRJ)
 async function fetchNowPlaying() {
   try {
     const res = await fetch('https://proxy-nrj.evan-berard45.workers.dev/');
     if (!res.ok) throw new Error("Erreur réseau");
 
     const data = await res.json();
-    
-    // Identification de la station dans le JSON NRJ
     const station = Array.isArray(data)
       ? data.find(s => s.slug === 'nrj-taylor-swift' || s.id === '1109')
       : (data?.['nrj-taylor-swift'] || data?.webradio);
@@ -71,10 +75,8 @@ async function fetchNowPlaying() {
       if (radioTrackAlbum) radioTrackAlbum.textContent = "NRJ Taylor Swift (En direct)";
       return;
     }
-
     useFallbackTrack();
   } catch (err) {
-    console.warn("Impossible de charger les métadonnées en direct, bascule sur la playlist de secours.", err);
     useFallbackTrack();
   }
 }
@@ -88,10 +90,31 @@ function useFallbackTrack() {
   fallbackIndex = (fallbackIndex + 1) % FALLBACK_PLAYLIST.length;
 }
 
-// Initialisation au chargement du document
+// 2. Génération des notes de musique flottantes
+function spawnNote() {
+  if (!notesContainer) return;
+
+  const note = document.createElement('span');
+  note.classList.add('floating-note');
+  note.textContent = MUSIC_NOTES[Math.floor(Math.random() * MUSIC_NOTES.length)];
+
+  const leftPos = Math.random() * 80 + 10;
+  note.style.left = `${leftPos}%`;
+
+  const drift = (Math.random() - 0.5) * 60;
+  note.style.setProperty('--drift', `${drift}px`);
+
+  notesContainer.appendChild(note);
+
+  setTimeout(() => {
+    note.remove();
+  }, 2500);
+}
+
+// --- ÉVÉNEMENTS & CONTRÔLES ---
+
 document.addEventListener('DOMContentLoaded', () => {
   fetchNowPlaying();
-
   if (radioPlayer && volumeSlider) {
     radioPlayer.volume = parseFloat(volumeSlider.value);
   }
@@ -102,30 +125,29 @@ if (volumeSlider) {
   volumeSlider.addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);
     if (radioPlayer) radioPlayer.volume = val;
-    
-    const pct = Math.round(val * 100);
-    if (volumeValText) volumeValText.textContent = `${pct}%`;
-    
-    const angle = (val * 240) - 120;
-    if (volumeKnob) volumeKnob.style.transform = `rotate(${angle}deg)`;
+    if (volumeValText) volumeValText.textContent = `${Math.round(val * 100)}%`;
+    if (volumeKnob) volumeKnob.style.transform = `rotate(${(val * 240) - 120}deg)`;
   });
 }
 
-// Lancement de la radio
+// Lancement de la lecture audio
 if (btnPlay) {
   btnPlay.addEventListener('click', () => {
     if (!radioPlayer) return;
+
     radioPlayer.play().then(() => {
       if (radioStatus) {
         radioStatus.textContent = '🔊 Diffusion en direct...';
         radioStatus.style.color = '#34d399';
       }
       if (tunerNeedle) tunerNeedle.classList.add('playing');
-      
+      if (speakerGrill) speakerGrill.classList.add('playing');
+
+      // Démarrage du suivi des titres et de la création de notes
       fetchNowPlaying();
-      if (!trackInterval) {
-        trackInterval = setInterval(fetchNowPlaying, 10000);
-      }
+      if (!trackInterval) trackInterval = setInterval(fetchNowPlaying, 10000);
+      if (!noteInterval) noteInterval = setInterval(spawnNote, 450);
+
     }).catch((err) => {
       console.error("Erreur de lecture audio :", err);
       if (radioStatus) radioStatus.textContent = '⚠️ Erreur de connexion au flux';
@@ -133,19 +155,21 @@ if (btnPlay) {
   });
 }
 
-// Arrêt de la radio
+// Arrêt de la lecture audio
 if (btnStop) {
   btnStop.addEventListener('click', () => {
     if (!radioPlayer) return;
+
     radioPlayer.pause();
+
     if (radioStatus) {
       radioStatus.textContent = 'Radio éteinte';
       radioStatus.style.color = '#9ca3af';
     }
     if (tunerNeedle) tunerNeedle.classList.remove('playing');
-    if (trackInterval) {
-      clearInterval(trackInterval);
-      trackInterval = null;
-    }
+    if (speakerGrill) speakerGrill.classList.remove('playing');
+
+    if (trackInterval) { clearInterval(trackInterval); trackInterval = null; }
+    if (noteInterval) { clearInterval(noteInterval); noteInterval = null; }
   });
 }
