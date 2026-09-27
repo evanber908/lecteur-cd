@@ -461,3 +461,53 @@ body {
 .close-btn:hover {
   color: #ffffff;
 }
+/* --- Sections du Rack --- */
+.rack-section {
+  margin-bottom: 30px;
+}
+
+.rack-section h2 {
+  font-size: 16px;
+  color: #1a1c23;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #818cf8;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+/* Formulaire d'ajout de vinyle */
+.add-vinyl-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.add-vinyl-form input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  flex: 1;
+  min-width: 180px;
+}
+
+.add-vinyl-form input:focus {
+  border-color: #818cf8;
+}
+
+.add-vinyl-form button {
+  background-color: #818cf8;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-vinyl-form button:hover {
+  background-color: #6366f1;
+}
