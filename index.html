@@ -99,9 +99,22 @@
       </div>
     </div>
 
-    <footer class="footer">
-      <p>© 2026 MagniVinyl. Tous droits réservés. | <a href="#">Mentions Légales</a> | <a href="#">Politique de Confidentialité</a> | <a href="#">Contact</a></p>
-    </footer>
+    <!-- Bandeau de bas de page -->
+  <footer class="footer">
+    <p>© 2026 MagniVinyl. Tous droits réservés. |
+      <a href="#" id="link-mentions">Mentions Légales</a> |
+      <a href="#" id="link-privacy">Politique de Confidentialité</a> |
+      <a href="#" id="link-contact">Contact</a>
+    </p>
+  </footer>
+
+  <!-- Structure de la fenêtre modale (Cachée par défaut) -->
+  <div id="modal-container" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="modal-close">&times;</span>
+      <div id="modal-text"></div>
+    </div>
+  </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
