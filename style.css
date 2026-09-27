@@ -13,6 +13,32 @@ body {
   box-sizing: border-box;
 }
 
+/* --- Bandeau d'accueil en haut --- */
+.welcome-banner {
+  width: 100%;
+  background: linear-gradient(135deg, #1a1c23, #0d0f12); /* Fond sombre élégant */
+  color: #ffffff;
+  text-align: center;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #2d323f;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-banner h1 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #818cf8; /* Titre en violet lumineux */
+}
+
+.welcome-banner p {
+  margin: 0;
+  font-size: 14px;
+  color: #a0a5b1;
+  font-weight: 400;
+}
+
 /* Conteneur principal 2 colonnes */
 .main-container {
   display: flex;
