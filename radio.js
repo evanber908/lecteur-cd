@@ -116,7 +116,11 @@ function spawnNote() {
 document.addEventListener('DOMContentLoaded', () => {
   fetchNowPlaying();
   if (radioPlayer && volumeSlider) {
-    radioPlayer.volume = parseFloat(volumeSlider.value);
+    volumeSlider.value = "0.5"; // Force la glissière à 50%
+    const val = parseFloat(volumeSlider.value); // Récupère 0.5
+    radioPlayer.volume = val; // Définit le volume audio à 50%
+    if (volumeValText) volumeValText.textContent = `${Math.round(val * 100)}%`;
+    if (volumeKnob) volumeKnob.style.transform = `rotate(${(val * 240) - 120}deg)`;
   }
 });
 
