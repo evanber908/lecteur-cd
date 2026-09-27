@@ -43,6 +43,13 @@ vinyls.forEach(vinyl => {
     selectedYoutubeId = vinyl.getAttribute('data-youtube');
     selectedCover = vinyl.getAttribute('data-cover');
     e.dataTransfer.setData('text/plain', selectedYoutubeId);
+
+    // Sélectionne le disque vinyle/CD à l'intérieur de la pochette
+    const disc = vinyl.querySelector('.vinyl-disc');
+    if (disc) {
+      // (élément, x, y) : 40, 40 centre le disque (de 81px) sous la pointe de la souris
+      e.dataTransfer.setDragImage(disc, 40, 40);
+    }
   });
 });
 
