@@ -5,8 +5,22 @@ let selectedCover = '';
 // Image neutre par défaut pour les vinyles personnalisés
 const NEUTRAL_COVER = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OVSgDlIcxo5ePibqeZXjjxyMOpdhlMy-9I2Ii7nOFQ&s=10';
 
-// Fonction pour attacher l'événement Drag & Drop à n'importe quel vinyle
+// 1. Éléments du DOM (Déclarés en haut pour être accessibles partout)
+const vinyls = document.querySelectorAll('.vinyl-item');
+const dropZone = document.getElementById('drop-zone');
+const platter = document.getElementById('platter');
+const currentVinyl = document.getElementById('current-vinyl');
+const vinylLabel = document.getElementById('vinyl-label');
+const tonearm = document.getElementById('tonearm');
+const screenDefault = document.getElementById('screen-default');
+
+const btnPlay = document.getElementById('btn-play');
+const btnPause = document.getElementById('btn-pause');
+const btnEject = document.getElementById('btn-eject');
+
+// 2. Fonctions principales
 function makeVinylDraggable(vinyl) {
+  // Événement Drag & Drop (PC)
   vinyl.addEventListener('dragstart', (e) => {
     selectedYoutubeId = vinyl.getAttribute('data-youtube');
     selectedCover = vinyl.getAttribute('data-cover');
@@ -17,10 +31,38 @@ function makeVinylDraggable(vinyl) {
       e.dataTransfer.setDragImage(disc, 40, 40);
     }
   });
+
+  // Événement Clic / Tap (Mobile & Accessibilité)
+  vinyl.addEventListener('click', () => {
+    const ytId = vinyl.getAttribute('data-youtube');
+    const cover = vinyl.getAttribute('data-cover');
+    selectedYoutubeId = ytId;
+    selectedCover = cover;
+    playSelectedVinyl(ytId, cover);
+  });
 }
 
-// Initialiser le drag & drop pour tous les vinyles existants
-document.querySelectorAll('.vinyl-item').forEach(makeVinylDraggable);
+function playSelectedVinyl(youtubeId, coverUrl) {
+  if (!player || typeof player.loadVideoById !== 'function') {
+    alert("⚠️ Le lecteur YouTube n'est pas prêt. Assurez-vous de lancer le projet via un serveur local (Live Server).");
+    return;
+  }
+
+  if (youtubeId) {
+    if (screenDefault) screenDefault.style.display = 'none';
+
+    if (coverUrl && vinylLabel) {
+      vinylLabel.style.backgroundImage = `url(${coverUrl})`;
+    }
+    if (currentVinyl) currentVinyl.style.display = 'flex';
+
+    player.loadVideoById(youtubeId);
+    player.playVideo();
+
+    if (platter) platter.classList.add('spinning');
+    if (tonearm) tonearm.classList.add('active');
+  }
+}
 
 // Extraction de l'ID vidéo à partir d'une URL YouTube standard ou courte
 function extractYoutubeId(url) {
@@ -29,8 +71,7 @@ function extractYoutubeId(url) {
   return (match && match[2].length === 11) ? match[2] : null;
 }
 
-
-// 1. Initialisation de l'API YouTube
+// 3. Initialisation de l'API YouTube
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
     height: '100%',
@@ -52,109 +93,70 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// 2. Éléments du DOM
-const vinyls = document.querySelectorAll('.vinyl-item');
-const dropZone = document.getElementById('drop-zone');
-const platter = document.getElementById('platter');
-const currentVinyl = document.getElementById('current-vinyl');
-const vinylLabel = document.getElementById('vinyl-label');
-const tonearm = document.getElementById('tonearm');
-const screenDefault = document.getElementById('screen-default');
+// 4. Initialisation du Drag & Drop pour les vinyles existants
+vinyls.forEach(makeVinylDraggable);
 
-const btnPlay = document.getElementById('btn-play');
-const btnPause = document.getElementById('btn-pause');
-const btnEject = document.getElementById('btn-eject');
+// Gestion de la Zone de Dépôt (DropZone)
+if (dropZone) {
+  // Obligatoire pour autoriser le survol et le dépôt HTML5
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+  });
 
-// 3. Drag & Drop
-vinyls.forEach(vinyl => {
-  vinyl.addEventListener('dragstart', (e) => {
-    selectedYoutubeId = vinyl.getAttribute('data-youtube');
-    selectedCover = vinyl.getAttribute('data-cover');
-    e.dataTransfer.setData('text/plain', selectedYoutubeId);
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    playSelectedVinyl(selectedYoutubeId, selectedCover);
+  });
+}
 
-    // Sélectionne le disque vinyle/CD à l'intérieur de la pochette
-    const disc = vinyl.querySelector('.vinyl-disc');
-    if (disc) {
-      // (élément, x, y) : 40, 40 centre le disque (de 81px) sous la pointe de la souris
-      e.dataTransfer.setDragImage(disc, 40, 40);
+// 5. Gestion des boutons de contrôle
+if (btnPlay) {
+  btnPlay.addEventListener('click', () => {
+    if (player && selectedYoutubeId && typeof player.playVideo === 'function') {
+      player.playVideo();
     }
   });
-});
+}
 
-dropZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-});
-
-dropZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-
-  if (!player || typeof player.loadVideoById !== 'function') {
-    alert("⚠️ Le lecteur YouTube n'est pas prêt. Assurez-vous de lancer le projet via un serveur local (Live Server).");
-    return;
-  }
-
-  if (selectedYoutubeId) {
-    // Masquer l'écran par défaut pour afficher la vidéo
-    screenDefault.style.display = 'none';
-
-    if (selectedCover) {
-      vinylLabel.style.backgroundImage = `url(${selectedCover})`;
+if (btnPause) {
+  btnPause.addEventListener('click', () => {
+    if (player && typeof player.pauseVideo === 'function') {
+      player.pauseVideo();
     }
-    currentVinyl.style.display = 'flex';
+  });
+}
 
-    player.loadVideoById(selectedYoutubeId);
-    player.playVideo();
+if (btnEject) {
+  btnEject.addEventListener('click', () => {
+    if (player && typeof player.stopVideo === 'function') {
+      player.stopVideo();
+    }
     
-    platter.classList.add('spinning');
-    tonearm.classList.add('active');
-  }
-});
+    if (currentVinyl) currentVinyl.style.display = 'none';
+    if (platter) platter.classList.remove('spinning');
+    if (tonearm) tonearm.classList.remove('active');
+    if (screenDefault) screenDefault.style.display = 'flex';
+    selectedYoutubeId = '';
+  });
+}
 
-// 4. Gestion des boutons personnalisés
-btnPlay.addEventListener('click', () => {
-  if (player && selectedYoutubeId && typeof player.playVideo === 'function') {
-    player.playVideo();
-  }
-});
-
-btnPause.addEventListener('click', () => {
-  if (player && typeof player.pauseVideo === 'function') {
-    player.pauseVideo();
-  }
-});
-
-btnEject.addEventListener('click', () => {
-  if (player && typeof player.stopVideo === 'function') {
-    player.stopVideo();
-  }
-  
-  // Réinitialiser la platine et réafficher l'écran par défaut
-  currentVinyl.style.display = 'none';
-  platter.classList.remove('spinning');
-  tonearm.classList.remove('active');
-  screenDefault.style.display = 'flex';
-  selectedYoutubeId = '';
-});
-
-// 5. Synchronisation de la rotation et du bras de lecture
+// 6. Synchronisation de la rotation et du bras de lecture
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-    platter.classList.remove('spinning');
-    tonearm.classList.remove('active');
+    if (platter) platter.classList.remove('spinning');
+    if (tonearm) tonearm.classList.remove('active');
   } 
   else if (event.data === YT.PlayerState.PLAYING) {
-    platter.classList.add('spinning');
-    tonearm.classList.add('active');
+    if (platter) platter.classList.add('spinning');
+    if (tonearm) tonearm.classList.add('active');
   }
 }
 
-// --- Gestion des Mentions Légales, Confidentialité et Contact (Modale) ---
-
+// 7. Modale : Mentions Légales, Confidentialité et Contact
 const modal = document.getElementById('modal-container');
 const modalText = document.getElementById('modal-text');
 const modalClose = document.getElementById('modal-close');
 
-// Contenus des pages
 const legalContent = {
   mentions: `
     <h2>Mentions légales</h2>
@@ -189,77 +191,92 @@ const legalContent = {
   `
 };
 
-// Événements de clic sur les liens
-document.getElementById('link-mentions').addEventListener('click', (e) => {
-  e.preventDefault();
-  modalText.innerHTML = legalContent.mentions;
-  modal.style.display = 'flex';
-});
+const linkMentions = document.getElementById('link-mentions');
+const linkPrivacy = document.getElementById('link-privacy');
+const linkContact = document.getElementById('link-contact');
 
-document.getElementById('link-privacy').addEventListener('click', (e) => {
-  e.preventDefault();
-  modalText.innerHTML = legalContent.privacy;
-  modal.style.display = 'flex';
-});
+if (linkMentions) {
+  linkMentions.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (modalText && modal) {
+      modalText.innerHTML = legalContent.mentions;
+      modal.style.display = 'flex';
+    }
+  });
+}
 
-document.getElementById('link-contact').addEventListener('click', (e) => {
-  e.preventDefault();
-  modalText.innerHTML = legalContent.contact;
-  modal.style.display = 'flex';
-});
+if (linkPrivacy) {
+  linkPrivacy.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (modalText && modal) {
+      modalText.innerHTML = legalContent.privacy;
+      modal.style.display = 'flex';
+    }
+  });
+}
 
-// Fermeture de la modale
-modalClose.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
+if (linkContact) {
+  linkContact.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (modalText && modal) {
+      modalText.innerHTML = legalContent.contact;
+      modal.style.display = 'flex';
+    }
+  });
+}
+
+if (modalClose) {
+  modalClose.addEventListener('click', () => {
+    if (modal) modal.style.display = 'none';
+  });
+}
 
 window.addEventListener('click', (e) => {
-  if (e.target === modal) {
+  if (modal && e.target === modal) {
     modal.style.display = 'none';
   }
 });
 
-
-// Création d'un vinyle personnalisé
+// 8. Formulaire d'ajout de vinyle personnalisé
 const btnAddVinyl = document.getElementById('btn-add-vinyl');
 const customUrlInput = document.getElementById('custom-url');
 const customTitleInput = document.getElementById('custom-title');
 const customRack = document.getElementById('custom-rack');
 
-btnAddVinyl.addEventListener('click', () => {
-  const rawUrl = customUrlInput.value.trim();
-  const title = customTitleInput.value.trim() || 'Musique perso';
-  const youtubeId = extractYoutubeId(rawUrl);
+if (btnAddVinyl) {
+  btnAddVinyl.addEventListener('click', () => {
+    if (!customUrlInput) return;
+    const rawUrl = customUrlInput.value.trim();
+    const title = (customTitleInput && customTitleInput.value.trim()) || 'Musique perso';
+    const youtubeId = extractYoutubeId(rawUrl);
 
-  if (!youtubeId) {
-    alert("⚠️ Veuillez entrer un lien YouTube valide (ex: https://www.youtube.com/watch?v=...)");
-    return;
-  }
+    if (!youtubeId) {
+      alert("⚠️ Veuillez entrer un lien YouTube valide (ex: https://www.youtube.com/watch?v=...)");
+      return;
+    }
 
-  // Créer l'élément HTML du vinyle neutre
-  const vinylItem = document.createElement('div');
-  vinylItem.className = 'vinyl-item';
-  vinylItem.setAttribute('draggable', 'true');
-  vinylItem.setAttribute('data-youtube', youtubeId);
-  vinylItem.setAttribute('data-cover', NEUTRAL_COVER);
+    const vinylItem = document.createElement('div');
+    vinylItem.className = 'vinyl-item';
+    vinylItem.setAttribute('draggable', 'true');
+    vinylItem.setAttribute('data-youtube', youtubeId);
+    vinylItem.setAttribute('data-cover', NEUTRAL_COVER);
 
-  vinylItem.innerHTML = `
-    <div class="sleeve">
-      <div class="vinyl-disc">
-        <div class="disc-label">
-          <img src="${NEUTRAL_COVER}" alt="${title}">
+    vinylItem.innerHTML = `
+      <div class="sleeve">
+        <div class="vinyl-disc">
+          <div class="disc-label">
+            <img src="${NEUTRAL_COVER}" alt="${title}">
+          </div>
         </div>
+        <img src="${NEUTRAL_COVER}" alt="${title}">
       </div>
-      <img src="${NEUTRAL_COVER}" alt="${title}">
-    </div>
-    <span>${title}</span>
-  `;
+      <span>${title}</span>
+    `;
 
-  // Attacher les événements de glissement et l'ajouter au rack personnalisé
-  makeVinylDraggable(vinylItem);
-  customRack.appendChild(vinylItem);
+    makeVinylDraggable(vinylItem);
+    if (customRack) customRack.appendChild(vinylItem);
 
-  // Réinitialiser les champs
-  customUrlInput.value = '';
-  customTitleInput.value = '';
-});
+    customUrlInput.value = '';
+    if (customTitleInput) customTitleInput.value = '';
+  });
+}
