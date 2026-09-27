@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Écoute Taylor - Web Radio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  </head>
+  <body>
+
+    <!-- Bandeau d'accueil avec commutateur CD / Radio -->
+    <header class="welcome-banner">
+      <div class="header-content">
+        <div>
+          <h1>Web Radio Taylor Swift 📻</h1>
+          <p>Écoutez en direct la radio dédiée 24/7 aux plus grands succès de Taylor Swift !</p>
+        </div>
+        <div class="mode-switch-container">
+          <div class="mode-switch">
+            <a href="index.html" class="switch-btn">CD</a>
+            <a href="radio.html" class="switch-btn active">Radio</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+      <!-- Colonne Gauche : Poste de Radio -->
+      <div class="player-column">
+
+        <!-- Écran / Cadran de la Radio -->
+        <div class="screen-container radio-screen-container">
+          <div class="screen-frame radio-screen-frame">
+            <div class="radio-screen-header">
+              <span class="radio-badge">EN DIRECT</span>
+              <h2 class="radio-station-title">Swiftie FM 103.9</h2>
+            </div>
+
+            <!-- Affichage du titre en cours avec pochette d'album -->
+            <div class="now-playing-box">
+              <img id="radio-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Pochette d'album" class="radio-cover-img">
+              <div class="radio-track-details">
+                <div class="track-title" id="radio-track-title">Cruel Summer</div>
+                <div class="track-artist" id="radio-track-artist">Taylor Swift</div>
+                <div class="track-album" id="radio-track-album">Album : Lover</div>
+                <p class="radio-now-playing" id="radio-status">Prêt pour l'écoute...</p>
+              </div>
+            </div>
+
+            <!-- Cadran de fréquence à aiguille -->
+            <div class="radio-tuner-dial">
+              <div class="tuner-frequency-ticks">
+                <span>88</span><span>92</span><span>96</span><span>100</span><span>103.9</span><span>108</span>
+              </div>
+              <div class="tuner-needle" id="tuner-needle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boîtier de la Radio -->
+        <div class="turntable radio-box">
+          <!-- Grille de Haut-Parleur -->
+          <div class="radio-speaker">
+            <div class="speaker-grille"></div>
+          </div>
+
+          <!-- Bouton rotatif + Réglage de Volume par Glissière (Souris) -->
+          <div class="radio-controls-group">
+            <div class="radio-knob-container">
+              <div class="radio-knob" id="volume-knob">
+                <div class="knob-indicator"></div>
+              </div>
+              <span class="knob-label">Volume</span>
+            </div>
+
+            <!-- Glissière de volume ergonomique -->
+            <div class="volume-slider-box">
+              <label for="volume-slider" class="volume-label">
+                <span>🔊 Niveau sonore</span>
+                <span id="volume-val-text">80%</span>
+              </label>
+              <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8" class="volume-slider">
+            </div>
+          </div>
+        </div>
+
+        <!-- Lecteur Audio HTML5 -->
+        <audio id="web-radio-player" preload="none">
+          <source src="https://streaming.nrjaudio.fm/ou62ybxp336f" type="audio/mpeg">
+          Votre navigateur ne supporte pas le lecteur audio.
+        </audio>
+
+        <!-- Commandes Radio -->
+        <div class="controls-bar">
+          <button type="button" id="btn-radio-play">▶ Allumer / Play</button>
+          <button type="button" id="btn-radio-stop">⏹ Éteindre</button>
+        </div>
+
+      </div>
+
+      <!-- Colonne Droite : Informations sur la Radio -->
+      <div class="rack-column">
+        <section class="rack-section">
+          <h2>À propos de Swiftie FM</h2>
+          <div class="radio-info-card">
+            <p><strong>🎵 Programmation :</strong> Diffusion 24/7 sans interruption de la discographie complète de Taylor Swift : tous les albums studio (de <em>Taylor Swift</em> à <em>The Tortured Poets Department</em>), versions <em>Taylor's Version</em>, démos acoustiques et titres en live.</p>
+            <p><strong>📻 Fréquence virtuelle :</strong> 103.9 MHz FM (<a href="https://www.nrj.fr/webradios/mur-des-radios/nrj-taylor-swift" target="_blank">NRJ - Taylor Swift</a>)</p>
+            <p><strong>⚡ Qualité de diffusion :</strong> 320 kbps HD Stereo Audio (Format AAC / MP3 High Definition)</p>
+            <p><strong>📜 Droits &amp; Crédits :</strong> Projet personnel de fan sans but lucratif. Les contenus musicaux et visuels appartiennent exclusivement à Taylor Swift et à ses ayants droit (Universal Music Group / TAS Rights Management).</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Bandeau de bas de page -->
+    <footer class="footer">
+      <p>© 2026 Écoute Taylor. Tous droits réservés. |
+        <a href="#" id="link-mentions">Mentions Légales</a> |
+        <a href="#" id="link-privacy">Politique de Confidentialité</a> |
+        <a href="#" id="link-contact">Contact</a>
+      </p>
+    </footer>
+
+    <!-- Modale -->
+    <div id="modal-container" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="modal-close">&times;</span>
+        <div id="modal-text"></div>
+      </div>
+    </div>
+
+    <script src="radio.js"></script>
+  </body>
+</html>
