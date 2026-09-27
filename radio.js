@@ -15,57 +15,89 @@ const radioTrackAlbum = document.getElementById('radio-track-album');
 
 let trackInterval = null;
 
-// Récupération des informations NRJ en direct
+// Playlist de secours en cas de problème réseau
+const FALLBACK_PLAYLIST = [
+  {
+    title: "Cruel Summer",
+    artist: "Taylor Swift",
+    album: "Lover",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10"
+  },
+  {
+    title: "Blank Space",
+    artist: "Taylor Swift",
+    album: "1989 (Taylor's Version)",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicxT76P3SNGzKmN-Ec-8WewrEx7GM4WMSSA53cquuaA&s=10"
+  },
+  {
+    title: "Anti-Hero",
+    artist: "Taylor Swift",
+    album: "Midnights",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn8qPUb0kIPLuxzN3mIN4KDs7nrGhyPlCs2X1TFnPnXQ&s=10"
+  },
+  {
+    title: "Shake It Off",
+    artist: "Taylor Swift",
+    album: "1989 (Taylor's Version)",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQREOfzMO000rhvf6RQ5ZTWmF2RG-QeACHrZwYNsEHqeQ&s=10"
+  }
+];
+
+let fallbackIndex = 0;
+
+// Récupération des informations NRJ via ton Worker Cloudflare
 async function fetchNowPlaying() {
   try {
-    const nrjApiUrl = 'https://www.nrj.fr/onair.json';
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(nrjApiUrl)}&timestamp=${Date.now()}`;
+    const res = await fetch('https://proxy-nrj.evan-berard45.workers.dev/');
+    if (!res.ok) throw new Error("Erreur réseau");
 
-    const response = await fetch(proxyUrl);
-    if (!response.ok) return;
+    const data = await res.json();
+    
+    // Identification de la station dans le JSON NRJ
+    const station = Array.isArray(data)
+      ? data.find(s => s.slug === 'nrj-taylor-swift' || s.id === '1109')
+      : (data?.['nrj-taylor-swift'] || data?.webradio);
 
-    const wrapper = await response.json();
-    if (!wrapper.contents) return;
+    const track = station?.playlist?.[0]?.song || station?.current || data?.song;
 
-    const data = JSON.parse(wrapper.contents);
+    if (track) {
+      const title = track.title || track.name || track.text;
+      const artist = track.artist || track.performer || "Taylor Swift";
+      const cover = track.img_url || track.cover || track.image;
 
-    let station = null;
-
-    // Recherche de la station par son ID ou son slug
-    if (Array.isArray(data)) {
-      station = data.find(s => s.id === "1109" || s.slug === "nrj-taylor-swift");
-    } else if (data['nrj-taylor-swift']) {
-      station = data['nrj-taylor-swift'];
+      if (radioTrackTitle && title) radioTrackTitle.textContent = title;
+      if (radioTrackArtist && artist) radioTrackArtist.textContent = artist;
+      if (radioCover && cover) radioCover.src = cover;
+      if (radioTrackAlbum) radioTrackAlbum.textContent = "NRJ Taylor Swift (En direct)";
+      return;
     }
 
-    // Extraction du morceau en cours de lecture
-    if (station && station.playlist && station.playlist.length > 0) {
-      const currentTrack = station.playlist[0].song;
-
-      if (radioTrackTitle && currentTrack.title) {
-        radioTrackTitle.textContent = currentTrack.title;
-      }
-      if (radioTrackArtist && currentTrack.artist) {
-        radioTrackArtist.textContent = currentTrack.artist;
-      }
-      if (radioCover && currentTrack.img_url) {
-        radioCover.src = currentTrack.img_url;
-      }
-      if (radioTrackAlbum) {
-        radioTrackAlbum.textContent = "NRJ Taylor Swift (En direct)";
-      }
-    }
+    useFallbackTrack();
   } catch (err) {
-    console.error("Erreur lors de la récupération des métadonnées :", err);
+    console.warn("Impossible de charger les métadonnées en direct, bascule sur la playlist de secours.", err);
+    useFallbackTrack();
   }
 }
 
-// Initialisation du volume sonore
-if (radioPlayer && volumeSlider) {
-  radioPlayer.volume = parseFloat(volumeSlider.value);
+function useFallbackTrack() {
+  const track = FALLBACK_PLAYLIST[fallbackIndex];
+  if (radioTrackTitle) radioTrackTitle.textContent = track.title;
+  if (radioTrackArtist) radioTrackArtist.textContent = track.artist;
+  if (radioTrackAlbum) radioTrackAlbum.textContent = `Album : ${track.album}`;
+  if (radioCover) radioCover.src = track.cover;
+  fallbackIndex = (fallbackIndex + 1) % FALLBACK_PLAYLIST.length;
 }
 
-// Gestion du slider de volume
+// Initialisation au chargement du document
+document.addEventListener('DOMContentLoaded', () => {
+  fetchNowPlaying();
+
+  if (radioPlayer && volumeSlider) {
+    radioPlayer.volume = parseFloat(volumeSlider.value);
+  }
+});
+
+// Réglage du volume
 if (volumeSlider) {
   volumeSlider.addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);
@@ -80,31 +112,40 @@ if (volumeSlider) {
 }
 
 // Lancement de la radio
-btnPlay.addEventListener('click', () => {
-  radioPlayer.play().then(() => {
-    radioStatus.textContent = '🔊 Diffusion en direct...';
-    radioStatus.style.color = '#34d399';
-    tunerNeedle.classList.add('playing');
-    
-    // Récupération immédiate au clic, puis mise à jour toutes les 10 secondes
-    fetchNowPlaying();
-    if (!trackInterval) {
-      trackInterval = setInterval(fetchNowPlaying, 10000);
-    }
-  }).catch((err) => {
-    console.error("Erreur de lecture audio :", err);
-    radioStatus.textContent = '⚠️ Erreur de connexion au flux';
+if (btnPlay) {
+  btnPlay.addEventListener('click', () => {
+    if (!radioPlayer) return;
+    radioPlayer.play().then(() => {
+      if (radioStatus) {
+        radioStatus.textContent = '🔊 Diffusion en direct...';
+        radioStatus.style.color = '#34d399';
+      }
+      if (tunerNeedle) tunerNeedle.classList.add('playing');
+      
+      fetchNowPlaying();
+      if (!trackInterval) {
+        trackInterval = setInterval(fetchNowPlaying, 10000);
+      }
+    }).catch((err) => {
+      console.error("Erreur de lecture audio :", err);
+      if (radioStatus) radioStatus.textContent = '⚠️ Erreur de connexion au flux';
+    });
   });
-});
+}
 
 // Arrêt de la radio
-btnStop.addEventListener('click', () => {
-  radioPlayer.pause();
-  radioStatus.textContent = 'Radio éteinte';
-  radioStatus.style.color = '#9ca3af';
-  tunerNeedle.classList.remove('playing');
-  if (trackInterval) {
-    clearInterval(trackInterval);
-    trackInterval = null;
-  }
-});
+if (btnStop) {
+  btnStop.addEventListener('click', () => {
+    if (!radioPlayer) return;
+    radioPlayer.pause();
+    if (radioStatus) {
+      radioStatus.textContent = 'Radio éteinte';
+      radioStatus.style.color = '#9ca3af';
+    }
+    if (tunerNeedle) tunerNeedle.classList.remove('playing');
+    if (trackInterval) {
+      clearInterval(trackInterval);
+      trackInterval = null;
+    }
+  });
+}

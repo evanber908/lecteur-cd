@@ -3,7 +3,7 @@ let selectedYoutubeId = '';
 let selectedCover = '';
 
 // Image neutre par défaut pour les vinyles personnalisés
-const NEUTRAL_COVER = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=200&auto=format&fit=crop&q=60';
+const NEUTRAL_COVER = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OVSgDlIcxo5ePibqeZXjjxyMOpdhlMy-9I2Ii7nOFQ&s=10';
 
 // Fonction pour attacher l'événement Drag & Drop à n'importe quel vinyle
 function makeVinylDraggable(vinyl) {
