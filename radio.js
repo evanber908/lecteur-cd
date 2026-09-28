@@ -1,3 +1,8 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+    .catch((err) => console.error('Erreur Service Worker :', err));
+}
+
 const radioPlayer = document.getElementById('web-radio-player');
 const btnPlay = document.getElementById('btn-radio-play');
 const btnStop = document.getElementById('btn-radio-stop');

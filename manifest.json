@@ -1,0 +1,20 @@
+{
+  "name": "Ecoute Taylor",
+  "short_name": "Ecoute Taylor",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "icon-192.jpeg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.jpeg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

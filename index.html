@@ -6,6 +6,8 @@
     <title>Écoute Taylor</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111111">
   </head>
   <body>
 
@@ -60,7 +62,7 @@
 
       </div>
 
-      <!-- Colonne Droite : Rack de Vinyles (Grille 5x2) -->
+      <!-- Colonne Droite : Rack de Vinyles -->
       <div class="rack-column">
 
         <!-- Section 1 : Chansons de Taylor Swift -->
@@ -72,15 +74,15 @@
               <div class="sleeve">
                 <div class="vinyl-disc">
                   <div class="disc-label">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="cruel summer">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Cruel Summer">
                   </div>
                 </div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="cruel summer">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10" alt="Cruel Summer">
               </div>
               <span>Cruel Summer</span>
             </div>
 
-                          <div class="vinyl-item" draggable="true" data-youtube="e-ORhEE9VVg" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicxT76P3SNGzKmN-Ec-8WewrEx7GM4WMSSA53cquuaA&s=10">
+            <div class="vinyl-item" draggable="true" data-youtube="e-ORhEE9VVg" data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicxT76P3SNGzKmN-Ec-8WewrEx7GM4WMSSA53cquuaA&s=10">
               <div class="sleeve">
                 <div class="vinyl-disc">
                   <div class="disc-label">
@@ -202,6 +204,22 @@
             <!-- Les vinyles personnalisés apparaîtront ici -->
           </div>
         </section>
+
+        <!-- Section 3 : Tous les albums -->
+        <section class="rack-section albums-section">
+          <h2>Albums de Taylor Swift</h2>
+
+          <!-- Conteneur des vignettes d'albums -->
+          <div id="albums-grid" class="albums-grid"></div>
+
+          <!-- Zone d'affichage des chansons de l'album sélectionné -->
+          <div id="tracks-container" class="tracks-container" style="display: none;">
+            <button type="button" id="btn-back-albums">← Retour aux albums</button>
+            <h3 id="selected-album-title">Album...</h3>
+            <div id="tracks-list" class="vinyl-rack"></div>
+          </div>
+        </section>
+
       </div>
     </div>
 
@@ -214,7 +232,7 @@
       </p>
     </footer>
 
-    <!-- Structure de la fenêtre modale (Cachée par défaut) -->
+    <!-- Fenêtre modale (Cachée par défaut) -->
     <div id="modal-container" class="modal">
       <div class="modal-content">
         <span class="close-btn" id="modal-close">&times;</span>

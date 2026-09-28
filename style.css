@@ -17,14 +17,24 @@ body {
 /* --- Bandeau d'accueil en haut --- */
 .welcome-banner {
   width: 100%;
-  align-self: stretch; /* Force le bandeau à s'étirer sur toute la largeur de l'écran */
+  align-self: stretch;
   background: linear-gradient(135deg, #1a1c23, #0d0f12);
   color: #ffffff;
-  text-align: center; /* Centre le texte à l'intérieur du bandeau */
+  text-align: center;
   padding: 16px 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #2d323f;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .welcome-banner h1 {
@@ -41,15 +51,50 @@ body {
   font-weight: 400;
 }
 
-/* Conteneur principal 2 colonnes */
+/* --- Commutateur CD / Radio --- */
+.mode-switch-container {
+  display: flex;
+  align-items: center;
+}
+
+.mode-switch {
+  display: flex;
+  background-color: #0d0f12;
+  border: 1px solid #2d323f;
+  border-radius: 30px;
+  padding: 4px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.switch-btn {
+  padding: 8px 22px;
+  border-radius: 20px;
+  color: #a0a5b1;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.switch-btn.active {
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.switch-btn:hover:not(.active) {
+  color: #ffffff;
+}
+
+/* --- Conteneur principal 2 colonnes --- */
 .main-container {
   display: flex;
   gap: 50px;
   align-items: flex-start;
   max-width: 1100px;
   width: 100%;
-  padding: 40px 20px; /* Marges autour du lecteur et du rack */
-  flex: 1; /* Permet d'occuper tout l'espace disponible */
+  padding: 40px 20px;
+  flex: 1;
   box-sizing: border-box;
 }
 
@@ -117,7 +162,7 @@ body {
   position: relative;
   width: 360px;
   height: 360px;
-   background: linear-gradient(135deg, #2d3139, #1a1c23);
+  background: linear-gradient(135deg, #2d3139, #1a1c23);
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
@@ -246,24 +291,42 @@ body {
   background-color: #842029;
 }
 
-/* --- Colonne de droite (Rack de vinyles) --- */
+/* --- Colonne de droite (Rack de vinyles et Albums) --- */
 .rack-column {
   flex-grow: 1;
   padding-top: 10px;
 }
 
-.vinyl-rack {
+.rack-section,
+.albums-section {
+  margin-bottom: 30px;
+}
+
+.rack-section h2,
+.albums-section h2 {
+  font-size: 16px;
+  color: #1a1c23;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #818cf8;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+.vinyl-rack,
+.albums-grid {
   display: grid;
   grid-template-columns: repeat(5, 105px);
   gap: 30px 25px;
 }
 
-.vinyl-item {
+.vinyl-item,
+.album-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: grab;
+  cursor: pointer;
   user-select: none;
+  transition: transform 0.2s ease-in-out;
 }
 
 /* --- Pochette d'album & Vinyle --- */
@@ -274,7 +337,6 @@ body {
   margin: 0 auto;
 }
 
-/* Pochette d'album carrée */
 .sleeve img {
   position: relative;
   z-index: 2;
@@ -287,7 +349,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Disque Vinyle caché derrière la pochette */
 .vinyl-disc {
   position: absolute;
   top: 2px;
@@ -295,7 +356,6 @@ body {
   width: 81px;
   height: 81px;
   border-radius: 50%;
-  /* Effet de microsillons */
   background: repeating-radial-gradient(
     circle at center,
     #080808 0,
@@ -311,7 +371,6 @@ body {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Macaron au centre du disque vinyle */
 .disc-label {
   width: 32px;
   height: 32px;
@@ -328,7 +387,6 @@ body {
   object-fit: cover;
 }
 
-/* Trou central du vinyle */
 .disc-label::after {
   content: '';
   position: absolute;
@@ -344,15 +402,18 @@ body {
 }
 
 /* --- Animation au survol (Hover) --- */
-.vinyl-item:hover .sleeve img {
+.vinyl-item:hover .sleeve img,
+.album-card:hover .sleeve img {
   transform: translateX(-12px);
 }
 
-.vinyl-item:hover .vinyl-disc {
+.vinyl-item:hover .vinyl-disc,
+.album-card:hover .vinyl-disc {
   transform: translateX(32px) rotate(180deg);
 }
 
-.vinyl-item span {
+.vinyl-item span,
+.album-card span {
   margin-top: 10px;
   font-size: 13px;
   color: #333;
@@ -360,7 +421,50 @@ body {
   text-align: center;
 }
 
-/* Emplacements futurs (Emplacements pochette carrés) */
+/* --- Cartes Albums (Taille ajustée) --- */
+.album-card .sleeve {
+  width: 90px;
+  height: 90px;
+  position: relative;
+}
+
+.album-card .sleeve img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.album-card .vinyl-disc {
+  width: 86px;
+  height: 86px;
+}
+
+.album-card:hover .sleeve img {
+  transform: translateX(-14px);
+}
+
+.album-card:hover .vinyl-disc {
+  transform: translateX(35px) rotate(180deg);
+}
+
+/* Effet d'agrandissement au survol */
+.album-card:hover {
+  transform: scale(1.08);
+}
+
+.album-card:hover .sleeve img {
+  transform: none; /* Annule tout décalage latéral */
+}
+
+.album-card:active {
+  transform: scale(0.98);
+}
+
+/* Emplacements futurs */
 .vinyl-placeholder {
   width: 85px;
   height: 85px;
@@ -371,10 +475,76 @@ body {
   margin: 0 auto;
 }
 
-/* --- Bandeau de bas de page sombre (100% de large tout en bas) --- */
+/* --- Formulaire d'ajout de vinyle --- */
+.add-vinyl-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.add-vinyl-form input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  flex: 1;
+  min-width: 180px;
+}
+
+.add-vinyl-form input:focus {
+  border-color: #818cf8;
+}
+
+.add-vinyl-form button {
+  background-color: #818cf8;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-vinyl-form button:hover {
+  background-color: #6366f1;
+}
+
+/* --- Conteneur de chansons d'un album --- */
+.tracks-container {
+  margin-top: 15px;
+}
+
+#selected-album-title {
+  font-size: 16px;
+  color: #818cf8;
+  margin: 10px 0 15px 0;
+  font-weight: 700;
+}
+
+#btn-back-albums {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#btn-back-albums:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* --- Bandeau de bas de page --- */
 .footer {
   width: 100%;
-  background-color: #0d0f12; /* Noir/Gris très foncé */
+  background-color: #0d0f12;
   color: #a0a5b1;
   text-align: center;
   padding: 18px 20px;
@@ -388,7 +558,7 @@ body {
 }
 
 .footer a {
-  color: #818cf8; /* Couleur des liens lisible sur fond sombre */
+  color: #818cf8;
   text-decoration: none;
   margin: 0 10px;
   transition: color 0.2s;
@@ -399,17 +569,17 @@ body {
   text-decoration: underline;
 }
 
-/* --- Style de la Fenêtre Modale (Popup) --- */
+/* --- Fenêtre Modale (Popup) --- */
 .modal {
-  display: none; /* Cachée par défaut */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.75); /* Fond assombri */
-  backdrop-filter: blur(4px); /* Effet flou en arrière-plan */
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
   justify-content: center;
   align-items: center;
 }
@@ -422,7 +592,7 @@ body {
   max-width: 600px;
   width: 90%;
   max-height: 80vh;
-  overflow-y: auto; /* Permet de scroller si le texte est long */
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   border: 1px solid #333a48;
@@ -461,103 +631,8 @@ body {
 .close-btn:hover {
   color: #ffffff;
 }
-/* --- Sections du Rack --- */
-.rack-section {
-  margin-bottom: 30px;
-}
 
-.rack-section h2 {
-  font-size: 16px;
-  color: #1a1c23;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #818cf8;
-  padding-bottom: 6px;
-  display: inline-block;
-}
-
-/* Formulaire d'ajout de vinyle */
-.add-vinyl-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.add-vinyl-form input {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 13px;
-  outline: none;
-  flex: 1;
-  min-width: 180px;
-}
-
-.add-vinyl-form input:focus {
-  border-color: #818cf8;
-}
-
-.add-vinyl-form button {
-  background-color: #818cf8;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.add-vinyl-form button:hover {
-  background-color: #6366f1;
-}
-
-/* --- Bouton Bascule CD / Radio --- */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.mode-switch-container {
-  display: flex;
-  align-items: center;
-}
-
-.mode-switch {
-  display: flex;
-  background-color: #0d0f12;
-  border: 1px solid #2d323f;
-  border-radius: 30px;
-  padding: 4px;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.switch-btn {
-  padding: 8px 22px;
-  border-radius: 20px;
-  color: #a0a5b1;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.switch-btn.active {
-  background: linear-gradient(135deg, #818cf8, #6366f1);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
-}
-
-.switch-btn:hover:not(.active) {
-  color: #ffffff;
-}
-
-/* --- Style du Poste de Radio --- */
+/* --- Style de la Radio --- */
 .radio-screen-frame {
   display: flex;
   flex-direction: column;
@@ -644,7 +719,8 @@ body {
   box-sizing: border-box;
 }
 
-.speaker-grille {
+.speaker-grille,
+.speaker-grill {
   width: 100%;
   height: 100%;
   background: repeating-linear-gradient(
@@ -655,6 +731,29 @@ body {
     #111318 4px
   );
   border-radius: 8px;
+  position: relative;
+  overflow: visible;
+  transition: transform 0.2s ease;
+}
+
+.speaker-grille.playing,
+.speaker-grill.playing {
+  animation: speakerPulse 0.32s ease-in-out infinite alternate;
+}
+
+@keyframes speakerPulse {
+  0% {
+    transform: scale(1) translate(0, 0);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    transform: scale(1.025) translate(-0.5px, -0.5px);
+    box-shadow: inset 0 0 14px rgba(168, 85, 247, 0.4), 0 0 8px rgba(168, 85, 247, 0.3);
+  }
+  100% {
+    transform: scale(1.04) translate(0.5px, 0.5px);
+    box-shadow: inset 0 0 18px rgba(192, 132, 252, 0.6), 0 0 16px rgba(192, 132, 252, 0.5);
+  }
 }
 
 .radio-knob-container {
@@ -701,7 +800,6 @@ body {
   line-height: 1.8;
 }
 
-/* --- Écran Radio & Affichage Titre + Pochette --- */
 .radio-screen-container {
   height: auto;
   min-height: 250px;
@@ -760,7 +858,6 @@ body {
   font-size: 11px;
 }
 
-/* --- Groupe de réglage du volume à la souris --- */
 .radio-controls-group {
   display: flex;
   align-items: center;
@@ -826,36 +923,6 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-/* --- Vibration du haut-parleur --- */
-.speaker-grill {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  transition: transform 0.2s ease;
-}
-
-/* Vibration plus rapide, rythmée et visible */
-.speaker-grill.playing {
-  animation: speakerPulse 0.32s ease-in-out infinite alternate;
-}
-
-@keyframes speakerPulse {
-  0% {
-    transform: scale(1) translate(0, 0);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-  }
-  50% {
-    transform: scale(1.025) translate(-0.5px, -0.5px);
-    box-shadow: inset 0 0 14px rgba(168, 85, 247, 0.4), 0 0 8px rgba(168, 85, 247, 0.3);
-  }
-  100% {
-    transform: scale(1.04) translate(0.5px, 0.5px);
-    box-shadow: inset 0 0 18px rgba(192, 132, 252, 0.6), 0 0 16px rgba(192, 132, 252, 0.5);
-  }
-}
-
-/* Conteneur absolu pour libérer le champ de vision des notes */
 #notes-container {
   position: absolute;
   top: 0;
@@ -867,7 +934,6 @@ body {
   z-index: 50;
 }
 
-/* --- Style et Animation des Notes Flottantes --- */
 .floating-note {
   position: absolute;
   bottom: 20px;
@@ -898,9 +964,8 @@ body {
   }
 }
 
-/* --- Adaptation Mobile (Écrans < 768px) --- */
+/* --- Adaptation Mobile (Écrans < 768px) - PLACÉE TOUT À LA FIN --- */
 @media (max-width: 768px) {
-  /* Le conteneur principal passe en colonne unique */
   .main-container {
     flex-direction: column;
     align-items: center;
@@ -908,7 +973,6 @@ body {
     padding: 20px 12px;
   }
 
-  /* Redimensionnement adaptatif du lecteur et du boîtier */
   .player-column {
     width: 100%;
     max-width: 360px;
@@ -920,7 +984,6 @@ body {
     max-width: 360px;
   }
 
-  /* La platine et ses composants s'ajustent en responsive */
   .turntable {
     height: auto;
     aspect-ratio: 1 / 1;
@@ -936,14 +999,13 @@ body {
     height: 90%;
   }
 
-  /* Passage de la grille de vinyles de 5 colonnes fixes à 3 ou 4 adaptatives */
-  .vinyl-rack {
+  .vinyl-rack,
+  .albums-grid {
     grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
     gap: 20px 10px;
     justify-items: center;
   }
 
-  /* Formulaire d'ajout en pile verticale */
   .add-vinyl-form {
     flex-direction: column;
   }
@@ -954,7 +1016,6 @@ body {
     box-sizing: border-box;
   }
 
-  /* Header et bouton de changement de mode */
   .header-content {
     flex-direction: column;
     text-align: center;
