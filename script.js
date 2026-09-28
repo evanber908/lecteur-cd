@@ -19,6 +19,44 @@ const NEUTRAL_COVER = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4O
 
 // Données des albums et de leurs chansons
 const taylorAlbums = [
+/*
+  {
+    id: "",
+    albumTitle: "",
+    coverImg: "",
+    tracks: [
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+      { title: "", youtubeId: "" },
+    ]
+  },
+*/
+  {
+    id: "TaylorSwift",
+    albumTitle: "Taylor Swift",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-x0NlwFE0FWNT_mG33qgYvTbYPojvsuZplPk96X9C3Q&s=10",
+    tracks: [
+      { title: "Tim McGraw", youtubeId: "GkD20ajVxnY" },
+      { title: "Picture to Burn", youtubeId: "yCMqcFAigRg" },
+      { title: "Teardrops on My Guitar", youtubeId: "xKCek6_dB0M" },
+      { title: "A Place in This World", youtubeId: "" },
+      { title: "Cold as You", youtubeId: "" },
+      { title: "The Outside", youtubeId: "" },
+      { title: "Tied Together with a Smile", youtubeId: "" },
+      { title: "Stay Beautiful", youtubeId: "" },
+      { title: "Should've Said No", youtubeId: "v9bxXO9fj98" },
+      { title: "Mary's Song (Oh My My My)", youtubeId: "" },
+      { title: "Our Song", youtubeId: "Jb2stN7kH28" },
+    ]
+  },
   {
     id: "lover",
     albumTitle: "Lover",
