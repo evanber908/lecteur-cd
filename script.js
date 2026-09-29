@@ -13,6 +13,8 @@ if ('serviceWorker' in navigator) {
 let player = null;
 let selectedYoutubeId = '';
 let selectedCover = '';
+let selectedTitle = '';
+let selectedAlbum = '';
 
 // Image neutre par défaut pour les vinyles personnalisés
 const NEUTRAL_COVER = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OVSgDlIcxo5ePibqeZXjjxyMOpdhlMy-9I2Ii7nOFQ&s=10';
@@ -235,6 +237,9 @@ function makeVinylDraggable(vinyl) {
   vinyl.addEventListener('dragstart', (e) => {
     selectedYoutubeId = vinyl.getAttribute('data-youtube') || '';
     selectedCover = vinyl.getAttribute('data-cover') || '';
+    selectedTitle = vinyl.getAttribute('data-title') || vinyl.querySelector('span')?.textContent || 'Taylor Swift';
+    selectedAlbum = vinyl.getAttribute('data-album') || 'Écoute Taylor';
+
     e.dataTransfer.setData('text/plain', selectedYoutubeId);
 
     const disc = vinyl.querySelector('.vinyl-disc');
@@ -247,13 +252,19 @@ function makeVinylDraggable(vinyl) {
   vinyl.addEventListener('click', () => {
     const ytId = vinyl.getAttribute('data-youtube');
     const cover = vinyl.getAttribute('data-cover');
+    const title = vinyl.getAttribute('data-title') || vinyl.querySelector('span')?.textContent || 'Taylor Swift';
+    const album = vinyl.getAttribute('data-album') || 'Écoute Taylor';
+
     selectedYoutubeId = ytId;
     selectedCover = cover;
-    playSelectedVinyl(ytId, cover);
+    selectedTitle = title;
+    selectedAlbum = album;
+
+    playSelectedVinyl(ytId, cover, title, album);
   });
 }
 
-function playSelectedVinyl(youtubeId, coverUrl) {
+function playSelectedVinyl(youtubeId, coverUrl, title = selectedTitle, album = selectedAlbum) {
   if (!youtubeId) return;
 
   if (!player || typeof player.loadVideoById !== 'function') {
@@ -273,6 +284,9 @@ function playSelectedVinyl(youtubeId, coverUrl) {
 
   if (platter) platter.classList.add('spinning');
   if (tonearm) tonearm.classList.add('active');
+
+  // Mise à jour de la notification multimédia système
+  updateMediaSession(title || 'Titre inconnu', 'Taylor Swift', album || 'Écoute Taylor', coverUrl);
 }
 
 function ejectVinyl() {
@@ -287,6 +301,8 @@ function ejectVinyl() {
   
   selectedYoutubeId = '';
   selectedCover = '';
+  selectedTitle = '';
+  selectedAlbum = '';
 }
 
 function extractYoutubeId(url) {
@@ -324,7 +340,7 @@ function setupControlButtons() {
     dropZone.addEventListener('dragover', (e) => e.preventDefault());
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
-      playSelectedVinyl(selectedYoutubeId, selectedCover);
+      playSelectedVinyl(selectedYoutubeId, selectedCover, selectedTitle, selectedAlbum);
     });
   }
 }
@@ -379,6 +395,8 @@ function setupCustomVinylForm() {
     vinylItem.setAttribute('draggable', 'true');
     vinylItem.setAttribute('data-youtube', youtubeId);
     vinylItem.setAttribute('data-cover', NEUTRAL_COVER);
+    vinylItem.setAttribute('data-title', title);
+    vinylItem.setAttribute('data-album', 'Ajout personnalisé');
 
     vinylItem.innerHTML = `
       <div class="sleeve">
@@ -436,6 +454,8 @@ function showAlbumTracks(album) {
     item.setAttribute('draggable', 'true');
     item.setAttribute('data-youtube', track.youtubeId);
     item.setAttribute('data-cover', album.coverImg);
+    item.setAttribute('data-title', track.title);
+    item.setAttribute('data-album', album.albumTitle);
 
     item.innerHTML = `
       <div class="sleeve">
@@ -484,4 +504,34 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
+}
+
+// --------------------------------------------------------------------------
+// 10. NOTIFICATION MULTIMÉDIA (MEDIA SESSION API)
+// --------------------------------------------------------------------------
+function updateMediaSession(title, artist, album, coverUrl) {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title || 'Titre inconnu',
+      artist: artist || 'Taylor Swift',
+      album: album || 'Écoute Taylor',
+      artwork: [
+        { src: coverUrl || NEUTRAL_COVER, sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    // Bouton Play sur la notification système
+    navigator.mediaSession.setActionHandler('play', () => {
+      if (player && typeof player.playVideo === 'function') {
+        player.playVideo();
+      }
+    });
+
+    // Bouton Pause sur la notification système
+    navigator.mediaSession.setActionHandler('pause', () => {
+      if (player && typeof player.pauseVideo === 'function') {
+        player.pauseVideo();
+      }
+    });
+  }
 }

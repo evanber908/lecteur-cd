@@ -78,6 +78,8 @@ async function fetchNowPlaying() {
       if (radioTrackArtist && artist) radioTrackArtist.textContent = artist;
       if (radioCover && cover) radioCover.src = cover;
       if (radioTrackAlbum) radioTrackAlbum.textContent = "NRJ Taylor Swift (En direct)";
+      // Mise à jour de la notification Google / Système
+      updateMediaSession(title, artist, "NRJ Taylor Swift (En direct)", cover);
       return;
     }
     useFallbackTrack();
@@ -92,6 +94,10 @@ function useFallbackTrack() {
   if (radioTrackArtist) radioTrackArtist.textContent = track.artist;
   if (radioTrackAlbum) radioTrackAlbum.textContent = `Album : ${track.album}`;
   if (radioCover) radioCover.src = track.cover;
+
+  // Mise à jour de la notification Google / Système
+  updateMediaSession(track.title, track.artist, track.album, track.cover);
+  
   fallbackIndex = (fallbackIndex + 1) % FALLBACK_PLAYLIST.length;
 }
 
@@ -181,4 +187,27 @@ if (btnStop) {
     if (trackInterval) { clearInterval(trackInterval); trackInterval = null; }
     if (noteInterval) { clearInterval(noteInterval); noteInterval = null; }
   });
+}
+
+// function de mise à jour pour la notification
+
+function updateMediaSession(title, artist, album, coverUrl) {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title || 'Titre inconnu',
+      artist: artist || 'Taylor Swift',
+      album: album || 'NRJ Taylor Swift',
+      artwork: [
+        { src: coverUrl, sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    // Écouteurs pour contrôler la lecture depuis la notification
+    navigator.mediaSession.setActionHandler('play', () => {
+      if (btnPlay) btnPlay.click();
+    });
+    navigator.mediaSession.setActionHandler('pause', () => {
+      if (btnStop) btnStop.click();
+    });
+  }
 }
