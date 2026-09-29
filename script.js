@@ -55,7 +55,7 @@ const taylorAlbums = [
       { title: "Breathe (Taylor's Version) [feat. Colbie Caillat]", youtubeId: "qsUK-BG5OQQ" },
       { title: "Tell Me Why (Taylor's Version)", youtubeId: "cwFbq-70EwE" },
       { title: "You're Not Sorry (Taylor's Version)", youtubeId: "DNaSlUYIXBg" },
-      { title: "The Way I Loved You (Taylor's Version)", youtubeId: "DlexmDDSDZ0&pp" },
+      { title: "The Way I Loved You (Taylor's Version)", youtubeId: "DlexmDDSDZ0" },
       { title: "Forever & Always (Taylor's Version)", youtubeId: "T-41vMWQTUA" },
       { title: "The Best Day (Taylor's Version)", youtubeId: "KZeI9I875Ig" },
       { title: "Change (Taylor's Version)", youtubeId: "jwWR1cQTKyw" },
