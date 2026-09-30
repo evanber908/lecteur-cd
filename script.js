@@ -122,36 +122,6 @@ const taylorAlbums = [
       { title: "Our Song", youtubeId: "Jb2stN7kH28" },
     ]
   },
-  {
-    id: "lover",
-    albumTitle: "Lover",
-    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10",
-    tracks: [
-      { title: "Lover", youtubeId: "tgVYh94QH8k" },
-      { title: "Cruel Summer", youtubeId: "ic8j13U5JT0" },
-      { title: "You Need To Calm Down", youtubeId: "Dkq3E-v-68s" }
-    ]
-  },
-  {
-    id: "midnights",
-    albumTitle: "Midnights",
-    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW60D4TVzghFayK-EH1R0o9JCWoA33NoeAYGBBmfoSGw&s=10",
-    tracks: [
-      { title: "Midnight Rain", youtubeId: "Odh9ddPUkEY" },
-      { title: "Anti-Hero", youtubeId: "b1kbLWVqugk" },
-      { title: "Karma", youtubeId: "h8DLofLM7No" }
-    ]
-  },
-  {
-    id: "1989",
-    albumTitle: "1989 (Taylor's Version)",
-    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicxT76P3SNGzKmN-Ec-8WewrEx7GM4WMSSA53cquuaA&s=10",
-    tracks: [
-      { title: "Blank Space", youtubeId: "e-ORhEE9VVg" },
-      { title: "Shake It Off", youtubeId: "nfWlot6h_JM" },
-      { title: "Bad Blood", youtubeId: "lUvBk4owRNU" }
-    ]
-  }
 ];
 
 // Contenus de la fenêtre modale
