@@ -245,7 +245,7 @@ function onYouTubeIframeAPIReady() {
       'modestbranding': 1,
       'playsinline': 1,
       'enablejsapi': 1,
-      'pointer-events': auto,
+      'pointer-events': 'auto',
     },
     events: {
       'onStateChange': onPlayerStateChange
