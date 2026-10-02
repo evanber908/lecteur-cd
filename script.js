@@ -237,14 +237,15 @@ function onYouTubeIframeAPIReady() {
     width: '100%',
     playerVars: {
       'autoplay': 0,
-      'controls': 0,
+      'controls': 1,
       'cc_load_policy': 0,
       'disablekb': 1,
       'iv_load_policy': 3,
       'rel': 0,
       'modestbranding': 1,
       'playsinline': 1,
-      'enablejsapi': 1
+      'enablejsapi': 1,
+      'pointer-events': auto,
     },
     events: {
       'onStateChange': onPlayerStateChange
