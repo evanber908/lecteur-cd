@@ -57,7 +57,7 @@ const taylorAlbums = [
       { title: "Wildest Dreams", youtubeId: "vtW_4j7SsZk" },
       { title: "How You Get the Girl", youtubeId: "rnwD7veCoFQ" },
       { title: "This Love", youtubeId: "mvxQYPR4lmU" },
-      { title: "I Know Places", youtubeId: "0jTGzm-6cYE&pp=0gcJCTcMAYcqIYzv" },
+      { title: "I Know Places", youtubeId: "0jTGzm-6cYE" },
       { title: "Clean", youtubeId: "AppsjTInqiw" },
       { title: "Wonderland", youtubeId: "JhICcmiIE80" },
       { title: "You Are In Love", youtubeId: "M7ySK0keirY" },
