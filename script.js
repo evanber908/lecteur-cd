@@ -40,7 +40,29 @@ const taylorAlbums = [
       { title: "", youtubeId: "" },
     ]
   },
-*/
+*/ 
+  {
+    id: "Reputation",
+    albumTitle: "Reputation",
+    coverImg: "",
+    tracks: [
+      { title: "…Ready for It?", youtubeId: "T62maKYX9tU" },
+      { title: "Endgame (feat. Ed Sheeran et Future)", youtubeId: "dfnCAmr569k&pp=0gcJCTcMAYcqIYzv" },
+      { title: "I Did Something Bad", youtubeId: "xYLxUJ9v6KU&list=PLINj2JJM1jxPJGrPXDDuWVdBCzrhX2g0j&index=9" },
+      { title: "Don't Blame Me", youtubeId: "kRJKB291Z1g&list=PLINj2JJM1jxPJGrPXDDuWVdBCzrhX2g0j&index=6" },
+      { title: "Delicate", youtubeId: "tCXGJQYZ9JA" },
+      { title: "Look What You Made Me Do", youtubeId: "3K0RzZGpyds" },
+      { title: "So It Goes…", youtubeId: "iAv1Y1YIwm8&list=PLINj2JJM1jxPJGrPXDDuWVdBCzrhX2g0j&index=16" },
+      { title: "Gorgeous", youtubeId: "EUoe7cf0HYw" },
+      { title: "Getaway Car", youtubeId: "FhPLQVlUiNQ&list=PLINj2JJM1jxNGufWqHnZb2LeJTxzcCmne&index=29" },
+      { title: "King Of My Heart", youtubeId: "5U7bF68xcRg&pp=ygUda2luZyBvZiBteSBoZWFydCB0YXlsb3Igc3dpZnQ%3D" },
+      { title: "Dancing With Our Hands Tied", youtubeId: "erGyUphZSt8&pp=ygUoRGFuY2luZyBXaXRoIE91ciBIYW5kcyBUaWVkIHRheWxvciBzd2lmdA%3D%3D" },
+      { title: "Dress", youtubeId: "FNEoPctNIUE&pp=ygUSRHJlc3MgdGF5bG9yIHN3aWZ0" },
+      { title: "This is Why We Can't Have Nice Things", youtubeId: "6Z3QJ4L1Bg0&pp=ygUyVGhpcyBpcyBXaHkgV2UgQ2FuJ3QgSGF2ZSBOaWNlIFRoaW5ncyB0YXlsb3Igc3dpZnQ%3D" },
+      { title: "Call It What You Want", youtubeId: "V54CEElTF_U&pp=ygUiQ2FsbCBJdCBXaGF0IFlvdSBXYW50IHRheWxvciBzd2lmdA%3D%3D" },
+      { title: "New Year's Day", youtubeId: "wnwpBnD4JRg&pp=ygUbTmV3IFllYXIncyBEYXkgdGF5bG9yIHN3aWZ0" },
+    ]
+  },
   {
     id: "1989",
     albumTitle: "1989 (Taylor's Version)",
