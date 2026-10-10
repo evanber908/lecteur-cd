@@ -48,7 +48,7 @@ const taylorAlbums = [
     tracks: [
       { title: "…Ready for It?", youtubeId: "T62maKYX9tU" },
       { title: "Endgame (feat. Ed Sheeran et Future)", youtubeId: "dfnCAmr569k" },
-      { title: "I Did Something Bad", youtubeId: "xYLxUJ9v6KU&list" },
+      { title: "I Did Something Bad", youtubeId: "xYLxUJ9v6KU" },
       { title: "Don't Blame Me", youtubeId: "kRJKB291Z1g" },
       { title: "Delicate", youtubeId: "tCXGJQYZ9JA" },
       { title: "Look What You Made Me Do", youtubeId: "3K0RzZGpyds" },
