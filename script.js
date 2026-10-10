@@ -42,6 +42,30 @@ const taylorAlbums = [
   },
 */ 
   {
+    id: "Lover",
+    albumTitle: "Lover",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10",
+    tracks: [
+      { title: "I Forgot That You Existed", youtubeId: "p1cEvNn88jM" },
+      { title: "Cruel Summer", youtubeId: "ic8j13piAhQ" },
+      { title: "Lover", youtubeId: "-BjZmE2gtdo" },
+      { title: "The Man", youtubeId: "tbEekLA7J3Y" },
+      { title: "The Archer", youtubeId: "8KpKc3C9V3w" },
+      { title: "I Think He Knows", youtubeId: "2d1wKn-oJnA" },
+      { title: "Miss Americana & the Heartbreak Prince", youtubeId: "Kwf7P2GNAVw" },
+      { title: "Paper Rings", youtubeId: "8zdg-pDF10g" },
+      { title: "Cornelia Street (Live From Paris)", youtubeId: "3xGvCApIEQY" },
+      { title: "Death by a Thousand Cuts", youtubeId: "GTEFSuFfgnU" },
+      { title: "London Boy", youtubeId: "VsKoOH6DVys" },
+      { title: "Soon You'll Get Better (feat. Dixie Chicks)", youtubeId: "tMoW5G5LU08" },
+      { title: "False God (Live on Saturday Night Live / 2019)", youtubeId: "kjD3LoXp-Pw" },
+      { title: "You Need to Calm Down", youtubeId: "GWtfOHBF1_w" },
+      { title: "Me! (feat. Brendon Urie de Panic! at the Disco)", youtubeId: "S--WI8PUVVo" },
+      { title: "It's Nice to Have a Friend", youtubeId: "eaP1VswBF28" },
+      { title: "Daylight", youtubeId: "u9raS7-NisU" },
+    ]
+  },
+  {
     id: "Reputation",
     albumTitle: "Reputation",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTge42Pfg5XFXXbNJv9Rpf-bmgpBMxcoFiGXn2Sq3tgjA&s=10",
