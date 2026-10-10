@@ -1,5 +1,4 @@
-# 🎵 Écoute Taylor & Swiftie FM
-
+# [🎵 Écoute Taylor & Swiftie FM](https://evanber908.github.io/lecteur-cd/)
 Une application web immersive et Progressive Web App (PWA) dédiée à l'univers de **Taylor Swift**, regroupant un lecteur de type platine CD/vinyle interactive par album et une web radio en direct 24/7.
 ![Aperçu du site](./screenshot.png)`
 
