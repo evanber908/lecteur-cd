@@ -346,6 +346,10 @@ function playSelectedVinyl(youtubeId, coverUrl, title = selectedTitle, album = s
 
   player.loadVideoById(youtubeId);
   player.playVideo();
+  const titleSpan = document.getElementById('current-music-title');
+  titleSpan.textContent = title;
+  const AlbumSpan = document.getElementById('current-album-title');
+  AlbumSpan.textContent = album;
 
   if (platter) platter.classList.add('spinning');
   if (tonearm) tonearm.classList.add('active');
