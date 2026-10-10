@@ -1,15 +1,21 @@
-# 🎵 Écoute Taylor - MagniVinyl & Swiftie FM
+# 🎵 Écoute Taylor & Swiftie FM
+`![Aperçu du site](./screenshot.png)`
 
-Une application web immersive et Progressive Web App (PWA) dédiée à l'univers de **Taylor Swift**, regroupant un lecteur de type platine CD/vinyle interactive par album et une web radio en direct 24/7[cite: 1, 3, 5].
+Une application web immersive et Progressive Web App (PWA) dédiée à l'univers de **Taylor Swift**, regroupant un lecteur de type platine CD/vinyle interactive par album et une web radio en direct 24/7.
+
+---
+
+## 🚀 Installation et Lancement Local
+* Important : Pour que le Service Worker et les fonctionnalités PWA fonctionnent correctement, le site doit impérativement être exécuté via un serveur web local (et non en ouvrant directement les fichiers avec file://).
 
 ---
 
 ## ✨ Fonctionnalités
 
-* **Platine CD / Vinyle interactive :** Navigation fluide à travers les albums de Taylor Swift, affichage des pochettes d'albums et listes de pistes dynamiques connectées à YouTube[cite: 1, 4].
-* **Web Radio en direct (Swiftie FM 103.9) :** Diffusion en continu de la radio dédiée, avec récupération dynamique des métadonnées en temps réel (titre, artiste, pochette)[cite: 1, 2, 3].
+* **Platine CD / Vinyle interactive :** Navigation fluide à travers les albums de Taylor Swift, affichage des pochettes d'albums et listes de pistes dynamiques connectées à YouTube.
+* **Web Radio en direct (Swiftie FM 103.9) :** Diffusion en continu de la radio dédiée, avec récupération dynamique des métadonnées en temps réel (titre, artiste, pochette).
 * **Intégration Media Session :** Contrôle de la lecture et affichage des pochettes directement sur l'écran de verrouillage et le volet de notification du système (mobile / PC).
-* **Progressive Web App (PWA) :** Installable sur mobile et bureau comme une véritable application native grâce au manifeste et au Service Worker[cite: 3, 5].
+* **Progressive Web App (PWA) :** Installable sur mobile et bureau comme une véritable application native grâce au manifeste et au Service Worker.
 
 ---
 
@@ -25,8 +31,33 @@ Une application web immersive et Progressive Web App (PWA) dédiée à l'univers
 ├── sw.js               # Service Worker pour la validation PWA
 ├── favicon.svg         # Icône du site
 └── icons/              # Icônes de l'application (formats PNG 192x192 et 512x512)
+```
 
 ---
 
+## 🛠️ Technologies utilisées
+
+* **HTML5 & CSS3** : Structure sémantique et mise en forme (design rétro vinyle/radio).
+* **JavaScript (Vanilla)** : Logique interactive des lecteurs et gestion du flux audio.
+* **API YouTube & Web API** : Intégration des pistes et gestion des médias (Media Session).
+* **PWA (Progressive Web App)** : Manifeste et Service Worker pour l'installation sur l'appareil.
+
+---
+
+## 🔮 Améliorations futures
+
+* [ ] Ajouter de nouveaux albums et clips vidéo.
+* [ ] Intégrer un système de favoris ou de playlist personnalisée.
+* [ ] Améliorer le design responsive pour les très petits écrans mobiles.
+* [ ] Afficher les titres les plus écoutés sur le site
+
+---
+
+## 👥 Auteurs
+
+* **evanber908** - *Création et développement initial* - [Votre Profil GitHub](https://github.com/evanber908)
+
 ## 📜 Crédits & Mentions Légales
-* Projet personnel de fan sans but lucratif. Les contenus musicaux, les pochettes d'albums et les visuels appartiennent exclusivement à Taylor Swift et à ses ayants droit (Universal Music Group / TAS Rights Management)[cite: 3].
+* Projet personnel de fan sans but lucratif. Les contenus musicaux, les pochettes d'albums et les visuels appartiennent exclusivement à Taylor Swift et à ses ayants droit (Universal Music Group / TAS Rights Management).
+* vidéos venant de l'API Youtube
+* Radio venat de NRJ Taylor Swift
