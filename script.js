@@ -44,7 +44,7 @@ const taylorAlbums = [
   {
     id: "Reputation",
     albumTitle: "Reputation",
-    coverImg: "",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTge42Pfg5XFXXbNJv9Rpf-bmgpBMxcoFiGXn2Sq3tgjA&s=10",
     tracks: [
       { title: "…Ready for It?", youtubeId: "T62maKYX9tU" },
       { title: "Endgame (feat. Ed Sheeran et Future)", youtubeId: "dfnCAmr569k" },
