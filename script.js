@@ -42,6 +42,29 @@ const taylorAlbums = [
   },
 */ 
   {
+    id: "Folklore",
+    albumTitle: "Folklore",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_o6Vk1iHmGv5ULfC5RvSENjLdLlN9isI9Fo7P0kKO6A&s=10",
+    tracks: [
+      { title: "the 1", youtubeId: "KsZ6tROaVOQ" },
+      { title: "cardigan", youtubeId: "zLSUp53y-HQ" },
+      { title: "the last great american dynasty", youtubeId: "2s5xdY6MCeI" },
+      { title: "exile [feat. Bon Iver]", youtubeId: "osdoLjUNFnA" },
+      { title: "my tears ricochet", youtubeId: "OWbDJFtHl3w" },
+      { title: "mirrorball", youtubeId: "KaM1bCuG4xo" },
+      { title: "seven", youtubeId: "pEY-GPsru_E" },
+      { title: "august", youtubeId: "nn_0zPAfyo8" },
+      { title: "this is me trying", youtubeId: "9bdLTPNrlEg" },
+      { title: "illicit affairs", youtubeId: "MLV2SJKWk4M" },
+      { title: "invisible string", youtubeId: "OuFnpmGwg5k" },
+      { title: "mad woman", youtubeId: "6DP4q_1EgQQ" },
+      { title: "epiphany", youtubeId: "DUnDkI7l9LQ" },
+      { title: "betty", youtubeId: "6TAPqXkZW_I" },
+      { title: "peace", youtubeId: "HpxX4ZE4KWE" },
+      { title: "hoax", youtubeId: "ryLGxpjwAhM" },
+    ]
+  },
+  {
     id: "Lover",
     albumTitle: "Lover",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10",
