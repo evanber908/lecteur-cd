@@ -42,6 +42,28 @@ const taylorAlbums = [
   },
 */ 
   {
+    id: "Evermore",
+    albumTitle: "Evermore",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs829B8GwjLPkFBpPR6SprN6QhAObsZ7ybVZ4w5AOggA&s=10",
+    tracks: [
+      { title: "willow", youtubeId: "7EvwIw4gIyk" },
+      { title: "champagne problems", youtubeId: "wMpqCRF7TKg" },
+      { title: "gold rush", youtubeId: "Pz-f9mM3Ms8" },
+      { title: "'tis the damn season", youtubeId: "WuvhOD-mP8M" },
+      { title: "tolerate it", youtubeId: "ukxEKY_7MOc" },
+      { title: "no body, no crime (feat. Haim)", youtubeId: "IEPomqor2A8" },
+      { title: "happiness", youtubeId: "tP4TTgt4nb0" },
+      { title: "dorothea", youtubeId: "zI4DS5GmQWE" },
+      { title: "coney island", youtubeId: "bee4lW1bdn4" },
+      { title: "ivy", youtubeId: "9nIOx-ezlzA" },
+      { title: "cowboy like me", youtubeId: "YPlNBb6I8qU" },
+      { title: "long story short", youtubeId: "rqQHa2HcGtM" },
+      { title: "marjorie", youtubeId: "hP6QpMeSG6s" },
+      { title: "closure", youtubeId: "AIFnKqIeEdY" },
+      { title: "evermore (feat. Bon Iver)", youtubeId: "EXLgZZE072g" },
+    ]
+  },
+  {
     id: "Folklore",
     albumTitle: "Folklore",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_o6Vk1iHmGv5ULfC5RvSENjLdLlN9isI9Fo7P0kKO6A&s=10",
