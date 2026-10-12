@@ -773,6 +773,7 @@ function init() {
   setupCustomVinylForm();
   setupAlbumsSection();
   renderTopTracks();
+  setupTopTracksAccordion();
 }
 
 // Lancement automatique dès le chargement du DOM
@@ -813,7 +814,7 @@ function updateMediaSession(title, artist, album, coverUrl) {
 }
 
 // --------------------------------------------------------------------------
-// 11. SECTION TOP RACK 10 CHANSONS LES PLUS ÉCOUTÉES
+// 11. SECTION TOP RACK 10 CHANSONS LES PLUS ÉCOUTÉES + DÉFILEMENT TELEPHONE
 // --------------------------------------------------------------------------
 
 function renderTopTracks() {
@@ -867,4 +868,18 @@ function renderTopTracks() {
     makeVinylDraggable(item);
     swiftRack.appendChild(item);
   });
+}
+
+function setupTopTracksAccordion() {
+  const toggleBtn = document.getElementById('top-tracks-toggle');
+  const section = document.querySelector('.top-tracks-section');
+
+  if (toggleBtn && section) {
+    toggleBtn.addEventListener('click', () => {
+      // Uniquement actif sur les écrans mobiles (< 768px)
+      if (window.innerWidth <= 768) {
+        section.classList.toggle('open');
+      }
+    });
+  }
 }

@@ -1039,6 +1039,22 @@ body {
     grid-template-columns: repeat(2, 105px);
     gap: 25px 15px;
   }
+
+    /* --- Style du titre cliquable pour l'accordéon --- */
+  .top-tracks-section h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+
+  /* Flèche cachée par défaut sur grand écran */
+  .toggle-icon {
+    display: none;
+    font-size: 14px;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+  }
 }
 
 /* --- Adaptation Mobile (Écrans < 768px) - PLACÉE TOUT À LA FIN --- */
@@ -1100,5 +1116,34 @@ body {
 
   .welcome-banner h1 {
     font-size: 18px;
+  }
+
+  .toggle-icon {
+    display: inline-block;
+    /* Flèche pointant vers le côté par défaut */
+    transform: rotate(0deg); 
+  }
+
+  /* Style du titre cliquable sur mobile */
+  .top-tracks-section h2 {
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 5px;
+  }
+
+  /* La liste est masquée par défaut sur mobile */
+  .top-tracks-section #swift-rack {
+    display: none;
+  }
+
+  /* Quand la section est dépliée (classe .open active) */
+  .top-tracks-section.open #swift-rack {
+    display: grid;
+  }
+
+  /* Pivotement de la flèche vers le bas lorsque c'est déplié */
+  .top-tracks-section.open .toggle-icon {
+    transform: rotate(90deg);
   }
 }
