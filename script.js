@@ -15,30 +15,32 @@ let selectedYoutubeId = '';
 let selectedCover = '';
 let selectedTitle = '';
 let selectedAlbum = '';
+let savedAlbums = localStorage.getItem('taylorAlbums');
 
 // Image neutre par défaut pour les vinyles personnalisés
 const NEUTRAL_COVER = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OVSgDlIcxo5ePibqeZXjjxyMOpdhlMy-9I2Ii7nOFQ&s=10';
 
 // Données des albums et de leurs chansons
-const taylorAlbums = [
+const taylorAlbums = savedAlbums ? JSON.parse(savedAlbums) : [
 /*
   {
     id: "",
     albumTitle: "",
     coverImg: "",
     tracks: [
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-      { title: "", youtubeId: "" },
-    ]
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+      { plays: 0, title: "", youtubeId: "" },
+    ],
+    plays: 0
   },
 */
   {
@@ -46,22 +48,22 @@ const taylorAlbums = [
     albumTitle: "The life of a Showgirl : The Encore",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGlyohCKLQNOPi37wNpWIaS920YWd9MdGQX8NZbtCZiQ&s=10",
     tracks: [
-      { title: "The Fate of Ophelia", youtubeId: "rbmdfEQODOw" },
-      { title: "Elizabeth Taylor", youtubeId: "7X5iDKPrZH0" },
-      { title: "Opalite", youtubeId: "3PJC6uPIekc" },
-      { title: "Father Figure", youtubeId: "98SmlWOKuME" },
-      { title: "Eldest Daughter", youtubeId: "HwQnW_ZRKhc" },
-      { title: "Ruin the Friendship", youtubeId: "WQCPl5rTMDQ" },
-      { title: "Actually Romantic", youtubeId: "FnEg1RgmqO4" },
-      { title: "Wi$h Li$t", youtubeId: "wqgUzLHgNMI" },
-      { title: "Wood", youtubeId: "6m50keINEOI" },
-      { title: "CANCELLED!", youtubeId: "F-5XoUZ42Tc" },
-      { title: "Honey", youtubeId: "4-EzK5UB40U" },
-      { title: "The Life of a Showgirl (feat. Sabrina Carpenter)", youtubeId: "OU6362Nggg0" },
-      { title: "The patient zero", youtubeId: "BpR280fXISA" },
-      { title: "Cleveland!", youtubeId: "jfVVXYTZykw" },
-      { title: "Pink Clouding", youtubeId: "kXOKQCtttbw" },
-      { title: "Babylon", youtubeId: "tZnNLoPKriU" },
+      { plays: 0, title: "The Fate of Ophelia", youtubeId: "rbmdfEQODOw" },
+      { plays: 0, title: "Elizabeth Taylor", youtubeId: "7X5iDKPrZH0" },
+      { plays: 0, title: "Opalite", youtubeId: "3PJC6uPIekc" },
+      { plays: 0, title: "Father Figure", youtubeId: "98SmlWOKuME" },
+      { plays: 0, title: "Eldest Daughter", youtubeId: "HwQnW_ZRKhc" },
+      { plays: 0, title: "Ruin the Friendship", youtubeId: "WQCPl5rTMDQ" },
+      { plays: 0, title: "Actually Romantic", youtubeId: "FnEg1RgmqO4" },
+      { plays: 0, title: "Wi$h Li$t", youtubeId: "wqgUzLHgNMI" },
+      { plays: 0, title: "Wood", youtubeId: "6m50keINEOI" },
+      { plays: 0, title: "CANCELLED!", youtubeId: "F-5XoUZ42Tc" },
+      { plays: 0, title: "Honey", youtubeId: "4-EzK5UB40U" },
+      { plays: 0, title: "The Life of a Showgirl (feat. Sabrina Carpenter)", youtubeId: "OU6362Nggg0" },
+      { plays: 0, title: "The patient zero", youtubeId: "BpR280fXISA" },
+      { plays: 0, title: "Cleveland!", youtubeId: "jfVVXYTZykw" },
+      { plays: 0, title: "Pink Clouding", youtubeId: "kXOKQCtttbw" },
+      { plays: 0, title: "Babylon", youtubeId: "tZnNLoPKriU" },
     ]
   },
   {
@@ -69,18 +71,18 @@ const taylorAlbums = [
     albumTitle: "The Life of a Showgirl",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jDSg1NvMW320Ma_jCwwNniKorfQb8eC0y9xtQL4Fdg&s=10",
     tracks: [
-      { title: "The Fate of Ophelia", youtubeId: "rbmdfEQODOw" },
-      { title: "Elizabeth Taylor", youtubeId: "7X5iDKPrZH0" },
-      { title: "Opalite", youtubeId: "3PJC6uPIekc" },
-      { title: "Father Figure", youtubeId: "98SmlWOKuME" },
-      { title: "Eldest Daughter", youtubeId: "HwQnW_ZRKhc" },
-      { title: "Ruin the Friendship", youtubeId: "WQCPl5rTMDQ" },
-      { title: "Actually Romantic", youtubeId: "FnEg1RgmqO4" },
-      { title: "Wi$h Li$t", youtubeId: "wqgUzLHgNMI" },
-      { title: "Wood", youtubeId: "6m50keINEOI" },
-      { title: "CANCELLED!", youtubeId: "F-5XoUZ42Tc" },
-      { title: "Honey", youtubeId: "4-EzK5UB40U" },
-      { title: "The Life of a Showgirl (feat. Sabrina Carpenter)", youtubeId: "OU6362Nggg0" },
+      { plays: 0, title: "The Fate of Ophelia", youtubeId: "rbmdfEQODOw" },
+      { plays: 0, title: "Elizabeth Taylor", youtubeId: "7X5iDKPrZH0" },
+      { plays: 0, title: "Opalite", youtubeId: "3PJC6uPIekc" },
+      { plays: 0, title: "Father Figure", youtubeId: "98SmlWOKuME" },
+      { plays: 0, title: "Eldest Daughter", youtubeId: "HwQnW_ZRKhc" },
+      { plays: 0, title: "Ruin the Friendship", youtubeId: "WQCPl5rTMDQ" },
+      { plays: 0, title: "Actually Romantic", youtubeId: "FnEg1RgmqO4" },
+      { plays: 0, title: "Wi$h Li$t", youtubeId: "wqgUzLHgNMI" },
+      { plays: 0, title: "Wood", youtubeId: "6m50keINEOI" },
+      { plays: 0, title: "CANCELLED!", youtubeId: "F-5XoUZ42Tc" },
+      { plays: 0, title: "Honey", youtubeId: "4-EzK5UB40U" },
+      { plays: 0, title: "The Life of a Showgirl (feat. Sabrina Carpenter)", youtubeId: "OU6362Nggg0" },
     ]
   },
   {
@@ -88,37 +90,37 @@ const taylorAlbums = [
     albumTitle: "The Tortured Poets Department",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiVT7bjHriVgDbK_lXHgR7MEwqWiBL2ha8-HNeY2B3tw&s=10",
     tracks: [
-      { title: "Fortnight (feat. Post Malone)", youtubeId: "HzsQHfBA3MY" },
-      { title: "The Tortured Poets Department", youtubeId: "RQMz4JDbtmI" },
-      { title: "My Boy Only Breaks His Favorite Toys", youtubeId: "wRKXAAV6jh4" },
-      { title: "Down Bad", youtubeId: "EVbtjaWXQVg" },
-      { title: "So Long, London", youtubeId: "CCUr2pNJft4" },
-      { title: "But Daddy I Love Him", youtubeId: "U2W173hRfyA" },
-      { title: "Fresh Out the Slammer", youtubeId: "0EKbEP2L32M" },
-      { title: "Florida!!! (feat. Florence and the Machine)", youtubeId: "uEssK8o3jKg" },
-      { title: "Guilty as Sin?", youtubeId: "OOYlWF6V8t8" },
-      { title: "Who’s Afraid of Little Old Me?", youtubeId: "vOZFiX6hDXQ" },
-      { title: "I Can Fix Him (No Really I Can)", youtubeId: "OKWfv-x2rdU" },
-      { title: "loml", youtubeId: "GZ4vaTRn0HU" },
-      { title: "I Can Do It with a Broken Heart", youtubeId: "i8_w_m6HLJ0" },
-      { title: "The Smallest Man Who Ever Lived", youtubeId: "Atdzfj8LcuY" },
-      { title: "The Alchemy", youtubeId: "iMMUAd66vxo" },
-      { title: "Clara Bow", youtubeId: "fcVUbmdQfaE" },
-      { title: "The Black Dog", youtubeId: "56TZ3B8Qxsk" },
-      { title: "Imgonnagetyouback", youtubeId: "SBGdvxi2JmU" },
-      { title: "The Albatross", youtubeId: "4wOsiM2T_xc" },
-      { title: "Chloe or Sam or Sophia or Marcus", youtubeId: "gOtOWeD9YJk" },
-      { title: "How Did It End?", youtubeId: "O3wlMR0y4a4" },
-      { title: "So High School", youtubeId: "w-FkV0EM_CU" },
-      { title: "I Hate It Here", youtubeId: "BpkmUfv1I4Q" },
-      { title: "thanK you alMee", youtubeId: "oaBJlKXBvjk" },
-      { title: "I Look in People's Window", youtubeId: "6HIA7ouBfGY" },
-      { title: "The Prophecy", youtubeId: "_PsBoqNwYo4" },
-      { title: "Cassandra", youtubeId: "0hYY86DmqPY" },
-      { title: "Peter", youtubeId: "Mxxswu7V1Us" },
-      { title: "The Bolter", youtubeId: "bAi80EylyXQ" },
-      { title: "Robin", youtubeId: "FQyEZZPbOb0" },
-      { title: "The Manuscript", youtubeId: "iY6Qhlua8Zw" },
+      { plays: 0, title: "Fortnight (feat. Post Malone)", youtubeId: "HzsQHfBA3MY" },
+      { plays: 0, title: "The Tortured Poets Department", youtubeId: "RQMz4JDbtmI" },
+      { plays: 0, title: "My Boy Only Breaks His Favorite Toys", youtubeId: "wRKXAAV6jh4" },
+      { plays: 0, title: "Down Bad", youtubeId: "EVbtjaWXQVg" },
+      { plays: 0, title: "So Long, London", youtubeId: "CCUr2pNJft4" },
+      { plays: 0, title: "But Daddy I Love Him", youtubeId: "U2W173hRfyA" },
+      { plays: 0, title: "Fresh Out the Slammer", youtubeId: "0EKbEP2L32M" },
+      { plays: 0, title: "Florida!!! (feat. Florence and the Machine)", youtubeId: "uEssK8o3jKg" },
+      { plays: 0, title: "Guilty as Sin?", youtubeId: "OOYlWF6V8t8" },
+      { plays: 0, title: "Who’s Afraid of Little Old Me?", youtubeId: "vOZFiX6hDXQ" },
+      { plays: 0, title: "I Can Fix Him (No Really I Can)", youtubeId: "OKWfv-x2rdU" },
+      { plays: 0, title: "loml", youtubeId: "GZ4vaTRn0HU" },
+      { plays: 0, title: "I Can Do It with a Broken Heart", youtubeId: "i8_w_m6HLJ0" },
+      { plays: 0, title: "The Smallest Man Who Ever Lived", youtubeId: "Atdzfj8LcuY" },
+      { plays: 0, title: "The Alchemy", youtubeId: "iMMUAd66vxo" },
+      { plays: 0, title: "Clara Bow", youtubeId: "fcVUbmdQfaE" },
+      { plays: 0, title: "The Black Dog", youtubeId: "56TZ3B8Qxsk" },
+      { plays: 0, title: "Imgonnagetyouback", youtubeId: "SBGdvxi2JmU" },
+      { plays: 0, title: "The Albatross", youtubeId: "4wOsiM2T_xc" },
+      { plays: 0, title: "Chloe or Sam or Sophia or Marcus", youtubeId: "gOtOWeD9YJk" },
+      { plays: 0, title: "How Did It End?", youtubeId: "O3wlMR0y4a4" },
+      { plays: 0, title: "So High School", youtubeId: "w-FkV0EM_CU" },
+      { plays: 0, title: "I Hate It Here", youtubeId: "BpkmUfv1I4Q" },
+      { plays: 0, title: "thanK you alMee", youtubeId: "oaBJlKXBvjk" },
+      { plays: 0, title: "I Look in People's Window", youtubeId: "6HIA7ouBfGY" },
+      { plays: 0, title: "The Prophecy", youtubeId: "_PsBoqNwYo4" },
+      { plays: 0, title: "Cassandra", youtubeId: "0hYY86DmqPY" },
+      { plays: 0, title: "Peter", youtubeId: "Mxxswu7V1Us" },
+      { plays: 0, title: "The Bolter", youtubeId: "bAi80EylyXQ" },
+      { plays: 0, title: "Robin", youtubeId: "FQyEZZPbOb0" },
+      { plays: 0, title: "The Manuscript", youtubeId: "iY6Qhlua8Zw" },
     ]
   },
   {
@@ -126,19 +128,19 @@ const taylorAlbums = [
     albumTitle: "Midnights",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbftm-D0w1ZdzXvo40gOm5gsilbXSJVgLyykqqFQQKaA&s=10",
     tracks: [
-      { title: "Lavender Haze", youtubeId: "mkR_Qwix4Ho" },
-      { title: "Maroon", youtubeId: "lvHZjvIyqsk" },
-      { title: "Anti-Hero", youtubeId: "XqN2qFvY64U" },
-      { title: "Snow on the Beach (feat. Lana Del Rey)", youtubeId: "ycE7bUq3-2k" },
-      { title: "You're on Your Own, Kid", youtubeId: "7Gbg6Z70J7E" },
-      { title: "Midnight Rain", youtubeId: "Odh9ddPUkEY" },
-      { title: "Question...?", youtubeId: "xxrf_QBD5DE" },
-      { title: "Vigilante Shit", youtubeId: "Uoey4W_3bos" },
-      { title: "Bejeweled", youtubeId: "XzKSPRqFg9E" },
-      { title: "Labyrinth", youtubeId: "xTXsKMXUi7w" },
-      { title: "Karma", youtubeId: "rg18Kf4en2o" },
-      { title: "Sweet Nothing", youtubeId: "rn0brgg2BpI" },
-      { title: "Mastermind", youtubeId: "Tmz1lz0zcLQ" },
+      { plays: 0, title: "Lavender Haze", youtubeId: "mkR_Qwix4Ho" },
+      { plays: 0, title: "Maroon", youtubeId: "lvHZjvIyqsk" },
+      { plays: 0, title: "Anti-Hero", youtubeId: "XqN2qFvY64U" },
+      { plays: 0, title: "Snow on the Beach (feat. Lana Del Rey)", youtubeId: "ycE7bUq3-2k" },
+      { plays: 0, title: "You're on Your Own, Kid", youtubeId: "7Gbg6Z70J7E" },
+      { plays: 0, title: "Midnight Rain", youtubeId: "Odh9ddPUkEY" },
+      { plays: 0, title: "Question...?", youtubeId: "xxrf_QBD5DE" },
+      { plays: 0, title: "Vigilante Shit", youtubeId: "Uoey4W_3bos" },
+      { plays: 0, title: "Bejeweled", youtubeId: "XzKSPRqFg9E" },
+      { plays: 0, title: "Labyrinth", youtubeId: "xTXsKMXUi7w" },
+      { plays: 0, title: "Karma", youtubeId: "rg18Kf4en2o" },
+      { plays: 0, title: "Sweet Nothing", youtubeId: "rn0brgg2BpI" },
+      { plays: 0, title: "Mastermind", youtubeId: "Tmz1lz0zcLQ" },
     ]
   },
   {
@@ -146,21 +148,21 @@ const taylorAlbums = [
     albumTitle: "Evermore",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs829B8GwjLPkFBpPR6SprN6QhAObsZ7ybVZ4w5AOggA&s=10",
     tracks: [
-      { title: "willow", youtubeId: "7EvwIw4gIyk" },
-      { title: "champagne problems", youtubeId: "wMpqCRF7TKg" },
-      { title: "gold rush", youtubeId: "Pz-f9mM3Ms8" },
-      { title: "'tis the damn season", youtubeId: "WuvhOD-mP8M" },
-      { title: "tolerate it", youtubeId: "ukxEKY_7MOc" },
-      { title: "no body, no crime (feat. Haim)", youtubeId: "IEPomqor2A8" },
-      { title: "happiness", youtubeId: "tP4TTgt4nb0" },
-      { title: "dorothea", youtubeId: "zI4DS5GmQWE" },
-      { title: "coney island", youtubeId: "bee4lW1bdn4" },
-      { title: "ivy", youtubeId: "9nIOx-ezlzA" },
-      { title: "cowboy like me", youtubeId: "YPlNBb6I8qU" },
-      { title: "long story short", youtubeId: "rqQHa2HcGtM" },
-      { title: "marjorie", youtubeId: "hP6QpMeSG6s" },
-      { title: "closure", youtubeId: "AIFnKqIeEdY" },
-      { title: "evermore (feat. Bon Iver)", youtubeId: "EXLgZZE072g" },
+      { plays: 0, title: "willow", youtubeId: "7EvwIw4gIyk" },
+      { plays: 0, title: "champagne problems", youtubeId: "wMpqCRF7TKg" },
+      { plays: 0, title: "gold rush", youtubeId: "Pz-f9mM3Ms8" },
+      { plays: 0, title: "'tis the damn season", youtubeId: "WuvhOD-mP8M" },
+      { plays: 0, title: "tolerate it", youtubeId: "ukxEKY_7MOc" },
+      { plays: 0, title: "no body, no crime (feat. Haim)", youtubeId: "IEPomqor2A8" },
+      { plays: 0, title: "happiness", youtubeId: "tP4TTgt4nb0" },
+      { plays: 0, title: "dorothea", youtubeId: "zI4DS5GmQWE" },
+      { plays: 0, title: "coney island", youtubeId: "bee4lW1bdn4" },
+      { plays: 0, title: "ivy", youtubeId: "9nIOx-ezlzA" },
+      { plays: 0, title: "cowboy like me", youtubeId: "YPlNBb6I8qU" },
+      { plays: 0, title: "long story short", youtubeId: "rqQHa2HcGtM" },
+      { plays: 0, title: "marjorie", youtubeId: "hP6QpMeSG6s" },
+      { plays: 0, title: "closure", youtubeId: "AIFnKqIeEdY" },
+      { plays: 0, title: "evermore (feat. Bon Iver)", youtubeId: "EXLgZZE072g" },
     ]
   },
   {
@@ -168,22 +170,22 @@ const taylorAlbums = [
     albumTitle: "Folklore",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_o6Vk1iHmGv5ULfC5RvSENjLdLlN9isI9Fo7P0kKO6A&s=10",
     tracks: [
-      { title: "the 1", youtubeId: "KsZ6tROaVOQ" },
-      { title: "cardigan", youtubeId: "zLSUp53y-HQ" },
-      { title: "the last great american dynasty", youtubeId: "2s5xdY6MCeI" },
-      { title: "exile [feat. Bon Iver]", youtubeId: "osdoLjUNFnA" },
-      { title: "my tears ricochet", youtubeId: "OWbDJFtHl3w" },
-      { title: "mirrorball", youtubeId: "KaM1bCuG4xo" },
-      { title: "seven", youtubeId: "pEY-GPsru_E" },
-      { title: "august", youtubeId: "nn_0zPAfyo8" },
-      { title: "this is me trying", youtubeId: "9bdLTPNrlEg" },
-      { title: "illicit affairs", youtubeId: "MLV2SJKWk4M" },
-      { title: "invisible string", youtubeId: "OuFnpmGwg5k" },
-      { title: "mad woman", youtubeId: "6DP4q_1EgQQ" },
-      { title: "epiphany", youtubeId: "DUnDkI7l9LQ" },
-      { title: "betty", youtubeId: "6TAPqXkZW_I" },
-      { title: "peace", youtubeId: "HpxX4ZE4KWE" },
-      { title: "hoax", youtubeId: "ryLGxpjwAhM" },
+      { plays: 0, title: "the 1", youtubeId: "KsZ6tROaVOQ" },
+      { plays: 0, title: "cardigan", youtubeId: "zLSUp53y-HQ" },
+      { plays: 0, title: "the last great american dynasty", youtubeId: "2s5xdY6MCeI" },
+      { plays: 0, title: "exile [feat. Bon Iver]", youtubeId: "osdoLjUNFnA" },
+      { plays: 0, title: "my tears ricochet", youtubeId: "OWbDJFtHl3w" },
+      { plays: 0, title: "mirrorball", youtubeId: "KaM1bCuG4xo" },
+      { plays: 0, title: "seven", youtubeId: "pEY-GPsru_E" },
+      { plays: 0, title: "august", youtubeId: "nn_0zPAfyo8" },
+      { plays: 0, title: "this is me trying", youtubeId: "9bdLTPNrlEg" },
+      { plays: 0, title: "illicit affairs", youtubeId: "MLV2SJKWk4M" },
+      { plays: 0, title: "invisible string", youtubeId: "OuFnpmGwg5k" },
+      { plays: 0, title: "mad woman", youtubeId: "6DP4q_1EgQQ" },
+      { plays: 0, title: "epiphany", youtubeId: "DUnDkI7l9LQ" },
+      { plays: 0, title: "betty", youtubeId: "6TAPqXkZW_I" },
+      { plays: 0, title: "peace", youtubeId: "HpxX4ZE4KWE" },
+      { plays: 0, title: "hoax", youtubeId: "ryLGxpjwAhM" },
     ]
   },
   {
@@ -191,23 +193,23 @@ const taylorAlbums = [
     albumTitle: "Lover",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqS4K4pNb0uD_0CsOmaVpP05KJ0y0Ml21Y8Pq1vcdG1g&s=10",
     tracks: [
-      { title: "I Forgot That You Existed", youtubeId: "p1cEvNn88jM" },
-      { title: "Cruel Summer", youtubeId: "ic8j13piAhQ" },
-      { title: "Lover", youtubeId: "-BjZmE2gtdo" },
-      { title: "The Man", youtubeId: "tbEekLA7J3Y" },
-      { title: "The Archer", youtubeId: "8KpKc3C9V3w" },
-      { title: "I Think He Knows", youtubeId: "2d1wKn-oJnA" },
-      { title: "Miss Americana & the Heartbreak Prince", youtubeId: "Kwf7P2GNAVw" },
-      { title: "Paper Rings", youtubeId: "8zdg-pDF10g" },
-      { title: "Cornelia Street (Live From Paris)", youtubeId: "3xGvCApIEQY" },
-      { title: "Death by a Thousand Cuts", youtubeId: "GTEFSuFfgnU" },
-      { title: "London Boy", youtubeId: "VsKoOH6DVys" },
-      { title: "Soon You'll Get Better (feat. Dixie Chicks)", youtubeId: "tMoW5G5LU08" },
-      { title: "False God (Live on Saturday Night Live / 2019)", youtubeId: "kjD3LoXp-Pw" },
-      { title: "You Need to Calm Down", youtubeId: "GWtfOHBF1_w" },
-      { title: "Me! (feat. Brendon Urie de Panic! at the Disco)", youtubeId: "S--WI8PUVVo" },
-      { title: "It's Nice to Have a Friend", youtubeId: "eaP1VswBF28" },
-      { title: "Daylight", youtubeId: "u9raS7-NisU" },
+      { plays: 0, title: "I Forgot That You Existed", youtubeId: "p1cEvNn88jM" },
+      { plays: 0, title: "Cruel Summer", youtubeId: "ic8j13piAhQ" },
+      { plays: 0, title: "Lover", youtubeId: "-BjZmE2gtdo" },
+      { plays: 0, title: "The Man", youtubeId: "tbEekLA7J3Y" },
+      { plays: 0, title: "The Archer", youtubeId: "8KpKc3C9V3w" },
+      { plays: 0, title: "I Think He Knows", youtubeId: "2d1wKn-oJnA" },
+      { plays: 0, title: "Miss Americana & the Heartbreak Prince", youtubeId: "Kwf7P2GNAVw" },
+      { plays: 0, title: "Paper Rings", youtubeId: "8zdg-pDF10g" },
+      { plays: 0, title: "Cornelia Street (Live From Paris)", youtubeId: "3xGvCApIEQY" },
+      { plays: 0, title: "Death by a Thousand Cuts", youtubeId: "GTEFSuFfgnU" },
+      { plays: 0, title: "London Boy", youtubeId: "VsKoOH6DVys" },
+      { plays: 0, title: "Soon You'll Get Better (feat. Dixie Chicks)", youtubeId: "tMoW5G5LU08" },
+      { plays: 0, title: "False God (Live on Saturday Night Live / 2019)", youtubeId: "kjD3LoXp-Pw" },
+      { plays: 0, title: "You Need to Calm Down", youtubeId: "GWtfOHBF1_w" },
+      { plays: 0, title: "Me! (feat. Brendon Urie de Panic! at the Disco)", youtubeId: "S--WI8PUVVo" },
+      { plays: 0, title: "It's Nice to Have a Friend", youtubeId: "eaP1VswBF28" },
+      { plays: 0, title: "Daylight", youtubeId: "u9raS7-NisU" },
     ]
   },
   {
@@ -215,21 +217,21 @@ const taylorAlbums = [
     albumTitle: "Reputation",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTge42Pfg5XFXXbNJv9Rpf-bmgpBMxcoFiGXn2Sq3tgjA&s=10",
     tracks: [
-      { title: "…Ready for It?", youtubeId: "T62maKYX9tU" },
-      { title: "Endgame (feat. Ed Sheeran et Future)", youtubeId: "dfnCAmr569k" },
-      { title: "I Did Something Bad", youtubeId: "xYLxUJ9v6KU" },
-      { title: "Don't Blame Me", youtubeId: "kRJKB291Z1g" },
-      { title: "Delicate", youtubeId: "tCXGJQYZ9JA" },
-      { title: "Look What You Made Me Do", youtubeId: "3K0RzZGpyds" },
-      { title: "So It Goes…", youtubeId: "iAv1Y1YIwm8" },
-      { title: "Gorgeous", youtubeId: "EUoe7cf0HYw" },
-      { title: "Getaway Car", youtubeId: "FhPLQVlUiNQ" },
-      { title: "King Of My Heart", youtubeId: "5U7bF68xcRg" },
-      { title: "Dancing With Our Hands Tied", youtubeId: "erGyUphZSt8" },
-      { title: "Dress", youtubeId: "FNEoPctNIUE" },
-      { title: "This is Why We Can't Have Nice Things", youtubeId: "6Z3QJ4L1Bg0" },
-      { title: "Call It What You Want", youtubeId: "V54CEElTF_U" },
-      { title: "New Year's Day", youtubeId: "wnwpBnD4JRg" },
+      { plays: 0, title: "…Ready for It?", youtubeId: "T62maKYX9tU" },
+      { plays: 0, title: "Endgame (feat. Ed Sheeran et Future)", youtubeId: "dfnCAmr569k" },
+      { plays: 0, title: "I Did Something Bad", youtubeId: "xYLxUJ9v6KU" },
+      { plays: 0, title: "Don't Blame Me", youtubeId: "kRJKB291Z1g" },
+      { plays: 0, title: "Delicate", youtubeId: "tCXGJQYZ9JA" },
+      { plays: 0, title: "Look What You Made Me Do", youtubeId: "3K0RzZGpyds" },
+      { plays: 0, title: "So It Goes…", youtubeId: "iAv1Y1YIwm8" },
+      { plays: 0, title: "Gorgeous", youtubeId: "EUoe7cf0HYw" },
+      { plays: 0, title: "Getaway Car", youtubeId: "FhPLQVlUiNQ" },
+      { plays: 0, title: "King Of My Heart", youtubeId: "5U7bF68xcRg" },
+      { plays: 0, title: "Dancing With Our Hands Tied", youtubeId: "erGyUphZSt8" },
+      { plays: 0, title: "Dress", youtubeId: "FNEoPctNIUE" },
+      { plays: 0, title: "This is Why We Can't Have Nice Things", youtubeId: "6Z3QJ4L1Bg0" },
+      { plays: 0, title: "Call It What You Want", youtubeId: "V54CEElTF_U" },
+      { plays: 0, title: "New Year's Day", youtubeId: "wnwpBnD4JRg" },
     ]
   },
   {
@@ -237,27 +239,27 @@ const taylorAlbums = [
     albumTitle: "1989 (Taylor's Version)",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ZfJN1Jps-05nwY1E2rHemrdMHPLYOQf-VbTEVtP0KA&s=10",
     tracks: [
-      { title: "Welcome to New York", youtubeId: "FsGdznlfE2U" },
-      { title: "Blank Space", youtubeId: "gir8BEqAutk" },
-      { title: "Style", youtubeId: "2JgvVfOfoWI" },
-      { title: "Out Of The Woods", youtubeId: "gp1MR2WAAXY" },
-      { title: "All You Had to Do Was Stay", youtubeId: "_Usd5X5XJXM" },
-      { title: "Shake it Off", youtubeId: "mvVBuG4IOW4" },
-      { title: "I Wish You Would", youtubeId: "89aQIli8aVU" },
-      { title: "Bad Blood", youtubeId: "lUvBk4owRNU" },
-      { title: "Wildest Dreams", youtubeId: "vtW_4j7SsZk" },
-      { title: "How You Get the Girl", youtubeId: "rnwD7veCoFQ" },
-      { title: "This Love", youtubeId: "mvxQYPR4lmU" },
-      { title: "I Know Places", youtubeId: "0jTGzm-6cYE" },
-      { title: "Clean", youtubeId: "AppsjTInqiw" },
-      { title: "Wonderland", youtubeId: "JhICcmiIE80" },
-      { title: "You Are In Love", youtubeId: "M7ySK0keirY" },
-      { title: "New Romantics", youtubeId: "3-BcH7KowGE" },
-      { title: "&laquo;Slut!&raquo;", youtubeId: "qrxsceexTBw" },
-      { title: "Say Don't Go", youtubeId: "C-z-IckrQK8" },
-      { title: "Now That We Don't Talk", youtubeId: "yF4ulRTCn44" },
-      { title: "Suburban Legends", youtubeId: "ZGBPKYbzSXs" },
-      { title: "Is It Over Now ?", youtubeId: "tNxUxm3-658" },
+      { plays: 0, title: "Welcome to New York", youtubeId: "FsGdznlfE2U" },
+      { plays: 0, title: "Blank Space", youtubeId: "gir8BEqAutk" },
+      { plays: 0, title: "Style", youtubeId: "2JgvVfOfoWI" },
+      { plays: 0, title: "Out Of The Woods", youtubeId: "gp1MR2WAAXY" },
+      { plays: 0, title: "All You Had to Do Was Stay", youtubeId: "_Usd5X5XJXM" },
+      { plays: 0, title: "Shake it Off", youtubeId: "mvVBuG4IOW4" },
+      { plays: 0, title: "I Wish You Would", youtubeId: "89aQIli8aVU" },
+      { plays: 0, title: "Bad Blood", youtubeId: "lUvBk4owRNU" },
+      { plays: 0, title: "Wildest Dreams", youtubeId: "vtW_4j7SsZk" },
+      { plays: 0, title: "How You Get the Girl", youtubeId: "rnwD7veCoFQ" },
+      { plays: 0, title: "This Love", youtubeId: "mvxQYPR4lmU" },
+      { plays: 0, title: "I Know Places", youtubeId: "0jTGzm-6cYE" },
+      { plays: 0, title: "Clean", youtubeId: "AppsjTInqiw" },
+      { plays: 0, title: "Wonderland", youtubeId: "JhICcmiIE80" },
+      { plays: 0, title: "You Are In Love", youtubeId: "M7ySK0keirY" },
+      { plays: 0, title: "New Romantics", youtubeId: "3-BcH7KowGE" },
+      { plays: 0, title: "&laquo;Slut!&raquo;", youtubeId: "qrxsceexTBw" },
+      { plays: 0, title: "Say Don't Go", youtubeId: "C-z-IckrQK8" },
+      { plays: 0, title: "Now That We Don't Talk", youtubeId: "yF4ulRTCn44" },
+      { plays: 0, title: "Suburban Legends", youtubeId: "ZGBPKYbzSXs" },
+      { plays: 0, title: "Is It Over Now ?", youtubeId: "tNxUxm3-658" },
     ]
   },
   {
@@ -265,36 +267,36 @@ const taylorAlbums = [
     albumTitle: "Red (Taylor's Version)",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqJFFtXoomi_ZCLsmlHw0A6533zQyc1THOlroMCnP_sQ&s",
     tracks: [
-      { title: "State of Grace", youtubeId: "-mrC5tRkxrY" },
-      { title: "Red", youtubeId: "R_rUYuFtNO4" },
-      { title: "Treacherous", youtubeId: "u1D1AgDfreg" },
-      { title: "I knew you were trouble", youtubeId: "TqAollrUJdA" },
-      { title: "All Too Well", youtubeId: "9OQBDdNHmXo" },
-      { title: "22", youtubeId: "9boiT64sm0Q" },
-      { title: "I Almost Do", youtubeId: "w1AV_35zVwU" },
-      { title: "We Are Never Ever Getting Back Together", youtubeId: "zJFcr1KyFqE" },
-      { title: "Stay Stay Stay", youtubeId: "OhJ-S9Nrh7Q" },
-      { title: "The Last Time [feat. Gary Lightbody de Snow Patrol]", youtubeId: "pCH4QrSx2Jg" },
-      { title: "Holy Ground", youtubeId: "S4PuN-IWi2g" },
-      { title: "Sad Beautiful Tragic", youtubeId: "jQfB4Gahi3I" },
-      { title: "The Lucky One", youtubeId: "4LtQxA_ooLk" },
-      { title: "Everything Has Changed [feat. Ed Sheeran]", youtubeId: "eMcMbWl0fDk" },
-      { title: "Starlight", youtubeId: "lPvcwgEuKTg" },
-      { title: "Begin Again", youtubeId: "dXNZaHuKWNA" },
-      { title: "The Moment I Knew", youtubeId: "LmXn6BU16e0" },
-      { title: "Come Back… Be Here", youtubeId: "hHWOAUjnmjQ" },
-      { title: "Girl At Home", youtubeId: "UNckfN9upqo" },
-      { title: "State of Grace (acoustic version)", youtubeId: "D3mJe28un4M" },
-      { title: "Ronan", youtubeId: "kdiBc40gW7s" },
-      { title: "Better Man (From the Vault)", youtubeId: "PReSQYTFvcs" },
-      { title: "Nothing New [feat. Phoebe Bridgers] (From the Vault)", youtubeId: "m3fWCRvz5JA" },
-      { title: "Babe (From the Vault)", youtubeId: "3pj39qZZYoQ" },
-      { title: "Message in a Bottle (From the Vault)", youtubeId: "cVaG6adE2mA" },
-      { title: "I Bet You Think About Me [feat. Chris Stapleton] (From the Vault)", youtubeId: "AccGdO5XeZY" },
-      { title: "Forever Winter (From the Vault)", youtubeId: "TkAomsYFsJw" },
-      { title: "Run [feat. Ed Sheeran] (From the Vault)", youtubeId: "flv8AEWrRMI" },
-      { title: "The Very First Night (From the Vault)", youtubeId: "rVuyi-dPMIc" },
-      { title: "All Too Well (10 Minute Version) (From the Vault)", youtubeId: "sRxrwjOtIag" },
+      { plays: 0, title: "State of Grace", youtubeId: "-mrC5tRkxrY" },
+      { plays: 0, title: "Red", youtubeId: "R_rUYuFtNO4" },
+      { plays: 0, title: "Treacherous", youtubeId: "u1D1AgDfreg" },
+      { plays: 0, title: "I knew you were trouble", youtubeId: "TqAollrUJdA" },
+      { plays: 0, title: "All Too Well", youtubeId: "9OQBDdNHmXo" },
+      { plays: 0, title: "22", youtubeId: "9boiT64sm0Q" },
+      { plays: 0, title: "I Almost Do", youtubeId: "w1AV_35zVwU" },
+      { plays: 0, title: "We Are Never Ever Getting Back Together", youtubeId: "zJFcr1KyFqE" },
+      { plays: 0, title: "Stay Stay Stay", youtubeId: "OhJ-S9Nrh7Q" },
+      { plays: 0, title: "The Last Time [feat. Gary Lightbody de Snow Patrol]", youtubeId: "pCH4QrSx2Jg" },
+      { plays: 0, title: "Holy Ground", youtubeId: "S4PuN-IWi2g" },
+      { plays: 0, title: "Sad Beautiful Tragic", youtubeId: "jQfB4Gahi3I" },
+      { plays: 0, title: "The Lucky One", youtubeId: "4LtQxA_ooLk" },
+      { plays: 0, title: "Everything Has Changed [feat. Ed Sheeran]", youtubeId: "eMcMbWl0fDk" },
+      { plays: 0, title: "Starlight", youtubeId: "lPvcwgEuKTg" },
+      { plays: 0, title: "Begin Again", youtubeId: "dXNZaHuKWNA" },
+      { plays: 0, title: "The Moment I Knew", youtubeId: "LmXn6BU16e0" },
+      { plays: 0, title: "Come Back… Be Here", youtubeId: "hHWOAUjnmjQ" },
+      { plays: 0, title: "Girl At Home", youtubeId: "UNckfN9upqo" },
+      { plays: 0, title: "State of Grace (acoustic version)", youtubeId: "D3mJe28un4M" },
+      { plays: 0, title: "Ronan", youtubeId: "kdiBc40gW7s" },
+      { plays: 0, title: "Better Man (From the Vault)", youtubeId: "PReSQYTFvcs" },
+      { plays: 0, title: "Nothing New [feat. Phoebe Bridgers] (From the Vault)", youtubeId: "m3fWCRvz5JA" },
+      { plays: 0, title: "Babe (From the Vault)", youtubeId: "3pj39qZZYoQ" },
+      { plays: 0, title: "Message in a Bottle (From the Vault)", youtubeId: "cVaG6adE2mA" },
+      { plays: 0, title: "I Bet You Think About Me [feat. Chris Stapleton] (From the Vault)", youtubeId: "AccGdO5XeZY" },
+      { plays: 0, title: "Forever Winter (From the Vault)", youtubeId: "TkAomsYFsJw" },
+      { plays: 0, title: "Run [feat. Ed Sheeran] (From the Vault)", youtubeId: "flv8AEWrRMI" },
+      { plays: 0, title: "The Very First Night (From the Vault)", youtubeId: "rVuyi-dPMIc" },
+      { plays: 0, title: "All Too Well (10 Minute Version) (From the Vault)", youtubeId: "sRxrwjOtIag" },
     ]
   },
   {
@@ -302,28 +304,28 @@ const taylorAlbums = [
     albumTitle: "Speak Now (Taylor's Version)",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_DHIjsloyM10HKHQQNQAoIA4J_cf831rA4QQAiwP2A&s",
     tracks: [
-      { title: "Mine (Taylor's Version)", youtubeId: "oxNLRqMJMZk" },
-      { title: "Sparks Fly (Taylor's Version)", youtubeId: "UlFrV5GJA_4" },
-      { title: "Back to December (Taylor's Version)", youtubeId: "qc2Z-OX9wnc" },
-      { title: "Speak Now (Taylor's Version)", youtubeId: "JlZnvyBqceY" },
-      { title: "Dear John (Taylor's Version)", youtubeId: "N-FYySSy0rM" },
-      { title: "Mean (Taylor's Version)", youtubeId: "8AR1dKawCi8" },
-      { title: "The Story of Us (Taylor's Version)", youtubeId: "pRhWAXg4xek" },
-      { title: "Never Grow Up (Taylor's Version)", youtubeId: "maEVfpxDB8k" },
-      { title: "Enchanted (Taylor's Version)", youtubeId: "igIfiqqVHtA" },
-      { title: "Better than Revenge (Taylor's Version)", youtubeId: "EH70M5OeS4o" },
-      { title: "Innocent (Taylor's Version)", youtubeId: "vO6JqQpJboY" },
-      { title: "Haunted (Taylor's Version)", youtubeId: "4cC6fw8EqWU" },
-      { title: "Last Kiss (Taylor's Version)", youtubeId: "idWma942CUI" },
-      { title: "Long Live (Taylor's Version)", youtubeId: "F5TMU6916U8" },
-      { title: "Ours (Taylor's Version)", youtubeId: "PH8Uc0Z_KRY" },
-      { title: "Superman (Taylor's Version)", youtubeId: "Fn0er7H1Dm0" },
-      { title: "Electric Touch [feat. Fall Out Boy] (Taylor's Version)", youtubeId: "hMPK2vNXr-E" },
-      { title: "When Emma Falls in Love (Taylor's Version)", youtubeId: "IYqgVYjN3Go" },
-      { title: "I Can See You (Taylor's Version)", youtubeId: "jOD86iMAEY0" },
-      { title: "Castles Crumbling [feat. Hayley Williams] (Taylor's Version)", youtubeId: "V80A8qN4fR8" },
-      { title: "Foolish One (Taylor's Version)", youtubeId: "6-x1AlDudZw" },
-      { title: "Timeless (Taylor's Version)", youtubeId: "osmzwWw4RYM" },
+      { plays: 0, title: "Mine (Taylor's Version)", youtubeId: "oxNLRqMJMZk" },
+      { plays: 0, title: "Sparks Fly (Taylor's Version)", youtubeId: "UlFrV5GJA_4" },
+      { plays: 0, title: "Back to December (Taylor's Version)", youtubeId: "qc2Z-OX9wnc" },
+      { plays: 0, title: "Speak Now (Taylor's Version)", youtubeId: "JlZnvyBqceY" },
+      { plays: 0, title: "Dear John (Taylor's Version)", youtubeId: "N-FYySSy0rM" },
+      { plays: 0, title: "Mean (Taylor's Version)", youtubeId: "8AR1dKawCi8" },
+      { plays: 0, title: "The Story of Us (Taylor's Version)", youtubeId: "pRhWAXg4xek" },
+      { plays: 0, title: "Never Grow Up (Taylor's Version)", youtubeId: "maEVfpxDB8k" },
+      { plays: 0, title: "Enchanted (Taylor's Version)", youtubeId: "igIfiqqVHtA" },
+      { plays: 0, title: "Better than Revenge (Taylor's Version)", youtubeId: "EH70M5OeS4o" },
+      { plays: 0, title: "Innocent (Taylor's Version)", youtubeId: "vO6JqQpJboY" },
+      { plays: 0, title: "Haunted (Taylor's Version)", youtubeId: "4cC6fw8EqWU" },
+      { plays: 0, title: "Last Kiss (Taylor's Version)", youtubeId: "idWma942CUI" },
+      { plays: 0, title: "Long Live (Taylor's Version)", youtubeId: "F5TMU6916U8" },
+      { plays: 0, title: "Ours (Taylor's Version)", youtubeId: "PH8Uc0Z_KRY" },
+      { plays: 0, title: "Superman (Taylor's Version)", youtubeId: "Fn0er7H1Dm0" },
+      { plays: 0, title: "Electric Touch [feat. Fall Out Boy] (Taylor's Version)", youtubeId: "hMPK2vNXr-E" },
+      { plays: 0, title: "When Emma Falls in Love (Taylor's Version)", youtubeId: "IYqgVYjN3Go" },
+      { plays: 0, title: "I Can See You (Taylor's Version)", youtubeId: "jOD86iMAEY0" },
+      { plays: 0, title: "Castles Crumbling [feat. Hayley Williams] (Taylor's Version)", youtubeId: "V80A8qN4fR8" },
+      { plays: 0, title: "Foolish One (Taylor's Version)", youtubeId: "6-x1AlDudZw" },
+      { plays: 0, title: "Timeless (Taylor's Version)", youtubeId: "osmzwWw4RYM" },
     ]
   },
   {
@@ -331,33 +333,33 @@ const taylorAlbums = [
     albumTitle: "Fearless (Taylor's version)",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLzTIOV6nJwbsxhVVLc_gaYAwAwEEarS34VFr-2g6PZg&s=10",
     tracks: [
-      { title: "Fearless (Taylor's Version)", youtubeId: "7lLigiVgJsE" },
-      { title: "Fifteen (Taylor's Version)", youtubeId: "rLCol1C3ouc" },
-      { title: "Love Story (Taylor's Version)", youtubeId: "aXzVF3XeS8M" },
-      { title: "Hey Stephen (Taylor's Version)", youtubeId: "tMhiHrL7rPE" },
-      { title: "White Horse (Taylor's Version)", youtubeId: "9-rKvhsjwKU" },
-      { title: "You Belong With Me (Taylor's Version)", youtubeId: "vwp8Ur6tO-8" },
-      { title: "Breathe (Taylor's Version) [feat. Colbie Caillat]", youtubeId: "qsUK-BG5OQQ" },
-      { title: "Tell Me Why (Taylor's Version)", youtubeId: "cwFbq-70EwE" },
-      { title: "You're Not Sorry (Taylor's Version)", youtubeId: "DNaSlUYIXBg" },
-      { title: "The Way I Loved You (Taylor's Version)", youtubeId: "DlexmDDSDZ0" },
-      { title: "Forever & Always (Taylor's Version)", youtubeId: "T-41vMWQTUA" },
-      { title: "The Best Day (Taylor's Version)", youtubeId: "KZeI9I875Ig" },
-      { title: "Change (Taylor's Version)", youtubeId: "jwWR1cQTKyw" },
-      { title: "Jump Then Fall (Taylor's Version)", youtubeId: "vUHDR6Rg3Y4" },
-      { title: "Untouchable (Taylor's Version)", youtubeId: "8bNlGwnEUAs" },
-      { title: "Forever & Always (Piano Version) (Taylor's Version)", youtubeId: "RcGowZ26sE0" },
-      { title: "Come In With The Rain (Taylor's Version)", youtubeId: "ePjcjLRHPOo" },
-      { title: "Superstar (Taylor's Version)", youtubeId: "IsCik8wznlU" },
-      { title: "The Other Side Of The Door (Taylor's Version)", youtubeId: "425n1NoRtgA" },
-      { title: "Today Was A Fairytale (Taylor's Version)", youtubeId: "xSWVPqnKcXQ" },
-      { title: "You All Over Me (Taylor's Version) (From The Vault) [feat. Maren Morris]", youtubeId: "XKaMUm7YwZc" },
-      { title: "Mr. Perfectly Fine (Taylor's Version) (From The Vault)", youtubeId: "rFjJs6ZjPe8" },
-      { title: "We Were Happy (Taylor's Version) (From The Vault)", youtubeId: "seU5y5EgIwk" },
-      { title: "That's When (Taylor's Version) (From The Vault) [feat. Keith Urban]", youtubeId: "aOa6D6ku3dM" },
-      { title: "Don't You (Taylor's Version) (From The Vault)", youtubeId: "dHdAN4FXzmc" },
-      { title: "Bye Bye Baby (Taylor's Version) (From The Vault)", youtubeId: "yuFuwXd-B9E" },
-      { title: "Love Story (Taylor's Version) [Elvira Remix]", youtubeId: "FeTHyZJvozc" },
+      { plays: 0, title: "Fearless (Taylor's Version)", youtubeId: "7lLigiVgJsE" },
+      { plays: 0, title: "Fifteen (Taylor's Version)", youtubeId: "rLCol1C3ouc" },
+      { plays: 0, title: "Love Story (Taylor's Version)", youtubeId: "aXzVF3XeS8M" },
+      { plays: 0, title: "Hey Stephen (Taylor's Version)", youtubeId: "tMhiHrL7rPE" },
+      { plays: 0, title: "White Horse (Taylor's Version)", youtubeId: "9-rKvhsjwKU" },
+      { plays: 0, title: "You Belong With Me (Taylor's Version)", youtubeId: "vwp8Ur6tO-8" },
+      { plays: 0, title: "Breathe (Taylor's Version) [feat. Colbie Caillat]", youtubeId: "qsUK-BG5OQQ" },
+      { plays: 0, title: "Tell Me Why (Taylor's Version)", youtubeId: "cwFbq-70EwE" },
+      { plays: 0, title: "You're Not Sorry (Taylor's Version)", youtubeId: "DNaSlUYIXBg" },
+      { plays: 0, title: "The Way I Loved You (Taylor's Version)", youtubeId: "DlexmDDSDZ0" },
+      { plays: 0, title: "Forever & Always (Taylor's Version)", youtubeId: "T-41vMWQTUA" },
+      { plays: 0, title: "The Best Day (Taylor's Version)", youtubeId: "KZeI9I875Ig" },
+      { plays: 0, title: "Change (Taylor's Version)", youtubeId: "jwWR1cQTKyw" },
+      { plays: 0, title: "Jump Then Fall (Taylor's Version)", youtubeId: "vUHDR6Rg3Y4" },
+      { plays: 0, title: "Untouchable (Taylor's Version)", youtubeId: "8bNlGwnEUAs" },
+      { plays: 0, title: "Forever & Always (Piano Version) (Taylor's Version)", youtubeId: "RcGowZ26sE0" },
+      { plays: 0, title: "Come In With The Rain (Taylor's Version)", youtubeId: "ePjcjLRHPOo" },
+      { plays: 0, title: "Superstar (Taylor's Version)", youtubeId: "IsCik8wznlU" },
+      { plays: 0, title: "The Other Side Of The Door (Taylor's Version)", youtubeId: "425n1NoRtgA" },
+      { plays: 0, title: "Today Was A Fairytale (Taylor's Version)", youtubeId: "xSWVPqnKcXQ" },
+      { plays: 0, title: "You All Over Me (Taylor's Version) (From The Vault) [feat. Maren Morris]", youtubeId: "XKaMUm7YwZc" },
+      { plays: 0, title: "Mr. Perfectly Fine (Taylor's Version) (From The Vault)", youtubeId: "rFjJs6ZjPe8" },
+      { plays: 0, title: "We Were Happy (Taylor's Version) (From The Vault)", youtubeId: "seU5y5EgIwk" },
+      { plays: 0, title: "That's When (Taylor's Version) (From The Vault) [feat. Keith Urban]", youtubeId: "aOa6D6ku3dM" },
+      { plays: 0, title: "Don't You (Taylor's Version) (From The Vault)", youtubeId: "dHdAN4FXzmc" },
+      { plays: 0, title: "Bye Bye Baby (Taylor's Version) (From The Vault)", youtubeId: "yuFuwXd-B9E" },
+      { plays: 0, title: "Love Story (Taylor's Version) [Elvira Remix]", youtubeId: "FeTHyZJvozc" },
     ]
   },
   {
@@ -365,17 +367,17 @@ const taylorAlbums = [
     albumTitle: "Taylor Swift",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-x0NlwFE0FWNT_mG33qgYvTbYPojvsuZplPk96X9C3Q&s=10",
     tracks: [
-      { title: "Tim McGraw", youtubeId: "GkD20ajVxnY" },
-      { title: "Picture to Burn", youtubeId: "yCMqcFAigRg" },
-      { title: "Teardrops on My Guitar", youtubeId: "xKCek6_dB0M" },
-      { title: "A Place in This World", youtubeId: "" },
-      { title: "Cold as You", youtubeId: "" },
-      { title: "The Outside", youtubeId: "" },
-      { title: "Tied Together with a Smile", youtubeId: "" },
-      { title: "Stay Beautiful", youtubeId: "" },
-      { title: "Should've Said No", youtubeId: "v9bxXO9fj98" },
-      { title: "Mary's Song (Oh My My My)", youtubeId: "" },
-      { title: "Our Song", youtubeId: "Jb2stN7kH28" },
+      { plays: 0, title: "Tim McGraw", youtubeId: "GkD20ajVxnY" },
+      { plays: 0, title: "Picture to Burn", youtubeId: "yCMqcFAigRg" },
+      { plays: 0, title: "Teardrops on My Guitar", youtubeId: "xKCek6_dB0M" },
+      { plays: 0, title: "A Place in This World", youtubeId: "" },
+      { plays: 0, title: "Cold as You", youtubeId: "" },
+      { plays: 0, title: "The Outside", youtubeId: "" },
+      { plays: 0, title: "Tied Together with a Smile", youtubeId: "" },
+      { plays: 0, title: "Stay Beautiful", youtubeId: "" },
+      { plays: 0, title: "Should've Said No", youtubeId: "v9bxXO9fj98" },
+      { plays: 0, title: "Mary's Song (Oh My My My)", youtubeId: "" },
+      { plays: 0, title: "Our Song", youtubeId: "Jb2stN7kH28" },
     ]
   },
 ];
@@ -537,10 +539,23 @@ function playSelectedVinyl(youtubeId, coverUrl, title = selectedTitle, album = s
 
   player.loadVideoById(youtubeId);
   player.playVideo();
+
+  taylorAlbums.forEach(album => {
+    album.tracks.forEach(track => {
+      if (track.youtubeId === youtubeId) {
+        track.plays++;
+
+        localStorage.setItem('taylorAlbums', JSON.stringify(taylorAlbums));
+      }
+    });
+  })
+
   const titleSpan = document.getElementById('current-music-title');
   titleSpan.textContent = title;
   const AlbumSpan = document.getElementById('current-album-title');
   AlbumSpan.textContent = album;
+
+  renderTopTracks()
 
   if (platter) platter.classList.add('spinning');
   if (tonearm) tonearm.classList.add('active');
@@ -757,6 +772,7 @@ function init() {
   setupModal();
   setupCustomVinylForm();
   setupAlbumsSection();
+  renderTopTracks();
 }
 
 // Lancement automatique dès le chargement du DOM
@@ -794,4 +810,61 @@ function updateMediaSession(title, artist, album, coverUrl) {
       }
     });
   }
+}
+
+// --------------------------------------------------------------------------
+// 11. SECTION TOP RACK 10 CHANSONS LES PLUS ÉCOUTÉES
+// --------------------------------------------------------------------------
+
+function renderTopTracks() {
+  const swiftRack = document.getElementById('swift-rack');
+  if (!swiftRack) return;
+
+  // 1. Aplatir tous les tableaux de pistes de tous les albums en une seule liste
+  let allTracks = [];
+  taylorAlbums.forEach(album => {
+    album.tracks.forEach(track => {
+      // On associe la piste à l'image de son album pour l'affichage
+      allTracks.push({
+        title: track.title,
+        youtubeId: track.youtubeId,
+        plays: track.plays,
+        coverImg: album.coverImg,
+        albumTitle: album.albumTitle
+      });
+    });
+  });
+
+  // 2. Trier du plus grand nombre de plays au plus petit
+  allTracks.sort((a, b) => b.plays - a.plays);
+
+  // 3. Vider l'ancien affichage et recréer les 10 premiers vinyles
+  swiftRack.innerHTML = '';
+  
+  // On prend les 10 premiers éléments avec .slice(0, 10)
+  allTracks.slice(0, 10).forEach(track => {
+    const item = document.createElement('div');
+    item.className = 'vinyl-item';
+    item.setAttribute('draggable', 'true');
+    item.setAttribute('data-youtube', track.youtubeId);
+    item.setAttribute('data-cover', track.coverImg);
+    item.setAttribute('data-title', track.title);
+    item.setAttribute('data-album', track.albumTitle);
+
+    item.innerHTML = `
+      <div class="sleeve">
+        <div class="vinyl-disc">
+          <div class="disc-label">
+            <img src="${track.coverImg}" alt="${track.title}">
+          </div>
+        </div>
+        <img src="${track.coverImg}" alt="${track.title}">
+      </div>
+      <span>${track.title} (${track.plays} écoutes)</span>
+    `;
+
+    // On réactive le glisser-déposer / clic sur ces nouveaux éléments générés
+    makeVinylDraggable(item);
+    swiftRack.appendChild(item);
+  });
 }
