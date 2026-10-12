@@ -42,6 +42,26 @@ const taylorAlbums = [
   },
 */ 
   {
+    id: "Midnights",
+    albumTitle: "Midnights",
+    coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbftm-D0w1ZdzXvo40gOm5gsilbXSJVgLyykqqFQQKaA&s=10",
+    tracks: [
+      { title: "Lavender Haze", youtubeId: "mkR_Qwix4Ho" },
+      { title: "Maroon", youtubeId: "lvHZjvIyqsk" },
+      { title: "Anti-Hero", youtubeId: "XqN2qFvY64U" },
+      { title: "Snow on the Beach (feat. Lana Del Rey)", youtubeId: "ycE7bUq3-2k" },
+      { title: "You're on Your Own, Kid", youtubeId: "7Gbg6Z70J7E" },
+      { title: "Midnight Rain", youtubeId: "Odh9ddPUkEY" },
+      { title: "Question...?", youtubeId: "xxrf_QBD5DE" },
+      { title: "Vigilante Shit", youtubeId: "Uoey4W_3bos" },
+      { title: "Bejeweled", youtubeId: "XzKSPRqFg9E" },
+      { title: "Labyrinth", youtubeId: "xTXsKMXUi7w" },
+      { title: "Karma", youtubeId: "rg18Kf4en2o" },
+      { title: "Sweet Nothing", youtubeId: "rn0brgg2BpI" },
+      { title: "Mastermind", youtubeId: "Tmz1lz0zcLQ" },
+    ]
+  },
+  {
     id: "Evermore",
     albumTitle: "Evermore",
     coverImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs829B8GwjLPkFBpPR6SprN6QhAObsZ7ybVZ4w5AOggA&s=10",
