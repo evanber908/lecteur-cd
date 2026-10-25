@@ -1,3 +1,9 @@
+## ✨ Nouveautés
+
+* Nouveau design pour les 20 ans de carrière de Taylor Swift ! Pour célébrer ce moment, le site a obtenu un nouveau design (fond, badge, icon d'app...)
+* Venez vite découvrir le site ! ;)
+---
+
 # [🎵 Écoute Taylor & Swiftie FM](https://evanber908.github.io/lecteur-cd/)
 Une application web immersive et Progressive Web App (PWA) dédiée à l'univers de **Taylor Swift**, regroupant un lecteur de type platine CD/vinyle interactive par album et une web radio en direct 24/7.
 ![Aperçu du site](./screenshot.png)`
@@ -68,7 +74,7 @@ Actualise ta page (F5), et voilà : le site repart de zéro avec les valeurs d'o
 
 ## 👥 Auteurs
 
-* **evanber908** - *Création et développement initial* - [Votre Profil GitHub](https://github.com/evanber908)
+* **evanber908** - *Création et développement initial* - [Mon Profil GitHub](https://github.com/evanber908)
 
 ## 📜 Crédits & Mentions Légales
 * Projet personnel de fan sans but lucratif. Les contenus musicaux, les pochettes d'albums et les visuels appartiennent exclusivement à Taylor Swift et à ses ayants droit (Universal Music Group / TAS Rights Management).
