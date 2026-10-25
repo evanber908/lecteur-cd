@@ -883,3 +883,207 @@ function setupTopTracksAccordion() {
     });
   }
 }
+
+// --------------------------------------------------------------------------
+// 12. Script de l'animation Confettis "20 Years" (Exécuté uniquement au chargement)
+// --------------------------------------------------------------------------
+
+(function() {
+        const canvas = document.getElementById('confettiCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const textOverlay = document.getElementById('textOverlay');
+
+        let width, height;
+        let particles = [];
+        let targetPoints = [];
+        let animationFrameId;
+        let phase = 'falling'; // 'falling' -> 'forming' -> 'holding' -> 'dissolving' -> 'done'
+        let phaseTimer = 0;
+
+        const colors = [
+          '#74A782', '#F4C468', '#B571B3', '#B72138', '#9CD7F7',
+          '#D1D1D1', '#FFB7C5', '#C5C3BB', '#CC7E50', '#435882', '#FFFFFF'
+        ];
+
+        function resizeCanvas() {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function generateTarget20Points() {
+          const points = [];
+          const tempCanvas = document.createElement('canvas');
+          const tempCtx = tempCanvas.getContext('2d');
+          
+          tempCanvas.width = width;
+          tempCanvas.height = height;
+
+          const fontSize = Math.min(width * 0.45, 340);
+          tempCtx.font = `bold ${fontSize}px "Montserrat", sans-serif`;
+          tempCtx.fillStyle = '#ffffff';
+          tempCtx.textAlign = 'center';
+          tempCtx.textBaseline = 'middle';
+
+          tempCtx.fillText('20', width / 2, height / 2 - 40);
+
+          const imageData = tempCtx.getImageData(0, 0, width, height).data;
+          const step = Math.max(4, Math.floor(width / 320));
+
+          for (let y = 0; y < height; y += step) {
+            for (let x = 0; x < width; x += step) {
+              const alpha = imageData[(y * width + x) * 4 + 3];
+              if (alpha > 128) {
+                points.push({
+                  x: x + (Math.random() - 0.5) * 4,
+                  y: y + (Math.random() - 0.5) * 4
+                });
+              }
+            }
+          }
+          return points;
+        }
+
+        class Particle {
+          constructor() {
+            this.reset();
+          }
+
+          reset() {
+            this.x = Math.random() * width;
+            this.y = -20 - Math.random() * 200;
+            this.vx = (Math.random() - 0.5) * 2;
+            this.vy = 2 + Math.random() * 4;
+            this.size = Math.random() * 8 + 6;
+            this.height = Math.random() * 10 + 6;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.rotation = Math.random() * Math.PI * 2;
+            this.vRot = (Math.random() - 0.5) * 0.1;
+            this.target = null;
+            this.opacity = 1;
+            this.friction = 0.94;
+            this.spring = 0.04;
+          }
+
+          update() {
+            this.rotation += this.vRot;
+
+            if (phase === 'falling') {
+              this.y += this.vy;
+              this.x += Math.sin(this.y * 0.02) * 1.5;
+              if (this.y > height + 20) {
+                this.y = -20;
+                this.x = Math.random() * width;
+              }
+            } else if (phase === 'forming' || phase === 'holding') {
+              if (this.target) {
+                const dx = this.target.x - this.x;
+                const dy = this.target.y - this.y;
+                
+                this.vx += dx * this.spring;
+                this.vy += dy * this.spring;
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+
+                this.x += this.vx;
+                this.y += this.vy;
+              }
+            } else if (phase === 'dissolving') {
+              this.vy += 0.15;
+              this.vx += (Math.random() - 0.5) * 0.5;
+              this.y += this.vy;
+              this.x += this.vx;
+              this.opacity -= 0.015;
+              if (this.opacity < 0) this.opacity = 0;
+            }
+          }
+
+          draw() {
+            if (this.opacity <= 0) return;
+
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            if (ctx.roundRect) {
+              ctx.roundRect(-this.size / 2, -this.height / 2, this.size, this.height, 2);
+            } else {
+              ctx.rect(-this.size / 2, -this.height / 2, this.size, this.height);
+            }
+            ctx.fill();
+
+            ctx.restore();
+          }
+        }
+
+        function initAnimation() {
+          cancelAnimationFrame(animationFrameId);
+          particles = [];
+          targetPoints = generateTarget20Points();
+
+          textOverlay.classList.remove('show', 'fadeOut');
+
+          const particleCount = targetPoints.length;
+          for (let i = 0; i < particleCount; i++) {
+            const p = new Particle();
+            p.target = targetPoints[i];
+            particles.push(p);
+          }
+
+          const extraCount = Math.floor(particleCount * 0.25);
+          for (let i = 0; i < extraCount; i++) {
+            const p = new Particle();
+            particles.push(p);
+          }
+
+          phase = 'falling';
+          phaseTimer = 0;
+
+          animate();
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+          phaseTimer++;
+
+          if (phase === 'falling' && phaseTimer > 60) {
+            phase = 'forming';
+            phaseTimer = 0;
+          } else if (phase === 'forming' && phaseTimer > 110) {
+            phase = 'holding';
+            phaseTimer = 0;
+            textOverlay.classList.add('show');
+          } else if (phase === 'holding' && phaseTimer > 160) {
+            phase = 'dissolving';
+            phaseTimer = 0;
+            textOverlay.classList.remove('show');
+            textOverlay.classList.add('fadeOut');
+          }
+
+          let activeParticles = 0;
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            if (particles[i].opacity > 0) activeParticles++;
+          }
+
+          if (phase === 'dissolving' && activeParticles === 0) {
+            phase = 'done';
+            ctx.clearRect(0, 0, width, height);
+            canvas.style.display = 'none';
+            textOverlay.style.display = 'none';
+            return;
+          }
+
+          animationFrameId = requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('load', () => {
+          initAnimation();
+        });
+      })();
