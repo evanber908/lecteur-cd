@@ -7,12 +7,12 @@
   "theme_color": "#F2E8D5",
   "icons": [
     {
-      "src": "img/icon-192_img/20years-of-taylor-swift.png",
+      "src": "img/icon-192_20years-of-taylor-swift.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "img/icon-512_img/20years-of-taylor-swift.png",
+      "src": "img/icon-512_20years-of-taylor-swift.png",
       "sizes": "512x512",
       "type": "image/png"
     }
