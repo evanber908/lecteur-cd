@@ -204,8 +204,6 @@ body {
 }
 
 /* --- badge 20 years of taylor swift--- */
-.rack-section h3,
-.albums-section h3,
 .taylor-badge-20-years {
   background: rgba(187, 50, 187, 0.664); /* Fond légèrement teinté aux couleurs de votre thème */
   color: #ecedf0;                          /* Texte clair et élégant */
@@ -585,7 +583,7 @@ body {
 
 #selected-album-title {
   font-size: 16px;
-  color: #818cf8;
+  color: #0f24e0;
   margin: 10px 0 15px 0;
   font-weight: 700;
 }
