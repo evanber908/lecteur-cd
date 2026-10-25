@@ -1138,6 +1138,17 @@ body {
 
 /* --- Adaptation Mobile (Écrans < 768px) - PLACÉE TOUT À LA FIN --- */
 @media (max-width: 768px) {
+
+  .welcome-banner {
+    /* Superpose un voile sombre (ici très sombre à 90%) pour que le contenu reste bien lisible par-dessus l'image */
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                url('20years-of-taylor-swift.jpeg');
+    background-size: cover;       /* L'image s'étale pour couvrir tout l'écran */
+    background-position: center;  /* Centre l'image */
+    background-repeat: no-repeat; /* Empêche la répétition */
+    background-attachment: fixed; /* Garde l'arrière-plan fixe quand on fait défiler la page */
+  }
+
   .main-container {
     flex-direction: column;
     align-items: center;
