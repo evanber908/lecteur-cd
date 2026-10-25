@@ -1083,7 +1083,22 @@ function setupTopTracksAccordion() {
           animationFrameId = requestAnimationFrame(animate);
         }
 
-        window.addEventListener('load', () => {
+        function startOpeningAnimation() {
+          if (canvas) canvas.style.display = 'block';
+          if (textOverlay) textOverlay.style.display = 'flex';
           initAnimation();
+        }
+
+        // Déclenchement à l'ouverture de l'application (chargement de la page)
+        window.addEventListener('load', () => {
+          startOpeningAnimation();
+        });
+
+        // (Optionnel) Si vous souhaitez que l'animation se relance aussi 
+        // chaque fois que l'utilisateur revient sur l'onglet ou l'application :
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') {
+            startOpeningAnimation();
+          }
         });
       })();
