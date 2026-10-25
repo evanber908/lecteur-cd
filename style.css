@@ -1077,7 +1077,7 @@ body {
   body {
     /* Superpose un voile sombre (ici très sombre à 90%) pour que le contenu reste bien lisible par-dessus l'image */
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url('20years-of-taylor-swift.jpeg');
+                url('20years-of-taylor-swift.png');
     background-size: cover;       /* L'image s'étale pour couvrir tout l'écran */
     background-position: center;  /* Centre l'image */
     background-repeat: no-repeat; /* Empêche la répétition */
@@ -1142,7 +1142,7 @@ body {
   .welcome-banner {
     /* Superpose un voile sombre (ici très sombre à 90%) pour que le contenu reste bien lisible par-dessus l'image */
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url('20years-of-taylor-swift.jpeg');
+                url('20years-of-taylor-swift.png');
     background-size: cover;       /* L'image s'étale pour couvrir tout l'écran */
     background-position: center;  /* Centre l'image */
     background-repeat: no-repeat; /* Empêche la répétition */
