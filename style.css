@@ -20,8 +20,7 @@ body {
   align-self: stretch;
   background: linear-gradient(135deg, #1a1c23, #0d0f12);
   color: #ffffff;
-  text-align: center;
-  padding: 16px 20px;
+  padding: 12px 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #2d323f;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -31,10 +30,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto; /* Ajout d'une marge en bas pour séparer du texte */
   gap: 15px;
+}
+
+/* Texte à gauche */
+.header-text {
+  text-align: left;
+  flex: 1; /* Permet d'occuper l'espace disponible */
 }
 
 .welcome-banner h1 {
@@ -49,6 +53,21 @@ body {
   font-size: 14px;
   color: #a0a5b1;
   font-weight: 400;
+}
+
+/* Image au centre */
+.header-banner-img {
+  height: 150px;            /* Hauteur ajustée pour s'intégrer harmonieusement sur la ligne */
+  width: auto;             /* Conserve le ratio de l'image */
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;          /* Empêche l'image de s'écraser */
+}
+
+/* Commutateur à droite */
+.mode-switch-container {
+  flex-shrink: 0;          /* Empêche le commutateur de se déformer */
 }
 
 /* --- Commutateur CD / Radio --- */
@@ -155,6 +174,37 @@ body {
   height: 100%;
   border: 0;
   pointer-events: none;
+}
+
+/* --- class 20 years of taylor swift --- */
+.twenty-years-of-taylor-swift {
+  background: rgba(214, 197, 102, 0.493); /* Fond légèrement teinté aux couleurs de votre thème */
+  color: #ecedf0;                          /* Texte clair et élégant */
+  border: 1px solid rgba(75, 25, 77, 0.705); /* Fine bordure subtile */
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 20px;                    /* Forme arrondie en pilule */
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: auto;
+  text-align: center;
+}
+
+/* --- badge 20 years of taylor swift--- */
+.rack-section h3,
+.albums-section h3,
+.taylor-badge-20-years {
+  background: rgba(187, 50, 187, 0.664); /* Fond légèrement teinté aux couleurs de votre thème */
+  color: #ecedf0;                          /* Texte clair et élégant */
+  border: 1px solid rgba(75, 25, 77, 0.705); /* Fine bordure subtile */
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 20px;                    /* Forme arrondie en pilule */
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 280px;
 }
 
 /* --- Platine tourne-disque --- */
@@ -305,7 +355,7 @@ body {
 .rack-section h2,
 .albums-section h2 {
   font-size: 16px;
-  color: #1a1c23;
+  color: black;
   margin-bottom: 15px;
   border-bottom: 2px solid #818cf8;
   padding-bottom: 6px;
@@ -601,7 +651,7 @@ body {
 }
 
 .modal-content h2 {
-  color: #ffffff;
+  color: white;
   margin-top: 0;
   border-bottom: 1px solid #333a48;
   padding-bottom: 10px;
@@ -1007,6 +1057,17 @@ body {
 
 /* --- Disposition 3 colonnes pour grands écrans (Desktop) --- */
 @media (min-width: 1024px) {
+
+  body {
+    /* Superpose un voile sombre (ici très sombre à 90%) pour que le contenu reste bien lisible par-dessus l'image */
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                url('20years-of-taylor-swift.jpeg');
+    background-size: cover;       /* L'image s'étale pour couvrir tout l'écran */
+    background-position: center;  /* Centre l'image */
+    background-repeat: no-repeat; /* Empêche la répétition */
+    background-attachment: fixed; /* Garde l'arrière-plan fixe quand on fait défiler la page */
+  }
+
   .rack-column {
     display: flex;
     flex-direction: row;
@@ -1056,6 +1117,8 @@ body {
     margin-left: 10px;
   }
 }
+
+
 
 /* --- Adaptation Mobile (Écrans < 768px) - PLACÉE TOUT À LA FIN --- */
 @media (max-width: 768px) {
