@@ -1,13 +1,13 @@
 ## ✨ Nouveautés
 
 * Nouveau design pour les 20 ans de carrière de Taylor Swift ! Pour célébrer ce moment, le site a obtenu un nouveau design (fond, badge, icon d'app...)
-* ![20 years of Taylor Swift](./reduit_20years-of-taylor-swift.png)
+* ![20 years of Taylor Swift](./img/reduit_img/20years-of-taylor-swift.png)
 * Venez vite découvrir le site ! ;)
 ---
 
 # [🎵 Écoute Taylor & Swiftie FM](https://evanber908.github.io/lecteur-cd/)
 Une application web immersive et Progressive Web App (PWA) dédiée à l'univers de **Taylor Swift**, regroupant un lecteur de type platine CD/vinyle interactive par album et une web radio en direct 24/7.
-![Aperçu du site](./screenshot.png)`
+![Aperçu du site](./img/screenshot.png)`
 
 ---
 
@@ -42,15 +42,23 @@ Actualise ta page (F5), et voilà : le site repart de zéro avec les valeurs d'o
 ## 📂 Structure du Projet
 
 ```text
-├── index.html          # Page principale (Lecteur CD / Albums)
-├── radio.html          # Page Web Radio en direct
-├── style.css           # Styles globaux et design rétro / vinyle
-├── script.js           # Logique du lecteur CD et gestion des albums
-├── radio.js            # Logique de la web radio, flux audio et Media Session
-├── manifest.json       # Configuration PWA pour l'installation mobile
-├── sw.js               # Service Worker pour la validation PWA
-├── favicon.svg         # Icône du site
-└── icons/              # Icônes de l'application (formats PNG 192x192 et 512x512)
+├── img attente/                               # Fichier contenant les anciennes icones (formats PNG 192x192 et 512x512)
+├── img/
+│   └── 20years-of-taylor-swift.png            # Image fond d'écran, affichée sur bandeau et dans radio.html
+|   └── favicon.svg                            # Icône du site
+|   └── icon-192_20years-of-taylor-swift.png   # Nouvelle icon des 20 years mais temporaire 192X192
+|   └── icon-512_20years-of-taylor-swift.png   # Nouvelle icon des 20 years mais temporaire 512X512
+|   └── reduit_20years-of-taylor-swift.png     # image des 20 years réduites pour README.md
+|   └── screenshot.png                         # Image d'aperçu du site pour README.md
+├── java/
+|   └── radio.js                               # Logique de la web radio, flux audio et Media Session
+|   └── script.js                              # Logique du lecteur CD et gestion des albums
+├── index.html                                 # Page principale (Lecteur CD / Albums)
+├── radio.html                                 # Page Web Radio en direct
+├── style.css                                  # Styles globaux et design rétro / vinyle
+├── README.md                                  # Fichier d'explication, repères pour la compréhension du site
+├── manifest.json                              # Configuration PWA pour l'installation mobile
+├── sw.js                                      # Service Worker pour la validation PWA
 ```
 
 ---
@@ -69,7 +77,7 @@ Actualise ta page (F5), et voilà : le site repart de zéro avec les valeurs d'o
 * [ ] Ajouter de nouveaux albums et clips vidéo.
 * [ ] Intégrer un système de favoris ou de playlist personnalisée.
 * [ ] Améliorer le design responsive pour les très petits écrans mobiles.
-* [ ] Afficher les titres les plus écoutés sur le site
+* [X] Afficher les titres les plus écoutés sur le site
 
 ---
 
