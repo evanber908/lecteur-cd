@@ -1,7 +1,7 @@
 ## ✨ Nouveautés
 
 * Nouveau design pour les 20 ans de carrière de Taylor Swift ! Pour célébrer ce moment, le site a obtenu un nouveau design (fond, badge, icon d'app...)
-* ![20 years of Taylor Swift](./img/reduit_img/20years-of-taylor-swift.png)
+* ![20 years of Taylor Swift](./img/reduit_20years-of-taylor-swift.png)
 * Venez vite découvrir le site ! ;)
 ---
 
