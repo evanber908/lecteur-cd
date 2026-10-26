@@ -1,5 +1,6 @@
 {
-  "id": "/lecteur-cd/",
+  "id": "https://evanber908.github.io/lecteur-cd/",
+  "scope": "/lecteur-cd",
   "name": "Ecoute Taylor",
   "short_name": "Ecoute Taylor",
   "start_url": "./index.html",
