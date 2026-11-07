@@ -787,6 +787,129 @@ function init() {
   setupAlbumsSection();
   renderTopTracks();
   setupTopTracksAccordion();
+  setupSearch();
+}
+
+// --------------------------------------------------------------------------
+// 9b. BARRE DE RECHERCHE
+// --------------------------------------------------------------------------
+function setupSearch() {
+  const searchInput    = document.getElementById('search-input');
+  const searchClear    = document.getElementById('search-clear');
+  const resultsWrapper = document.getElementById('search-results-container');
+  const resultsLabel   = document.getElementById('search-results-label');
+  const resultsRack    = document.getElementById('search-results-rack');
+
+  if (!searchInput || !resultsWrapper || !resultsRack) return;
+
+  // Construit un index à plat de toutes les pistes
+  function buildIndex() {
+    const index = [];
+    taylorAlbums.forEach(album => {
+      album.tracks.forEach(track => {
+        index.push({
+          title:      track.title,
+          youtubeId:  track.youtubeId,
+          coverImg:   album.coverImg,
+          albumTitle: album.albumTitle,
+          // chaîne de recherche normalisée (minuscules, sans accents)
+          _search: (track.title + ' ' + album.albumTitle)
+            .toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        });
+      });
+    });
+    return index;
+  }
+
+  const index = buildIndex();
+
+  function normalizeQuery(q) {
+    return q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function renderResults(query) {
+    const q = normalizeQuery(query.trim());
+
+    if (!q) {
+      resultsWrapper.hidden = true;
+      searchClear.hidden = true;
+      return;
+    }
+
+    searchClear.hidden = false;
+
+    // Filtrage : toutes les pistes dont le titre OU l'album contient la requête
+    const matches = index.filter(t => t._search.includes(q));
+
+    resultsWrapper.hidden = false;
+
+    if (matches.length === 0) {
+      resultsLabel.textContent = `Aucun résultat pour « ${query} »`;
+      resultsRack.innerHTML = '';
+      return;
+    }
+
+    resultsLabel.textContent = `${matches.length} résultat${matches.length > 1 ? 's' : ''} pour « ${query} »`;
+    resultsRack.innerHTML = '';
+
+    matches.forEach(track => {
+      const item = document.createElement('div');
+      item.className = 'vinyl-item';
+      item.setAttribute('data-youtube',  track.youtubeId);
+      item.setAttribute('data-cover',    track.coverImg);
+      item.setAttribute('data-title',    track.title);
+      item.setAttribute('data-album',    track.albumTitle);
+
+      if (!track.youtubeId) {
+        item.style.opacity = '0.4';
+        item.style.cursor  = 'not-allowed';
+        item.title = 'Vidéo non disponible';
+      } else {
+        item.setAttribute('draggable', 'true');
+      }
+
+      item.innerHTML = `
+        <div class="sleeve">
+          <div class="vinyl-disc">
+            <div class="disc-label">
+              <img src="${track.coverImg}" alt="${track.title}">
+            </div>
+          </div>
+          <img src="${track.coverImg}" alt="${track.title}">
+        </div>
+        <span>${track.title}</span>
+        <span class="search-result-album">${track.albumTitle}</span>
+      `;
+
+      makeVinylDraggable(item);
+      resultsRack.appendChild(item);
+    });
+  }
+
+  // Écoute la frappe (avec debounce léger)
+  let debounceTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => renderResults(searchInput.value), 180);
+  });
+
+  // Bouton effacer
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+    resultsWrapper.hidden = true;
+    searchClear.hidden = true;
+  });
+
+  // Ferme les résultats si on appuie sur Échap
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      resultsWrapper.hidden = true;
+      searchClear.hidden = true;
+    }
+  });
 }
 
 // Lancement automatique dès le chargement du DOM

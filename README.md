@@ -26,6 +26,13 @@ Puis ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur
 
 ## ✨ Fonctionnalités
 
+### 🔍 Recherche instantanée (`index.html`)
+
+- **Barre de recherche en temps réel** : Permet de trouver instantanément n'importe quelle chanson ou album sans devoir ouvrir les albums un par un.
+- **Tolérance aux accents et à la casse** : La recherche fonctionne que vous tapiez en majuscules/minuscules, avec ou sans accents (ex: "lover", "hero", "karma").
+- **Vinyles jouables directement** : Les résultats s'affichent sous forme de vinyles interactifs (cliquables et glissables vers la platine).
+- **Raccourci Échap / Bouton ✕** : Efface la recherche et masque les résultats rapidement.
+
 ### 🎛️ Lecteur Platine Vinyle (`index.html`)
 
 - **Platine tourne-disque animée** : Le vinyle tourne et le bras de lecture se positionne lors de la lecture. La pochette de l'album sélectionné s'affiche au centre du disque.

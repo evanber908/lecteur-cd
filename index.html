@@ -90,6 +90,26 @@
       <!-- Colonne Droite : Rack de Vinyles -->
       <div class="rack-column">
 
+        <!-- Section 0 : Barre de recherche -->
+        <section class="rack-section search-section">
+          <div class="search-bar-container">
+            <span class="search-icon">🔍</span>
+            <input
+              type="search"
+              id="search-input"
+              placeholder="Rechercher une chanson ou un album…"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button type="button" id="search-clear" class="search-clear-btn" aria-label="Effacer" hidden>✕</button>
+          </div>
+          <!-- Résultats de recherche -->
+          <div id="search-results-container" class="search-results-container" hidden>
+            <p class="search-results-label" id="search-results-label"></p>
+            <div id="search-results-rack" class="vinyl-rack"></div>
+          </div>
+        </section>
+
         <!-- Section 1 : Chansons de Taylor Swift -->
         <section class="rack-section top-tracks-section">
           <h2 id="top-tracks-toggle">
