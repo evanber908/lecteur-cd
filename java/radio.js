@@ -135,12 +135,12 @@ function useFallbackTrack() {
   const track = FALLBACK_PLAYLIST[fallbackIndex];
   if (radioTrackTitle) radioTrackTitle.textContent = track.title;
   if (radioTrackArtist) radioTrackArtist.textContent = track.artist;
-  if (radioTrackAlbum) radioTrackAlbum.textContent = `Album : ${track.album}`;
+  if (radioTrackAlbum) radioTrackAlbum.textContent = `Album : ${track.album} (données hors-ligne)`;
   if (radioCover) radioCover.src = track.cover;
 
   // Mise à jour de la notification Google / Système
   updateMediaSession(track.title, track.artist, track.album, track.cover);
-  
+
   fallbackIndex = (fallbackIndex + 1) % FALLBACK_PLAYLIST.length;
 }
 

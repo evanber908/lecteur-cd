@@ -513,6 +513,11 @@ function makeVinylDraggable(vinyl) {
     const title = vinyl.getAttribute('data-title') || vinyl.querySelector('span')?.textContent || 'Taylor Swift';
     const album = vinyl.getAttribute('data-album') || 'Écoute Taylor';
 
+    if (!ytId) {
+      alert('⚠️ Vidéo non disponible pour cette chanson.');
+      return;
+    }
+
     selectedYoutubeId = ytId;
     selectedCover = cover;
     selectedTitle = title;
@@ -540,8 +545,8 @@ function playSelectedVinyl(youtubeId, coverUrl, title = selectedTitle, album = s
   player.loadVideoById(youtubeId);
   player.playVideo();
 
-  taylorAlbums.forEach(album => {
-    album.tracks.forEach(track => {
+  taylorAlbums.forEach(alb => {
+    alb.tracks.forEach(track => {
       if (track.youtubeId === youtubeId) {
         track.plays++;
 
@@ -726,11 +731,19 @@ function showAlbumTracks(album) {
   album.tracks.forEach(track => {
     const item = document.createElement('div');
     item.className = 'vinyl-item';
-    item.setAttribute('draggable', 'true');
     item.setAttribute('data-youtube', track.youtubeId);
     item.setAttribute('data-cover', album.coverImg);
     item.setAttribute('data-title', track.title);
     item.setAttribute('data-album', album.albumTitle);
+
+    // Désactive visuellement les pistes sans vidéo disponible
+    if (!track.youtubeId) {
+      item.style.opacity = '0.4';
+      item.style.cursor = 'not-allowed';
+      item.title = 'Vidéo non disponible';
+    } else {
+      item.setAttribute('draggable', 'true');
+    }
 
     item.innerHTML = `
       <div class="sleeve">
@@ -836,14 +849,21 @@ function renderTopTracks() {
     });
   });
 
-  // 2. Trier du plus grand nombre de plays au plus petit
-  allTracks.sort((a, b) => b.plays - a.plays);
+  // 2. Ne garder que les pistes avec au moins une écoute, puis trier
+  const playedTracks = allTracks.filter(t => t.plays > 0);
+  playedTracks.sort((a, b) => b.plays - a.plays);
 
-  // 3. Vider l'ancien affichage et recréer les 10 premiers vinyles
+  // 3. Vider l'ancien affichage
   swiftRack.innerHTML = '';
-  
-  // On prend les 10 premiers éléments avec .slice(0, 10)
-  allTracks.slice(0, 10).forEach(track => {
+
+  // Si aucune piste écoutée, afficher un message neutre
+  if (playedTracks.length === 0) {
+    swiftRack.innerHTML = '<p style="color:#888;font-size:13px;grid-column:1/-1;">Aucune écoute enregistrée pour l\'instant.</p>';
+    return;
+  }
+
+  // 4. Recréer les 10 premiers vinyles
+  playedTracks.slice(0, 10).forEach(track => {
     const item = document.createElement('div');
     item.className = 'vinyl-item';
     item.setAttribute('draggable', 'true');
@@ -861,7 +881,7 @@ function renderTopTracks() {
         </div>
         <img src="${track.coverImg}" alt="${track.title}">
       </div>
-      <span>${track.title} (${track.plays} écoutes)</span>
+      <span>${track.title} (${track.plays} écoute${track.plays > 1 ? 's' : ''})</span>
     `;
 
     // On réactive le glisser-déposer / clic sur ces nouveaux éléments générés
@@ -1090,14 +1110,19 @@ function setupTopTracksAccordion() {
         }
 
         // Déclenchement à l'ouverture de l'application (chargement de la page)
+        let hasPlayedAnimation = false;
         window.addEventListener('load', () => {
-          startOpeningAnimation();
+          if (!hasPlayedAnimation) {
+            hasPlayedAnimation = true;
+            startOpeningAnimation();
+          }
         });
 
-        // (Optionnel) Si vous souhaitez que l'animation se relance aussi 
-        // chaque fois que l'utilisateur revient sur l'onglet ou l'application :
+        // Relance l'animation si l'utilisateur revient sur l'onglet/app (PWA)
+        // uniquement si la première n'a pas encore été jouée
         document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'visible') {
+          if (document.visibilityState === 'visible' && !hasPlayedAnimation) {
+            hasPlayedAnimation = true;
             startOpeningAnimation();
           }
         });

@@ -3,6 +3,8 @@
   "scope": "/lecteur-cd",
   "name": "Ecoute Taylor",
   "short_name": "Ecoute Taylor",
+  "description": "Lecteur vinyle interactif et web radio dédiés à Taylor Swift",
+  "lang": "fr",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#F2EEDC",
