@@ -790,6 +790,13 @@ function init() {
   setupSearch();
 }
 
+// Lancement automatique dès le chargement du DOM
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
 // --------------------------------------------------------------------------
 // 9b. BARRE DE RECHERCHE
 // --------------------------------------------------------------------------
@@ -802,7 +809,13 @@ function setupSearch() {
 
   if (!searchInput || !resultsWrapper || !resultsRack) return;
 
-  // Construit un index à plat de toutes les pistes
+  function resetSearch() {
+    searchInput.value = '';
+    resultsWrapper.hidden = true;
+    if (searchClear) searchClear.hidden = true;
+    resultsRack.innerHTML = '';
+  }
+
   function buildIndex() {
     const index = [];
     taylorAlbums.forEach(album => {
@@ -812,8 +825,7 @@ function setupSearch() {
           youtubeId:  track.youtubeId,
           coverImg:   album.coverImg,
           albumTitle: album.albumTitle,
-          // chaîne de recherche normalisée (minuscules, sans accents)
-          _search: (track.title + ' ' + album.albumTitle)
+          _search: (track.title)
             .toLowerCase()
             .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         });
@@ -833,13 +845,12 @@ function setupSearch() {
 
     if (!q) {
       resultsWrapper.hidden = true;
-      searchClear.hidden = true;
+      if (searchClear) searchClear.hidden = true;
       return;
     }
 
-    searchClear.hidden = false;
+    if (searchClear) searchClear.hidden = false;
 
-    // Filtrage : toutes les pistes dont le titre OU l'album contient la requête
     const matches = index.filter(t => t._search.includes(q));
 
     resultsWrapper.hidden = false;
@@ -850,16 +861,16 @@ function setupSearch() {
       return;
     }
 
-    resultsLabel.textContent = `${matches.length} résultat${matches.length > 1 ? 's' : ''} pour « ${query} »`;
+    resultsLabel.textContent = `${matches.length} résultat${matches.length > 1 ? 's' : ''} trouvé${matches.length > 1 ? 's' : ''}`;
     resultsRack.innerHTML = '';
 
     matches.forEach(track => {
       const item = document.createElement('div');
       item.className = 'vinyl-item';
-      item.setAttribute('data-youtube',  track.youtubeId);
-      item.setAttribute('data-cover',    track.coverImg);
-      item.setAttribute('data-title',    track.title);
-      item.setAttribute('data-album',    track.albumTitle);
+      item.setAttribute('data-youtube', track.youtubeId);
+      item.setAttribute('data-cover',   track.coverImg);
+      item.setAttribute('data-title',   track.title);
+      item.setAttribute('data-album',   track.albumTitle);
 
       if (!track.youtubeId) {
         item.style.opacity = '0.4';
@@ -883,40 +894,44 @@ function setupSearch() {
       `;
 
       makeVinylDraggable(item);
+
+      // Quand on clique sur le résultat : lance la musique + masque/réinitialise la barre
+      item.addEventListener('click', () => {
+        if (track.youtubeId) {
+          resetSearch();
+        }
+      });
+
       resultsRack.appendChild(item);
     });
   }
 
-  // Écoute la frappe (avec debounce léger)
   let debounceTimer;
   searchInput.addEventListener('input', () => {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => renderResults(searchInput.value), 180);
+    debounceTimer = setTimeout(() => renderResults(searchInput.value), 150);
   });
 
-  // Bouton effacer
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-    resultsWrapper.hidden = true;
-    searchClear.hidden = true;
-  });
+  if (searchClear) {
+    searchClear.addEventListener('click', () => {
+      resetSearch();
+      searchInput.focus();
+    });
+  }
 
-  // Ferme les résultats si on appuie sur Échap
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      searchInput.value = '';
+  // Masquer les résultats au clic en dehors de la zone de recherche
+  document.addEventListener('click', (e) => {
+    const searchSection = document.querySelector('.search-section');
+    if (searchSection && !searchSection.contains(e.target)) {
       resultsWrapper.hidden = true;
-      searchClear.hidden = true;
     }
   });
-}
 
-// Lancement automatique dès le chargement du DOM
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      resetSearch();
+    }
+  });
 }
 
 // --------------------------------------------------------------------------
